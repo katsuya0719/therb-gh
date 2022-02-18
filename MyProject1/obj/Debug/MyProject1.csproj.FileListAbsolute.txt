@@ -4,3 +4,12 @@ C:\Users\katsu\Documents\OneDrive - Kyushu University\2021THERB\THERB\THERB-UI\T
 C:\Users\katsu\Documents\OneDrive - Kyushu University\2021THERB\THERB\THERB-UI\THERB-UI\MyProject1\bin\MyProject1.pdb
 C:\Users\katsu\Documents\OneDrive - Kyushu University\2021THERB\THERB\THERB-UI\THERB-UI\MyProject1\obj\Debug\MyProject1.dll
 C:\Users\katsu\Documents\OneDrive - Kyushu University\2021THERB\THERB\THERB-UI\THERB-UI\MyProject1\obj\Debug\MyProject1.pdb
+C:\Users\katsu\Documents\development\THERB-UI\MyProject1\bin\MyProject1.dll
+C:\Users\katsu\Documents\development\THERB-UI\MyProject1\bin\MyProject1.pdb
+C:\Users\katsu\Documents\development\THERB-UI\MyProject1\bin\Newtonsoft.Json.dll
+C:\Users\katsu\Documents\development\THERB-UI\MyProject1\bin\Newtonsoft.Json.xml
+C:\Users\katsu\Documents\development\THERB-UI\MyProject1\obj\Debug\MyProject1.csproj.AssemblyReference.cache
+C:\Users\katsu\Documents\development\THERB-UI\MyProject1\obj\Debug\MyProject1.csproj.CoreCompileInputs.cache
+C:\Users\katsu\Documents\development\THERB-UI\MyProject1\obj\Debug\MyProject1.csproj.CopyComplete
+C:\Users\katsu\Documents\development\THERB-UI\MyProject1\obj\Debug\MyProject1.dll
+C:\Users\katsu\Documents\development\THERB-UI\MyProject1\obj\Debug\MyProject1.pdb

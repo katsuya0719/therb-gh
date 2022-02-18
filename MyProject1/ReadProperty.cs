@@ -23,7 +23,7 @@ namespace MyProject1
         public ReadProperty()
           : base("ReadProperty", "ReadProperty",
               "Description",
-              "Category", "Subcategory")
+              "THERB-UI", "Modelling")
         {
         }
 
@@ -32,7 +32,7 @@ namespace MyProject1
         /// </summary>
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
         {
-            pManager.AddGenericParameter("Rooms", "Rooms", "Room class", GH_ParamAccess.list);
+            pManager.AddGenericParameter("Rooms", "Rooms", "Room class", GH_ParamAccess.item);
             //pManager.AddGenericParameter("Faces", "Faces", "Face class", GH_ParamAccess.list);
             //pManager.AddGenericParameter("Windows", "Windows", "Window class", GH_ParamAccess.list);
         }
@@ -43,9 +43,8 @@ namespace MyProject1
         protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
         {
             //TODO: RegisterOutputParamsをdynamicにしたい
-            pManager.AddBrepParameter("ids", "ids", "id list", GH_ParamAccess.item);
-            pManager.AddTextParameter("id", "id", "id", GH_ParamAccess.item);
-            pManager.AddIntegerParameter("ids", "ids", "id list", GH_ParamAccess.item);
+           // pManager.AddIntegerParameter("geo", "geo", "geometry", GH_ParamAccess.item);
+            pManager.AddIntegerParameter("ids", "ids", "ids", GH_ParamAccess.item);
         }
 
         /// <summary>
@@ -55,14 +54,20 @@ namespace MyProject1
         /// to store data in output parameters.</param>
         protected override void SolveInstance(IGH_DataAccess DA)
         {
-            Grasshopper.Kernel.Types.GH_ObjectWrapper obj = new Grasshopper.Kernel.Types.GH_ObjectWrapper();
+            Grasshopper.Kernel.Types.GH_ObjectWrapper objs = new Grasshopper.Kernel.Types.GH_ObjectWrapper();
+            List < Room > roomList= new List<Room>();
+            List<int> idList = new List<int>();
 
-            DA.GetData("Room", ref obj);
+            DA.GetData("Rooms", ref roomList);
+            foreach(Room room in roomList)
+            {
+                idList.Add(room.id);
+            }
+            //Room temp = obj.Value as Room;
 
-            Room temp = obj.Value as Room;
 
-            DA.SetData("geo", temp.geometry);
-            DA.SetData("id", temp.id.ToString());
+            //DA.SetData("geo", temp.geometry);
+            DA.SetData("ids", idList);
         }
 
         /// <summary>
