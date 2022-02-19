@@ -8,7 +8,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 const config = {
   title: 'THERB 2.0',
   tagline: 'Renewal toolset for building thermal simulation',
-  url: 'https://your-docusaurus-test-site.com',
+  url: ' http://katsuya0719.github.io/therb-gh/',
   baseUrl: '/',
   onBrokenLinks: 'ignore',
   onBrokenMarkdownLinks: 'warn',
