@@ -4,6 +4,7 @@ using Rhino.Geometry.Collections;
 using System;
 using System.Collections.Generic;
 using Rhino.Geometry.Intersect;
+using Newtonsoft.Json;
 using Model;
 
 // In order to load the result of this wizard, you will also need to
@@ -25,7 +26,7 @@ namespace MyProject1
         public THERB()
           : base("THERB", "THERB",
               "Description",
-              "Category", "Subcategory")
+              "THERB-UI", "Modelling")
         {
         }
 
@@ -36,7 +37,7 @@ namespace MyProject1
         {
             pManager.AddBrepParameter("geos", "geometries", "list of geometries", GH_ParamAccess.list);
             pManager.AddSurfaceParameter("windows", "windows", "list of windows", GH_ParamAccess.list);
-            pManager.AddBrepParameter("tol", "tolerance", "tolerance", GH_ParamAccess.item);
+            pManager.AddNumberParameter("tol", "tolerance", "tolerance", GH_ParamAccess.item);
         }
 
         /// <summary>
@@ -44,9 +45,11 @@ namespace MyProject1
         /// </summary>
         protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
         {
-            pManager.AddGenericParameter("Rooms", "Rooms", "Room class", GH_ParamAccess.list);
-            pManager.AddGenericParameter("Faces", "Faces", "Face class", GH_ParamAccess.list);
-            pManager.AddGenericParameter("Windows", "Windows", "Window class", GH_ParamAccess.list);
+            pManager.AddGenericParameter("Rooms", "Rooms", "Room class", GH_ParamAccess.item);
+            pManager.AddGenericParameter("Faces", "Faces", "Face class", GH_ParamAccess.item);
+            pManager.AddGenericParameter("Windows", "Windows", "Window class", GH_ParamAccess.item);
+            //pManager.AddGenericParameter("Baues", "Baues", "Baues", GH_ParamAccess.list);
+            pManager.AddTextParameter("Baues", "Baues", "Baues", GH_ParamAccess.item);
         }
 
         /// <summary>
@@ -61,8 +64,10 @@ namespace MyProject1
             List<Surface> windows = new List<Surface>();
             List<Room> roomList = new List<Room>();
             List<Face> faceList = new List<Face>();
+            List<Zone> zoneList = new List<Zone>();
 
             //DA.GetData("geos", ref geos);
+            //tolとwindowsは任意のパラメータとしたい
             double tol = 0.1;
             DA.GetDataList(0, geos);
             DA.GetDataList(1, windows);
@@ -82,10 +87,12 @@ namespace MyProject1
                     temp.addFace(face);
                 }
                 roomList.Add(temp);
+                Zone zone = new Zone(temp);
+                zoneList.Add(zone);
             }
 
             //FaceのboundaryConditionを計算する処理
-            List<Face> faceListBC = solveBoundary(faceList, tol);
+            List<Face> faceListBC = solveBoundary(faceList, tol,ref zoneList);
 
             //Roomに属するfaceの属性(wall,ceiling,roof)を集計するロジック
             foreach (Room room in roomList)
@@ -97,10 +104,13 @@ namespace MyProject1
                 }
             }
             //windowがどのwallの上にあるかどうかを判断するロジック
-            List<Window> windowList = windowOnFace(faceListBC, windows);
+            //FenestrationDetailedも書き出す
+
+            List<Window> windowList = windowOnFace(faceListBC, windows,ref zoneList);
 
             //window情報をfaceにaddする
             //refパラメータとか使ってwindowOnFaceに付加するのがいいかも
+            
             List<Face> faceListWindow = new List<Face>();
             foreach (Face face in faceListBC)
             {
@@ -113,21 +123,27 @@ namespace MyProject1
                 }
                 faceListWindow.Add(face);
             }
+            
+
+            //BAUESの情報をjsonに書き出し
+            var bauesJson=JsonConvert.SerializeObject(zoneList);
 
             DA.SetData("Rooms", roomList);
             DA.SetData("Faces", faceList);
             DA.SetData("Windows", windowList);
+            DA.SetData("Baues", bauesJson);
         }
 
 
-        private List<Window> windowOnFace(List<Face> faceList, List<Surface> windows)
+        private List<Window> windowOnFace(List<Face> faceList, List<Surface> windows, ref List<Zone> zoneList)
         {
             List<Face> externalFaces = faceList.FindAll(face => face.bc == "outdoor");
 
             List<Window> windowList = new List<Window>();
             foreach(Surface windowGeo in windows) {
-                int parentId = 0;
-                double tiltAngle = 0;
+                //int parentId = 0;
+                //double tiltAngle = 0;
+                Face parent = externalFaces[0];
                 double closestDistance = 10000;
                 Window window = new Window(windowGeo);
                 foreach(Face exFace in externalFaces)
@@ -135,27 +151,32 @@ namespace MyProject1
                     double distance = window.centerPt.DistanceTo(exFace.centerPt);
                     if (distance < closestDistance)
                     {
-                        parentId = exFace.id;
-                        tiltAngle = exFace.tiltAngle;
+                        //parentId = exFace.id;
+                        //tiltAngle = exFace.tiltAngle;
+                        parent = exFace;
                         closestDistance = distance;
                     }
                 }
 
                 if (closestDistance < 10000)
                 {
-                    window.parentId = parentId;
-                    window.tiltAngle = tiltAngle;
+                    //window.parentId = parentId;
+                    //window.tiltAngle = tiltAngle;
+                    window.addParent(parent);
                 }
                 else
                 {
                     //エラー処理を加える
                 }
                 windowList.Add(window);
+                FenestrationDetailed fenDetailed = new FenestrationDetailed(window);
+                zoneList[faceList[parent.id].parentId - 1].surfaces[parent.partId-1].addFenestration(fenDetailed);
+
             }
             return windowList;
         }
 
-        private List<Face> solveBoundary(List<Face> faceList, double tol)
+        private List<Face> solveBoundary(List<Face> faceList, double tol,ref List<Zone> zoneList)
         {
             List<Face> faceListBC = new List<Face>();
             for (int i=0;i<faceList.Count; i++)
@@ -180,11 +201,13 @@ namespace MyProject1
                 if (shootIt(testRay, targetSurfaces, tol, 2))
                 {
                     testFace.bc = "interior";
+                    testFace.bauesBC = BoundaryCondition.Surface;
                     //どのfaceに接しているのかをチェック
                     //testFace.centerPtから一番近いtargetSurfacesが隣接しているsurfaceだと判断する
                     Face adjacentFace = getClosestFaceFromFace(testFace, targetFaces);
                     testFace.adjacencyRoomId = adjacentFace.parentId;
-                    testFace.adjacencyFaceId = adjacentFace.partId;
+                    //testFace.adjacencyFaceId = adjacentFace.partId;
+                    testFace.adjacencyFace = adjacentFace;
                 }
                 else
                 {
@@ -192,16 +215,21 @@ namespace MyProject1
                     if(testFace.centerPt.Z <= tol)
                     {
                         testFace.bc = "ground";
+                        testFace.bauesBC = BoundaryCondition.Ground;
                     }
                     else
                     {
                         testFace.bc = "outdoor";
+                        testFace.bauesBC = BoundaryCondition.Outdoors;
                     }
                     testFace.adjacencyRoomId = 0;
                 }
                 testFace.setElementType();
                 testFace.setConstructionId();
                 faceListBC.Add(testFace);
+
+                SurfaceDetailed srfDetail = new SurfaceDetailed(testFace);
+                zoneList[testFace.parent.id - 1].addSurface(srfDetail);
             }
             return faceListBC;
         }

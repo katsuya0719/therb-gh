@@ -23,7 +23,7 @@ namespace MyProject1
         public SolveBoundary()
           : base("SolveBoundary", "SolveBoundary",
               "Description",
-              "Category", "Subcategory")
+              "THERB-UI", "Modelling")
         {
         }
 

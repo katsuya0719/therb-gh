@@ -3,6 +3,8 @@ using Rhino.Geometry;
 using System;
 using System.Collections.Generic;
 using Rhino.Geometry.Collections;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 // In order to load the result of this wizard, you will also need to
 // add the output bin/ folder of this project to the list of loaded
@@ -11,12 +13,14 @@ using Rhino.Geometry.Collections;
 
 namespace Model
 {
+    [JsonConverter(typeof(StringEnumConverter))]
     public enum BoundaryCondition
     {
         Outdoors,
         Surface,
         Ground
     }
+    [JsonConverter(typeof(StringEnumConverter))]
     public enum SurfaceType
     {
         Wall,
@@ -29,7 +33,22 @@ namespace Model
     {
         public string name;
         public int multiplier;
-        
+        public List<SurfaceDetailed> surfaces;
+        public int roomId;
+
+        public Zone(Room room)
+        {
+            name = "room" + room.id.ToString();
+            roomId = room.id;
+            multiplier = 1;
+            surfaces = new List<SurfaceDetailed>();
+
+        }
+
+        public void addSurface(SurfaceDetailed surface)
+        {
+            surfaces.Add(surface);
+        }
         
     }
 
@@ -38,15 +57,29 @@ namespace Model
         public string name;
         public string constructionName;
         public List<double> vertices;
+
+        public List<double> getBauesVertices(BrepVertexList vertices)
+        {
+            List<double> bauesVertices = new List<double>();
+            foreach (BrepVertex vertex in vertices)
+            {
+                Point3d pt = vertex.Location;
+                bauesVertices.Add(pt.X);
+                bauesVertices.Add(pt.Y);
+                bauesVertices.Add(pt.Z);
+            }
+            return bauesVertices;
+        }
     }
 
     public class SurfaceDetailed : BaseBaues
     {
+        public int faceId;
         public SurfaceType surfaceType;
         public int surfaceTypeId; //そのsurface typeのid
-        public string boundaryCondition;
+        public BoundaryCondition boundaryCondition;
         public string boundaryConditionObject;
-        public List<FenestrationDetailed> windows;
+        public List<FenestrationDetailed> fenestrations;
         public static int _totalWalls;
         public static int _totalRoofs;
         public static int _totalCeilings;
@@ -58,52 +91,97 @@ namespace Model
             _totalRoofs = 0;
             _totalCeilings = 0;
             _totalFloors = 0;
+            
         }
 
-        public SurfaceDetailed(string name, Face face)
+        public SurfaceDetailed(Face face)
         {
-            this.vertices = face.bauesVertices;
+            fenestrations = new List<FenestrationDetailed>();
+            faceId = face.id;
+            //vertices = face.bauesVertices;
+            vertices = base.getBauesVertices(face.vertices);
             switch (face.face)
             {
                 case "wall":
-                    this.surfaceType = SurfaceType.Wall;
+                    surfaceType = SurfaceType.Wall;
                     _totalWalls += 1;
                     surfaceTypeId = _totalWalls;
                     break;
                 case "floor":
-                    this.surfaceType = SurfaceType.Floor;
+                    surfaceType = SurfaceType.Floor;
                     _totalFloors += 1;
                     surfaceTypeId = _totalFloors;
                     break;
                 case "roof":
                     if (face.elementType == "exteriorroof")
                     {
-                        this.surfaceType = SurfaceType.Roof;
+                        surfaceType = SurfaceType.Roof;
                         _totalRoofs += 1;
                         surfaceTypeId = _totalRoofs;
                         break;
                     }
                     else
                     {
-                        this.surfaceType = SurfaceType.Ceiling;
+                        surfaceType = SurfaceType.Ceiling;
                         _totalCeilings += 1;
                         surfaceTypeId = _totalCeilings;
                         break;
                     }
             }
-            this.name = "room" + face.parent.id + "_" + this.surfaceType.ToString() + surfaceTypeId.ToString();
+            //TODO:命名規則を修正する必要
+            //name = "room" + face.parent.id + "_" + surfaceType.ToString() + surfaceTypeId.ToString();
+            name = "room" + face.parent.id + "_"+faceId.ToString();
+            boundaryCondition = face.bauesBC;
+            if (boundaryCondition == BoundaryCondition.Surface)
+            {
+                boundaryConditionObject = "room" + face.adjacencyFace.parent.id + "_" + face.adjacencyFace.id.ToString();
+            }
+
+        }
+
+        public void addFenestration(FenestrationDetailed fenestration)
+        {
+            fenestrations.Add(fenestration);
         }
     }
 
     public class FenestrationDetailed : BaseBaues
     {
+        public int windowId;
+        public static int _totalFenestrations;
 
+
+        static FenestrationDetailed() {
+            _totalFenestrations = 0;
+        }
+
+        public FenestrationDetailed(Window window)
+        {
+            windowId = window.id;
+            vertices = base.getBauesVertices(window.vertices);
+            _totalFenestrations += 1;
+            name = "window" + _totalFenestrations.ToString();
+            //name = "room" + window.parent.parentId.ToString() + "_" +window.parent 命名規則を考える必要
+        }
     }
 
     public class BaseGeo{
         public Guid guid;
         public int id;
         public string displayName;
+        /*
+        public static int _totalCount;
+
+        static BaseGeo()
+        {
+            _totalCount = 0;
+        }
+        public BaseGeo()
+        {
+            _totalCount += 1;
+            id = _totalCount;
+        }
+        */
     }
     public class Room : BaseGeo
     {
@@ -120,32 +198,33 @@ namespace Model
         public List<Face> eWalls;
         public List<Face> floors;
         public List<Face> roofs;
-
+        
         static Room()
         {
             _totalRooms = 0;
         }
+        
 
         public Room(Brep geometry)
         {
-            this.guid = Guid.NewGuid();
+            guid = Guid.NewGuid();
             _totalRooms += 1;
-            this.id = _totalRooms;
-            //this.displayName = _totalRooms;
-            this._faceList = new List<Face>();
+            id = _totalRooms;
+            //displayName = _totalRooms;
+            _faceList = new List<Face>();
             this.geometry = geometry;
             BrepVertexList vertices = geometry.Vertices;
             this.vertices = vertices;
-            this.minPt = getMinCoord(vertices);
-            this.maxPt = getMaxCoord(vertices);
-            this.sWalls = new List<Face>();
-            this.wWalls = new List<Face>();
-            this.nWalls = new List<Face>();
-            this.eWalls = new List<Face>();
-            this.floors = new List<Face>();
-            this.roofs = new List<Face>();
+            minPt = getMinCoord(vertices);
+            maxPt = getMaxCoord(vertices);
+            sWalls = new List<Face>();
+            wWalls = new List<Face>();
+            nWalls = new List<Face>();
+            eWalls = new List<Face>();
+            floors = new List<Face>();
+            roofs = new List<Face>();
             VolumeMassProperties vmp = VolumeMassProperties.Compute(geometry);
-            this.centroid = vmp.Centroid;
+            centroid = vmp.Centroid;
             //TODO:どのタイミングで
         }
 
@@ -161,39 +240,39 @@ namespace Model
                 switch (face.direction)
                 {
                     case "S":
-                        this.sWalls.Add(face);
+                        sWalls.Add(face);
                         break;
                     case "N":
-                        this.nWalls.Add(face);
+                        nWalls.Add(face);
                         break;
                     case "W":
-                        this.wWalls.Add(face);
+                        wWalls.Add(face);
                         break;
                     case "E":
-                        this.eWalls.Add(face);
+                        eWalls.Add(face);
                         break;
                 }
             }
             else if (face.face == "roof")
             {
-                this.roofs.Add(face);
+                roofs.Add(face);
             }
             else if (face.face == "floor")
             {
-                this.floors.Add(face);
+                floors.Add(face);
             }
         }
 
         public List<int> getDirectionList()
         {
             List<int> directionList = new List<int>();
-            directionList.Add(this.sWalls.Count);
-            directionList.Add(this.wWalls.Count);
-            directionList.Add(this.nWalls.Count);
-            directionList.Add(this.eWalls.Count);
-            directionList.Add(this.floors.Count);
-            directionList.Add(this.roofs.Count);
-            int total = this.sWalls.Count + this.wWalls.Count + this.nWalls.Count + this.eWalls.Count + this.floors.Count + this.roofs.Count;
+            directionList.Add(sWalls.Count);
+            directionList.Add(wWalls.Count);
+            directionList.Add(nWalls.Count);
+            directionList.Add(eWalls.Count);
+            directionList.Add(floors.Count);
+            directionList.Add(roofs.Count);
+            int total = sWalls.Count + wWalls.Count + nWalls.Count + eWalls.Count + floors.Count + roofs.Count;
             directionList.Add(total);
 
             return directionList;//[S,W,N,E,F,CR,total]
@@ -255,7 +334,31 @@ namespace Model
         }
     }
 
-    public class Face : BaseGeo
+    
+    public class BaseFace : BaseGeo
+    {
+        public int parentId;
+        public Surface geometry;
+        public Vector3d normal;
+        public Point3d centerPt;
+        public double tiltAngle;
+        public BrepVertexList vertices;
+        public double area;
+        public int constructionId; //とりあえず外壁1,内壁2,床(室内）5,屋根4,床（地面）5, 窓6　THERBのelement Idに相当/鈴木君からもらったデータにとりあえずそろえる
+
+        public BaseFace(Surface geometry)
+        {
+            this.geometry = geometry;
+            //parentId = parent.id; parentの設定方法がFaceとFenestrationで違う
+            AreaMassProperties areaMp = AreaMassProperties.Compute(geometry);
+            centerPt = areaMp.Centroid;
+            area = areaMp.Area;
+            //normal = tempNormal; 今のところ、normalというattributeがない
+            BrepVertexList vertices = geometry.ToBrep().Vertices;
+            this.vertices = vertices;
+        }
+    }
+    public class Face : BaseFace
     {
         public int partId;
         //public faceType face{get; private set;}
@@ -263,16 +366,8 @@ namespace Model
         //public boundaryCondition bc{get; set;}
         public string bc { get; set; }
         public string elementType { get; set; }
-        public int constructionId; //とりあえず外壁1,内壁2,床(室内）5,屋根4,床（地面）5, 窓6　THERBのelement Idに相当/鈴木君からもらったデータにとりあえずそろえる
         public Room parent;
-        public int parentId;
-        public Surface geometry { get; private set; }
-        public BrepVertexList vertices;
-        public Vector3d normal { get; private set; }
         public Vector3d tempNormal;
-        public Point3d centerPt;
-        public double tiltAngle;
-        public double area;
         public string direction;
         public int adjacencyRoomId; //隣接しているRoomのId 外気に接している場合には0
         public List<Window> windows { get; private set; }
@@ -285,8 +380,8 @@ namespace Model
         public static int _totalGrounds;
         //BAUES Analysis用の属性
         public BoundaryCondition bauesBC;
-        public int adjacencyFaceId;
-        public List<double> bauesVertices;
+        //public int adjacencyFaceId;
+        public Face adjacencyFace;
 
         static Face()
         {
@@ -298,61 +393,41 @@ namespace Model
             _totalGrounds = 0;
         }
 
-        public Face(Room parent, Surface geometry, Vector3d normal, Vector3d tempNormal)
+        public Face(Room parent, Surface geometry, Vector3d normal, Vector3d tempNormal):base(geometry)
         {
-            this.guid = Guid.NewGuid();
+            guid = Guid.NewGuid();
             _totalFaces += 1;
-            this.id = _totalFaces;
+            id = _totalFaces;
             //全体を通してのidとelementごとのidをつける
-            this.geometry = geometry;
             this.parent = parent;
-            this.parentId = parent.id;
-            AreaMassProperties areaMp = AreaMassProperties.Compute(geometry);
-            this.centerPt = areaMp.Centroid;
-            this.area = areaMp.Area;
-            this.normal = tempNormal;
-            BrepVertexList vertices = geometry.ToBrep().Vertices;
-            this.vertices = vertices;
-            this.bauesVertices = getBauesVertices();
-
-
+            parentId = parent.id;
             //方角、床、天井を判別するためにはtempNormalを使う
-            this.face = getFaceType(tempNormal);
-            this.direction = defineDirection(tempNormal);
+            face = getFaceType(tempNormal);
+            direction = defineDirection(tempNormal);
+
+            this.normal = tempNormal;
 
             //TODO: this logic has to be elaborated
-            if (this.face == "wall")
+            if (face == "wall")
             {
-                this.tiltAngle = 90;
+                tiltAngle = 90;
             }
             else
             {
-                this.tiltAngle = 0;
+                tiltAngle = 0;
             }
-            this.windows = new List<Window>();
-            this.windowIds = new List<int>();
-        }
-        private List<double> getBauesVertices()
-        {
-            List<double> bauesVertices = new List<double>();
-            foreach (BrepVertex vertex in this.vertices)
-            {
-                Point3d pt = vertex.Location;
-                bauesVertices.Add(pt.X);
-                bauesVertices.Add(pt.Y);
-                bauesVertices.Add(pt.Z);
-            }
-            return bauesVertices;
+            windows = new List<Window>();
+            windowIds = new List<int>();
         }
 
 
         private string defineDirection(Vector3d normal)
         {
-            if (this.face == "floor")
+            if (face == "floor")
             {
                 return "F";
             }
-            else if (this.face == "roof")
+            else if (face == "roof")
             {
                 return "CR";
             }
@@ -418,109 +493,108 @@ namespace Model
 
         public void addWindows(Window window)
         {
-            this.windows.Add(window);
-            this.windowIds.Add(window.id);
+            windows.Add(window);
+            windowIds.Add(window.id);
         }
 
         public void setElementType()
         {
             string firstPhrase = "";
-            if (this.bc == "outdoor")
+            if (bc == "outdoor")
             {
                 firstPhrase = "exterior";
             }
             else
             {
-                firstPhrase = this.bc;
+                firstPhrase = bc;
             }
-            this.elementType = firstPhrase + this.face;
+            elementType = firstPhrase + face;
             //partIdをアサインする
-            switch (this.elementType)
+            switch (elementType)
             {
                 case "exteriorwall":
                     _totalExWalls += 1;
-                    this.partId = _totalExWalls;
+                    partId = _totalExWalls;
                     break;
                 case "interiorwall":
                     _totalInWalls += 1;
-                    this.partId = _totalInWalls;
+                    partId = _totalInWalls;
                     break;
                 case "interiorroof":
                     _totalFlrCeilings += 1;
-                    this.partId = _totalFlrCeilings;
+                    partId = _totalFlrCeilings;
                     break;
                 case "interiorfloor":
                     _totalFlrCeilings += 1;
-                    this.partId = _totalFlrCeilings;
+                    partId = _totalFlrCeilings;
                     break;
                 case "exteriorroof":
                     _totalRoofs += 1;
-                    this.partId = _totalRoofs;
+                    partId = _totalRoofs;
                     break;
                 case "groundfloor":
                     _totalGrounds += 1;
-                    this.partId = _totalGrounds;
+                    partId = _totalGrounds;
                     break;
             }
         }
 
         public void setConstructionId()
         {
-            //Print("{0}", this.elementType);
-            switch (this.elementType)
+            //Print("{0}", elementType);
+            switch (elementType)
             {
                 case "exteriorwall":
-                    this.constructionId = 1;
+                    constructionId = 1;
                     break;
                 case "interiorwall":
-                    this.constructionId = 2;
+                    constructionId = 2;
                     break;
                 case "interiorroof":
-                    this.constructionId = 3;
+                    constructionId = 3;
                     break;
                 case "interiorfloor":
-                    this.constructionId = 3;
+                    constructionId = 3;
                     break;
                 case "exteriorroof":
-                    this.constructionId = 4;
+                    constructionId = 4;
                     break;
                 case "groundroof":
-                    this.constructionId = 5;
+                    constructionId = 5;
                     break;
                 case "groundfloor":
-                    this.constructionId = 5;
+                    constructionId = 5;
                     break;
             }
         }
     }
 
-    public class Window : BaseGeo
+    public class Window : BaseFace
     {
-        public int parentId { get; set; }
         public Face parent;
-        public Surface geometry { get; private set; }
-        public Vector3d normal { get; private set; }
-        public Point3d centerPt;
-        public double tiltAngle;
-        public int constructionId; //とりあえず外壁1,内壁2,床(室内）3,屋根4,床（地面）5, 窓6　THERBのelement Idに相当
-        public double area;
         public static int _totalWindows;
-
+        
         static Window()
         {
             _totalWindows = 0;
         }
+        
 
-        public Window(Surface geometry)
+        public Window(Surface geometry):base(geometry)
         {
-            this.guid = Guid.NewGuid();
+            this.parent = parent;
+
+            guid = Guid.NewGuid();
             _totalWindows += 1;
-            this.id = _totalWindows;
-            this.geometry = geometry;
-            AreaMassProperties areaMp = AreaMassProperties.Compute(geometry);
-            this.centerPt = areaMp.Centroid;
-            this.area = areaMp.Area;
+            id = _totalWindows;
             this.constructionId = 6;
+        }
+
+        public void addParent(Face parent)
+        {
+            this.parent = parent;
+            parentId = parent.partId;//注意)part idを使っている
+            tiltAngle = parent.tiltAngle;
         }
     }
 }
