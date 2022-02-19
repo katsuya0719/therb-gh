@@ -8,28 +8,11 @@ export default {
   "tagline": "Renewal toolset for building thermal simulation",
   "url": "https://your-docusaurus-test-site.com",
   "baseUrl": "/",
-  "onBrokenLinks": "throw",
+  "onBrokenLinks": "ignore",
   "onBrokenMarkdownLinks": "warn",
   "favicon": "img/becat_logo.jpg",
   "organizationName": "BeCAT",
   "projectName": "THERB-GH",
-  "i18n": {
-    "defaultLocale": "ja",
-    "locales": [
-      "ja",
-      "en"
-    ],
-    "localeConfigs": {
-      "ja": {
-        "label": "日本語",
-        "direction": "ltr"
-      },
-      "en": {
-        "label": "English",
-        "direction": "ltr"
-      }
-    }
-  },
   "presets": [
     [
       "classic",
@@ -342,6 +325,13 @@ export default {
     }
   },
   "baseUrlIssueBanner": true,
+  "i18n": {
+    "defaultLocale": "en",
+    "locales": [
+      "en"
+    ],
+    "localeConfigs": {}
+  },
   "onDuplicateRoutes": "warn",
   "staticDirectories": [
     "static"

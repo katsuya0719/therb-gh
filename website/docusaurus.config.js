@@ -10,23 +10,23 @@ const config = {
   tagline: 'Renewal toolset for building thermal simulation',
   url: 'https://your-docusaurus-test-site.com',
   baseUrl: '/',
-  onBrokenLinks: 'throw',
+  onBrokenLinks: 'ignore',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/becat_logo.jpg',
   organizationName: 'BeCAT', // Usually your GitHub org/user name.
   projectName: 'THERB-GH', // Usually your repo name.
-  i18n:{
-    defaultLocale: 'ja',
-    locales:['ja','en'],
-    localeConfigs:{
-      ja:{
-        label:'日本語',
-      },
-      en:{
-        label:'English',
-      }
-    }
-  },
+  // i18n:{
+  //   defaultLocale: 'ja',
+  //   locales:['ja','en'],
+  //   localeConfigs:{
+  //     ja:{
+  //       label:'日本語',
+  //     },
+  //     en:{
+  //       label:'English',
+  //     }
+  //   }
+  // },
 
   presets: [
     [

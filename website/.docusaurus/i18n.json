@@ -1,16 +1,10 @@
 {
-  "defaultLocale": "ja",
+  "defaultLocale": "en",
   "locales": [
-    "ja",
     "en"
   ],
-  "currentLocale": "ja",
+  "currentLocale": "en",
   "localeConfigs": {
-    "ja": {
-      "label": "日本語",
-      "direction": "ltr",
-      "htmlLang": "ja"
-    },
     "en": {
       "label": "English",
       "direction": "ltr",
