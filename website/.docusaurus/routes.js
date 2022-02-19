@@ -4,146 +4,113 @@ import ComponentCreator from '@docusaurus/ComponentCreator';
 
 export default [
   {
-    path: '/blog',
-    component: ComponentCreator('/blog','520'),
+    path: '/therb-gh/__docusaurus/debug',
+    component: ComponentCreator('/therb-gh/__docusaurus/debug','576'),
     exact: true
   },
   {
-    path: '/blog/archive',
-    component: ComponentCreator('/blog/archive','f4c'),
+    path: '/therb-gh/__docusaurus/debug/config',
+    component: ComponentCreator('/therb-gh/__docusaurus/debug/config','e39'),
     exact: true
   },
   {
-    path: '/blog/first-blog-post',
-    component: ComponentCreator('/blog/first-blog-post','6c7'),
+    path: '/therb-gh/__docusaurus/debug/content',
+    component: ComponentCreator('/therb-gh/__docusaurus/debug/content','c41'),
     exact: true
   },
   {
-    path: '/blog/long-blog-post',
-    component: ComponentCreator('/blog/long-blog-post','f06'),
+    path: '/therb-gh/__docusaurus/debug/globalData',
+    component: ComponentCreator('/therb-gh/__docusaurus/debug/globalData','da6'),
     exact: true
   },
   {
-    path: '/blog/mdx-blog-post',
-    component: ComponentCreator('/blog/mdx-blog-post','bee'),
+    path: '/therb-gh/__docusaurus/debug/metadata',
+    component: ComponentCreator('/therb-gh/__docusaurus/debug/metadata','456'),
     exact: true
   },
   {
-    path: '/blog/tags',
-    component: ComponentCreator('/blog/tags','e13'),
+    path: '/therb-gh/__docusaurus/debug/registry',
+    component: ComponentCreator('/therb-gh/__docusaurus/debug/registry','18e'),
     exact: true
   },
   {
-    path: '/blog/tags/docusaurus',
-    component: ComponentCreator('/blog/tags/docusaurus','ddf'),
+    path: '/therb-gh/__docusaurus/debug/routes',
+    component: ComponentCreator('/therb-gh/__docusaurus/debug/routes','fa4'),
     exact: true
   },
   {
-    path: '/blog/tags/facebook',
-    component: ComponentCreator('/blog/tags/facebook','ede'),
+    path: '/therb-gh/blog',
+    component: ComponentCreator('/therb-gh/blog','258'),
     exact: true
   },
   {
-    path: '/blog/tags/hello',
-    component: ComponentCreator('/blog/tags/hello','4c2'),
+    path: '/therb-gh/blog/archive',
+    component: ComponentCreator('/therb-gh/blog/archive','c78'),
     exact: true
   },
   {
-    path: '/blog/tags/hola',
-    component: ComponentCreator('/blog/tags/hola','752'),
+    path: '/therb-gh/blog/tags',
+    component: ComponentCreator('/therb-gh/blog/tags','c35'),
     exact: true
   },
   {
-    path: '/blog/welcome',
-    component: ComponentCreator('/blog/welcome','bfa'),
+    path: '/therb-gh/blog/tags/becat',
+    component: ComponentCreator('/therb-gh/blog/tags/becat','003'),
     exact: true
   },
   {
-    path: '/markdown-page',
-    component: ComponentCreator('/markdown-page','be1'),
+    path: '/therb-gh/blog/tags/hello',
+    component: ComponentCreator('/therb-gh/blog/tags/hello','c52'),
     exact: true
   },
   {
-    path: '/docs',
-    component: ComponentCreator('/docs','5d8'),
+    path: '/therb-gh/blog/tags/therb',
+    component: ComponentCreator('/therb-gh/blog/tags/therb','c9c'),
+    exact: true
+  },
+  {
+    path: '/therb-gh/blog/welcome',
+    component: ComponentCreator('/therb-gh/blog/welcome','683'),
+    exact: true
+  },
+  {
+    path: '/therb-gh/markdown-page',
+    component: ComponentCreator('/therb-gh/markdown-page','325'),
+    exact: true
+  },
+  {
+    path: '/therb-gh/docs',
+    component: ComponentCreator('/therb-gh/docs','231'),
     routes: [
       {
-        path: '/docs/Component/Modelling',
-        component: ComponentCreator('/docs/Component/Modelling','b8d'),
+        path: '/therb-gh/docs/Component/Modelling',
+        component: ComponentCreator('/therb-gh/docs/Component/Modelling','64c'),
         exact: true,
         'sidebar': "tutorialSidebar"
       },
       {
-        path: '/docs/intro',
-        component: ComponentCreator('/docs/intro','aed'),
+        path: '/therb-gh/docs/intro',
+        component: ComponentCreator('/therb-gh/docs/intro','016'),
         exact: true,
         'sidebar': "tutorialSidebar"
       },
       {
-        path: '/docs/tutorial-basics/congratulations',
-        component: ComponentCreator('/docs/tutorial-basics/congratulations','793'),
+        path: '/therb-gh/docs/Usage/CreateTherbModel',
+        component: ComponentCreator('/therb-gh/docs/Usage/CreateTherbModel','388'),
         exact: true,
         'sidebar': "tutorialSidebar"
       },
       {
-        path: '/docs/tutorial-basics/create-a-blog-post',
-        component: ComponentCreator('/docs/tutorial-basics/create-a-blog-post','68e'),
-        exact: true,
-        'sidebar': "tutorialSidebar"
-      },
-      {
-        path: '/docs/tutorial-basics/create-a-document',
-        component: ComponentCreator('/docs/tutorial-basics/create-a-document','c2d'),
-        exact: true,
-        'sidebar': "tutorialSidebar"
-      },
-      {
-        path: '/docs/tutorial-basics/create-a-page',
-        component: ComponentCreator('/docs/tutorial-basics/create-a-page','f44'),
-        exact: true,
-        'sidebar': "tutorialSidebar"
-      },
-      {
-        path: '/docs/tutorial-basics/deploy-your-site',
-        component: ComponentCreator('/docs/tutorial-basics/deploy-your-site','e46'),
-        exact: true,
-        'sidebar': "tutorialSidebar"
-      },
-      {
-        path: '/docs/tutorial-basics/markdown-features',
-        component: ComponentCreator('/docs/tutorial-basics/markdown-features','4b7'),
-        exact: true,
-        'sidebar': "tutorialSidebar"
-      },
-      {
-        path: '/docs/tutorial-extras/manage-docs-versions',
-        component: ComponentCreator('/docs/tutorial-extras/manage-docs-versions','fdd'),
-        exact: true,
-        'sidebar': "tutorialSidebar"
-      },
-      {
-        path: '/docs/tutorial-extras/translate-your-site',
-        component: ComponentCreator('/docs/tutorial-extras/translate-your-site','2d7'),
-        exact: true,
-        'sidebar': "tutorialSidebar"
-      },
-      {
-        path: '/docs/Usage/CreateTherbModel',
-        component: ComponentCreator('/docs/Usage/CreateTherbModel','a78'),
-        exact: true,
-        'sidebar': "tutorialSidebar"
-      },
-      {
-        path: '/docs/Usage/HowToInstall',
-        component: ComponentCreator('/docs/Usage/HowToInstall','52f'),
+        path: '/therb-gh/docs/Usage/HowToInstall',
+        component: ComponentCreator('/therb-gh/docs/Usage/HowToInstall','459'),
         exact: true,
         'sidebar': "tutorialSidebar"
       }
     ]
   },
   {
-    path: '/',
-    component: ComponentCreator('/','f49'),
+    path: '/therb-gh/',
+    component: ComponentCreator('/therb-gh/','bb3'),
     exact: true
   },
   {

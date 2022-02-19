@@ -6,13 +6,13 @@ Modify the docusaurus.config.js file at your site's root instead.
 export default {
   "title": "THERB 2.0",
   "tagline": "Renewal toolset for building thermal simulation",
-  "url": "https://your-docusaurus-test-site.com",
-  "baseUrl": "/",
+  "url": " http://katsuya0719.github.io",
+  "baseUrl": "/therb-gh/",
   "onBrokenLinks": "ignore",
   "onBrokenMarkdownLinks": "warn",
   "favicon": "img/becat_logo.jpg",
-  "organizationName": "BeCAT",
-  "projectName": "THERB-GH",
+  "organizationName": "katsuya0719",
+  "projectName": "therb-gh",
   "presets": [
     [
       "classic",
