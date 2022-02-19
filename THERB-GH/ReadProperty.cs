@@ -9,9 +9,9 @@ using Model;
 // folder in Grasshopper.
 // You can use the _GrasshopperDeveloperSettings Rhino command for that.
 
-namespace MyProject1
+namespace THERBgh
 {
-    public class SolveBoundary : GH_Component
+    public class ReadProperty : GH_Component
     {
         /// <summary>
         /// Each implementation of GH_Component must provide a public 
@@ -20,8 +20,8 @@ namespace MyProject1
         /// Subcategory the panel. If you use non-existing tab or panel names, 
         /// new tabs/panels will automatically be created.
         /// </summary>
-        public SolveBoundary()
-          : base("SolveBoundary", "SolveBoundary",
+        public ReadProperty()
+          : base("ReadProperty", "ReadProperty",
               "Description",
               "THERB-UI", "Modelling")
         {
@@ -32,7 +32,9 @@ namespace MyProject1
         /// </summary>
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
         {
-            pManager.AddGenericParameter("Room", "Room", "Room class", GH_ParamAccess.item);
+            pManager.AddGenericParameter("Rooms", "Rooms", "Room class", GH_ParamAccess.item);
+            //pManager.AddGenericParameter("Faces", "Faces", "Face class", GH_ParamAccess.list);
+            //pManager.AddGenericParameter("Windows", "Windows", "Window class", GH_ParamAccess.list);
         }
 
         /// <summary>
@@ -40,8 +42,9 @@ namespace MyProject1
         /// </summary>
         protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
         {
-            pManager.AddBrepParameter("geo", "geo", "Room class", GH_ParamAccess.item);
-            pManager.AddTextParameter("id", "id", "id", GH_ParamAccess.item);
+            //TODO: RegisterOutputParamsをdynamicにしたい
+           // pManager.AddIntegerParameter("geo", "geo", "geometry", GH_ParamAccess.item);
+            pManager.AddIntegerParameter("ids", "ids", "ids", GH_ParamAccess.item);
         }
 
         /// <summary>
@@ -51,14 +54,20 @@ namespace MyProject1
         /// to store data in output parameters.</param>
         protected override void SolveInstance(IGH_DataAccess DA)
         {
-            Grasshopper.Kernel.Types.GH_ObjectWrapper obj = new Grasshopper.Kernel.Types.GH_ObjectWrapper();
+            Grasshopper.Kernel.Types.GH_ObjectWrapper objs = new Grasshopper.Kernel.Types.GH_ObjectWrapper();
+            List < Room > roomList= new List<Room>();
+            List<int> idList = new List<int>();
 
-            DA.GetData("Room", ref obj);
+            DA.GetData("Rooms", ref roomList);
+            foreach(Room room in roomList)
+            {
+                idList.Add(room.id);
+            }
+            //Room temp = obj.Value as Room;
 
-            Room temp = obj.Value as Room;
 
-            DA.SetData("geo", temp.geometry);
-            DA.SetData("id", temp.id.ToString());
+            //DA.SetData("geo", temp.geometry);
+            DA.SetData("ids", idList);
         }
 
         /// <summary>

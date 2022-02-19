@@ -2,9 +2,9 @@
 using System;
 using System.Drawing;
 
-namespace MyProject1
+namespace THERBgh
 {
-    public class MyProject1Info : GH_AssemblyInfo
+    public class THERBghInfo : GH_AssemblyInfo
     {
         public override string Name
         {

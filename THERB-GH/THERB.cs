@@ -12,7 +12,7 @@ using Model;
 // folder in Grasshopper.
 // You can use the _GrasshopperDeveloperSettings Rhino command for that.
 
-namespace MyProject1
+namespace THERBgh
 {
     public class THERB : GH_Component
     {

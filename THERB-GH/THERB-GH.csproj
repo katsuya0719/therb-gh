@@ -8,8 +8,8 @@
     <ProjectGuid>{E17E6C51-8875-4A7F-AB80-635D1AF28391}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MyProject1</RootNamespace>
-    <AssemblyName>MyProject1</AssemblyName>
+    <RootNamespace>THERB-GH</RootNamespace>
+    <AssemblyName>THERB-GH</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <IsWebBootstrapper>false</IsWebBootstrapper>
@@ -64,7 +64,7 @@
     <Compile Include="SolveBoundary.cs" />
     <Compile Include="Model.cs" />
     <Compile Include="THERB.cs" />
-    <Compile Include="MyProject1Info.cs" />
+    <Compile Include="THERB-GHInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
