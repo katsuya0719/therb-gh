@@ -13,8 +13,8 @@ const config = {
   onBrokenLinks: 'ignore',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/becat_logo.jpg',
-  organizationName: 'BeCAT', // Usually your GitHub org/user name.
-  projectName: 'THERB-GH', // Usually your repo name.
+  organizationName: 'katsuya0719', // Usually your GitHub org/user name.
+  projectName: 'therb-gh', // Usually your repo name.
   // i18n:{
   //   defaultLocale: 'ja',
   //   locales:['ja','en'],
