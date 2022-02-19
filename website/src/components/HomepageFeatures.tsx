@@ -15,28 +15,25 @@ const FeatureList: FeatureItem[] = [
     image: '/img/undraw_docusaurus_mountain.svg',
     description: (
       <>
-        Docusaurus was designed from the ground up to be easily installed and
-        used to get your website up and running quickly.
+        THERB 2.0は温熱環境シミュレーションTHERBを簡単に使えるインターフェースです
       </>
     ),
   },
   {
-    title: 'Focus on What Matters',
+    title: 'Focus on efficiency improvement',
     image: '/img/undraw_docusaurus_tree.svg',
     description: (
       <>
-        Docusaurus lets you focus on your docs, and we&apos;ll do the chores. Go
-        ahead and move your docs into the <code>docs</code> directory.
+        煩雑なモデリング工程、時間のかかる後処理工程を自動化することで、ユーザーの生産性の向上に寄与します
       </>
     ),
   },
   {
-    title: 'Powered by React',
+    title: 'Enhance interoperability',
     image: '/img/undraw_docusaurus_react.svg',
     description: (
       <>
-        Extend or customize your website layout by reusing React. Docusaurus can
-        be extended while reusing the same header and footer.
+        THERB以外にも、New-Hasp、BAUES Analysisなど異なるシミュレーションツールに書き出しが可能です
       </>
     ),
   },

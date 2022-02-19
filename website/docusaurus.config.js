@@ -6,15 +6,27 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: 'My Site',
-  tagline: 'Dinosaurs are cool',
+  title: 'THERB 2.0',
+  tagline: 'Renewal toolset for building thermal simulation',
   url: 'https://your-docusaurus-test-site.com',
   baseUrl: '/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
-  favicon: 'img/favicon.ico',
-  organizationName: 'facebook', // Usually your GitHub org/user name.
-  projectName: 'docusaurus', // Usually your repo name.
+  favicon: 'img/becat_logo.jpg',
+  organizationName: 'BeCAT', // Usually your GitHub org/user name.
+  projectName: 'THERB-GH', // Usually your repo name.
+  i18n:{
+    defaultLocale: 'ja',
+    locales:['ja','en'],
+    localeConfigs:{
+      ja:{
+        label:'日本語',
+      },
+      en:{
+        label:'English',
+      }
+    }
+  },
 
   presets: [
     [
@@ -43,22 +55,27 @@ const config = {
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
       navbar: {
-        title: 'My Site',
+        title: 'THERB 2.0',
         logo: {
           alt: 'My Site Logo',
-          src: 'img/logo.svg',
+          src: 'img/becat_logo.jpg',
         },
         items: [
           {
-            type: 'doc',
-            docId: 'intro',
-            position: 'left',
-            label: 'Tutorial',
+            to:'docs/Usage/HowToInstall',
+            activeBasePath:'docs/Usage/HowToInstall',
+            label: 'Docs',
+            position: 'left'
           },
           {to: '/blog', label: 'Blog', position: 'left'},
           {
-            href: 'https://github.com/facebook/docusaurus',
+            href: 'https://github.com/becat-oss',
             label: 'GitHub',
+            position: 'right',
+          },
+          {
+            href: 'https://becat.kyushu-u.ac.jp',
+            label: 'About',
             position: 'right',
           },
         ],
@@ -70,8 +87,12 @@ const config = {
             title: 'Docs',
             items: [
               {
-                label: 'Tutorial',
-                to: '/docs/intro',
+                label: 'Component',
+                to: '/docs/Component/Modelling',
+              },
+              {
+                label: 'Usage',
+                to: '/docs/Component/CreateTherbModel',
               },
             ],
           },
@@ -79,16 +100,12 @@ const config = {
             title: 'Community',
             items: [
               {
-                label: 'Stack Overflow',
-                href: 'https://stackoverflow.com/questions/tagged/docusaurus',
-              },
-              {
-                label: 'Discord',
-                href: 'https://discordapp.com/invite/docusaurus',
+                label: 'Food4Rhino',
+                href: 'https://www.food4rhino.com/app/hoaryfox',
               },
               {
                 label: 'Twitter',
-                href: 'https://twitter.com/docusaurus',
+                href: 'https://twitter.com/katsuyaobara',
               },
             ],
           },
@@ -100,13 +117,13 @@ const config = {
                 to: '/blog',
               },
               {
-                label: 'GitHub',
+                label: 'Donation',
                 href: 'https://github.com/facebook/docusaurus',
               },
             ],
           },
         ],
-        copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
+        copyright: `Copyright © ${new Date().getFullYear()} THERB2.0, Inc. Built with Docusaurus.`,
       },
       prism: {
         theme: lightCodeTheme,
