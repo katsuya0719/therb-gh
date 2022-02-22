@@ -64,7 +64,6 @@
     <Compile Include="SolveBoundary.cs" />
     <Compile Include="Model.cs" />
     <Compile Include="THERB.cs" />
-    <Compile Include="THERB-GHInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

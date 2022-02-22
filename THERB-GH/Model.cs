@@ -29,6 +29,20 @@ namespace Model
         Floor
     }
 
+    public class Baues
+    {
+        public List<Zone> zones;
+        //public List<SurfaceDetailed> surfaces;
+        //public List<FenestrationDetailed> fenestraions;
+
+        public Baues(List<Zone> zones)
+        {
+            this.zones = zones;
+            //this.surfaces = surfaces;
+            //this.fenestraions = fenestraions;
+        }
+    }
+
     public class Zone
     {
         public string name;
@@ -182,6 +196,21 @@ namespace Model
             id = _totalCount;
         }
         */
+    }
+
+    public class Therb
+    {
+        public List<Room> rooms;
+        public List<Face> faces;
+        public List<Window> windows;
+        //shadingとかものちのちつけていく
+
+        public Therb(List<Room> rooms, List<Face> faces, List<Window> windows)
+        {
+            this.rooms = rooms;
+            this.faces = faces;
+            this.windows = windows;
+        }
     }
     public class Room : BaseGeo
     {

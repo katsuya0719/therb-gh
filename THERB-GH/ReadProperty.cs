@@ -13,6 +13,7 @@ namespace THERBgh
 {
     public class ReadProperty : GH_Component
     {
+        private Therb _therb;
         /// <summary>
         /// Each implementation of GH_Component must provide a public 
         /// constructor without any arguments.
@@ -32,7 +33,7 @@ namespace THERBgh
         /// </summary>
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
         {
-            pManager.AddGenericParameter("Rooms", "Rooms", "Room class", GH_ParamAccess.item);
+            pManager.AddGenericParameter("Therb", "Therb", "Therb class", GH_ParamAccess.item);
             //pManager.AddGenericParameter("Faces", "Faces", "Face class", GH_ParamAccess.list);
             //pManager.AddGenericParameter("Windows", "Windows", "Window class", GH_ParamAccess.list);
         }
@@ -43,7 +44,7 @@ namespace THERBgh
         protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
         {
             //TODO: RegisterOutputParamsをdynamicにしたい
-           // pManager.AddIntegerParameter("geo", "geo", "geometry", GH_ParamAccess.item);
+            pManager.AddIntegerParameter("geo", "geo", "geometry", GH_ParamAccess.list);
             pManager.AddIntegerParameter("ids", "ids", "ids", GH_ParamAccess.item);
         }
 
@@ -54,20 +55,14 @@ namespace THERBgh
         /// to store data in output parameters.</param>
         protected override void SolveInstance(IGH_DataAccess DA)
         {
-            Grasshopper.Kernel.Types.GH_ObjectWrapper objs = new Grasshopper.Kernel.Types.GH_ObjectWrapper();
-            List < Room > roomList= new List<Room>();
-            List<int> idList = new List<int>();
-
-            DA.GetData("Rooms", ref roomList);
-            foreach(Room room in roomList)
+            if (!DA.GetData("Therb",ref _therb)) { return;  }
+            List<Brep> geoList = new List<Brep>();
+            foreach(Room room in _therb.rooms)
             {
-                idList.Add(room.id);
+                geoList.Add(room.geometry);
             }
-            //Room temp = obj.Value as Room;
-
-
-            //DA.SetData("geo", temp.geometry);
-            DA.SetData("ids", idList);
+            
+            DA.SetData("geometris", geoList);
         }
 
         /// <summary>
