@@ -1,0 +1,46 @@
+{
+  "docusaurus-plugin-content-docs": {
+    "default": {
+      "path": "/therb-gh/docs",
+      "versions": [
+        {
+          "name": "current",
+          "label": "Next",
+          "isLast": true,
+          "path": "/therb-gh/docs",
+          "mainDocId": "intro",
+          "docs": [
+            {
+              "id": "Component/Modelling",
+              "path": "/therb-gh/docs/Component/Modelling",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "intro",
+              "path": "/therb-gh/docs/intro",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "Usage/CreateTherbModel",
+              "path": "/therb-gh/docs/Usage/CreateTherbModel",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "Usage/HowToInstall",
+              "path": "/therb-gh/docs/Usage/HowToInstall",
+              "sidebar": "tutorialSidebar"
+            }
+          ],
+          "sidebars": {
+            "tutorialSidebar": {
+              "link": {
+                "path": "/therb-gh/docs/intro",
+                "label": "intro"
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.32106.194
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyProject1", "MyProject1\MyProject1.csproj", "{E17E6C51-8875-4A7F-AB80-635D1AF28391}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "THERB-GH", "THERB-GH\THERB-GH.csproj", "{E17E6C51-8875-4A7F-AB80-635D1AF28391}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

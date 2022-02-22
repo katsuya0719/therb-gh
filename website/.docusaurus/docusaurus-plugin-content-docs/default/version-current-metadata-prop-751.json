@@ -1,0 +1,79 @@
+{
+  "pluginId": "default",
+  "version": "current",
+  "label": "Next",
+  "banner": null,
+  "badge": false,
+  "className": "docs-version-current",
+  "isLast": true,
+  "docsSidebars": {
+    "tutorialSidebar": [
+      {
+        "type": "link",
+        "label": "Tutorial Intro",
+        "href": "/therb-gh/docs/intro",
+        "docId": "intro"
+      },
+      {
+        "type": "category",
+        "label": "Component",
+        "collapsible": true,
+        "collapsed": true,
+        "items": [
+          {
+            "type": "link",
+            "label": "Modelling",
+            "href": "/therb-gh/docs/Component/Modelling",
+            "docId": "Component/Modelling"
+          }
+        ]
+      },
+      {
+        "type": "category",
+        "label": "Usage",
+        "collapsible": true,
+        "collapsed": true,
+        "items": [
+          {
+            "type": "link",
+            "label": "Create THERB Model",
+            "href": "/therb-gh/docs/Usage/CreateTherbModel",
+            "docId": "Usage/CreateTherbModel"
+          },
+          {
+            "type": "link",
+            "label": "How to install",
+            "href": "/therb-gh/docs/Usage/HowToInstall",
+            "docId": "Usage/HowToInstall"
+          }
+        ]
+      }
+    ]
+  },
+  "docs": {
+    "Component/Modelling": {
+      "id": "Component/Modelling",
+      "title": "Modelling",
+      "description": "読み込んだRhinoジオメトリから、THERBデータを作成するコンポーネントのカテゴリ",
+      "sidebar": "tutorialSidebar"
+    },
+    "intro": {
+      "id": "intro",
+      "title": "Tutorial Intro",
+      "description": "Let's discover Docusaurus in less than 5 minutes.",
+      "sidebar": "tutorialSidebar"
+    },
+    "Usage/CreateTherbModel": {
+      "id": "Usage/CreateTherbModel",
+      "title": "Create THERB Model",
+      "description": "RhinoにモデリングしたジオメトリデータをTHERBデータに変換し、サーバーにuploadするまでの一通りの流れを説明します。",
+      "sidebar": "tutorialSidebar"
+    },
+    "Usage/HowToInstall": {
+      "id": "Usage/HowToInstall",
+      "title": "How to install",
+      "description": "インストール方法",
+      "sidebar": "tutorialSidebar"
+    }
+  }
+}

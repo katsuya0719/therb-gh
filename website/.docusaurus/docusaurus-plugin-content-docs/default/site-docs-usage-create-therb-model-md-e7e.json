@@ -1,0 +1,26 @@
+{
+  "unversionedId": "Usage/CreateTherbModel",
+  "id": "Usage/CreateTherbModel",
+  "title": "Create THERB Model",
+  "description": "RhinoにモデリングしたジオメトリデータをTHERBデータに変換し、サーバーにuploadするまでの一通りの流れを説明します。",
+  "source": "@site/docs/Usage/CreateTherbModel.md",
+  "sourceDirName": "Usage",
+  "slug": "/Usage/CreateTherbModel",
+  "permalink": "/therb-gh/docs/Usage/CreateTherbModel",
+  "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/Usage/CreateTherbModel.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {
+    "id": "CreateTherbModel",
+    "title": "Create THERB Model"
+  },
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Modelling",
+    "permalink": "/therb-gh/docs/Component/Modelling"
+  },
+  "next": {
+    "title": "How to install",
+    "permalink": "/therb-gh/docs/Usage/HowToInstall"
+  }
+}

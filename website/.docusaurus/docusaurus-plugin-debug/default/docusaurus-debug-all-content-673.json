@@ -1,0 +1,288 @@
+{
+  "docusaurus-plugin-content-docs": {
+    "default": {
+      "loadedVersions": [
+        {
+          "versionName": "current",
+          "versionLabel": "Next",
+          "versionPath": "/therb-gh/docs",
+          "tagsPath": "/therb-gh/docs/tags",
+          "versionEditUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs",
+          "versionEditUrlLocalized": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/i18n/en/docusaurus-plugin-content-docs/current",
+          "versionBanner": null,
+          "versionBadge": false,
+          "versionClassName": "docs-version-current",
+          "isLast": true,
+          "routePriority": -1,
+          "sidebarFilePath": "C:\\Users\\katsu\\Documents\\development\\THERB-GH\\website\\sidebars.js",
+          "contentPath": "C:\\Users\\katsu\\Documents\\development\\THERB-GH\\website\\docs",
+          "contentPathLocalized": "C:\\Users\\katsu\\Documents\\development\\THERB-GH\\website\\i18n\\en\\docusaurus-plugin-content-docs\\current",
+          "docs": [
+            {
+              "unversionedId": "Component/Modelling",
+              "id": "Component/Modelling",
+              "title": "Modelling",
+              "description": "読み込んだRhinoジオメトリから、THERBデータを作成するコンポーネントのカテゴリ",
+              "source": "@site/docs/Component/Modelling.md",
+              "sourceDirName": "Component",
+              "slug": "/Component/Modelling",
+              "permalink": "/therb-gh/docs/Component/Modelling",
+              "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/Component/Modelling.md",
+              "tags": [],
+              "version": "current",
+              "frontMatter": {
+                "id": "Modelling",
+                "title": "Modelling"
+              },
+              "sidebar": "tutorialSidebar",
+              "previous": {
+                "title": "Tutorial Intro",
+                "permalink": "/therb-gh/docs/intro"
+              },
+              "next": {
+                "title": "Create THERB Model",
+                "permalink": "/therb-gh/docs/Usage/CreateTherbModel"
+              }
+            },
+            {
+              "unversionedId": "intro",
+              "id": "intro",
+              "title": "Tutorial Intro",
+              "description": "Let's discover Docusaurus in less than 5 minutes.",
+              "source": "@site/docs/intro.md",
+              "sourceDirName": ".",
+              "slug": "/intro",
+              "permalink": "/therb-gh/docs/intro",
+              "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/intro.md",
+              "tags": [],
+              "version": "current",
+              "sidebarPosition": 1,
+              "frontMatter": {
+                "sidebar_position": 1
+              },
+              "sidebar": "tutorialSidebar",
+              "next": {
+                "title": "Modelling",
+                "permalink": "/therb-gh/docs/Component/Modelling"
+              }
+            },
+            {
+              "unversionedId": "Usage/CreateTherbModel",
+              "id": "Usage/CreateTherbModel",
+              "title": "Create THERB Model",
+              "description": "RhinoにモデリングしたジオメトリデータをTHERBデータに変換し、サーバーにuploadするまでの一通りの流れを説明します。",
+              "source": "@site/docs/Usage/CreateTherbModel.md",
+              "sourceDirName": "Usage",
+              "slug": "/Usage/CreateTherbModel",
+              "permalink": "/therb-gh/docs/Usage/CreateTherbModel",
+              "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/Usage/CreateTherbModel.md",
+              "tags": [],
+              "version": "current",
+              "frontMatter": {
+                "id": "CreateTherbModel",
+                "title": "Create THERB Model"
+              },
+              "sidebar": "tutorialSidebar",
+              "previous": {
+                "title": "Modelling",
+                "permalink": "/therb-gh/docs/Component/Modelling"
+              },
+              "next": {
+                "title": "How to install",
+                "permalink": "/therb-gh/docs/Usage/HowToInstall"
+              }
+            },
+            {
+              "unversionedId": "Usage/HowToInstall",
+              "id": "Usage/HowToInstall",
+              "title": "How to install",
+              "description": "インストール方法",
+              "source": "@site/docs/Usage/HowToInstall.md",
+              "sourceDirName": "Usage",
+              "slug": "/Usage/HowToInstall",
+              "permalink": "/therb-gh/docs/Usage/HowToInstall",
+              "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/Usage/HowToInstall.md",
+              "tags": [],
+              "version": "current",
+              "frontMatter": {
+                "id": "HowToInstall",
+                "title": "How to install"
+              },
+              "sidebar": "tutorialSidebar",
+              "previous": {
+                "title": "Create THERB Model",
+                "permalink": "/therb-gh/docs/Usage/CreateTherbModel"
+              }
+            }
+          ],
+          "sidebars": {
+            "tutorialSidebar": [
+              {
+                "type": "doc",
+                "id": "intro"
+              },
+              {
+                "type": "category",
+                "label": "Component",
+                "collapsible": true,
+                "collapsed": true,
+                "items": [
+                  {
+                    "type": "doc",
+                    "id": "Component/Modelling"
+                  }
+                ]
+              },
+              {
+                "type": "category",
+                "label": "Usage",
+                "collapsible": true,
+                "collapsed": true,
+                "items": [
+                  {
+                    "type": "doc",
+                    "id": "Usage/CreateTherbModel"
+                  },
+                  {
+                    "type": "doc",
+                    "id": "Usage/HowToInstall"
+                  }
+                ]
+              }
+            ]
+          },
+          "mainDocId": "intro",
+          "categoryGeneratedIndices": []
+        }
+      ]
+    }
+  },
+  "docusaurus-plugin-content-blog": {
+    "default": {
+      "blogSidebarTitle": "Recent posts",
+      "blogPosts": [
+        {
+          "id": "welcome",
+          "metadata": {
+            "permalink": "/therb-gh/blog/welcome",
+            "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/blog/2022-02-19-welcome/index.md",
+            "source": "@site/blog/2022-02-19-welcome/index.md",
+            "title": "Welcome",
+            "description": "this is for testing.",
+            "date": "2022-02-19T00:00:00.000Z",
+            "formattedDate": "February 19, 2022",
+            "tags": [
+              {
+                "label": "becat",
+                "permalink": "/therb-gh/blog/tags/becat"
+              },
+              {
+                "label": "hello",
+                "permalink": "/therb-gh/blog/tags/hello"
+              },
+              {
+                "label": "therb",
+                "permalink": "/therb-gh/blog/tags/therb"
+              }
+            ],
+            "readingTime": 0.02,
+            "truncated": false,
+            "authors": [
+              {
+                "name": "katsuya obara",
+                "title": "Lead Engineer at BeCAT",
+                "url": "https://github.com/katsuya0719",
+                "image_url": "https://github.com/katsuya0719.png",
+                "imageURL": "https://github.com/katsuya0719.png"
+              }
+            ],
+            "frontMatter": {
+              "slug": "welcome",
+              "title": "Welcome",
+              "authors": {
+                "name": "katsuya obara",
+                "title": "Lead Engineer at BeCAT",
+                "url": "https://github.com/katsuya0719",
+                "image_url": "https://github.com/katsuya0719.png",
+                "imageURL": "https://github.com/katsuya0719.png"
+              },
+              "tags": [
+                "becat",
+                "hello",
+                "therb"
+              ]
+            }
+          },
+          "content": "this is for testing."
+        }
+      ],
+      "blogListPaginated": [
+        {
+          "metadata": {
+            "permalink": "/therb-gh/blog",
+            "page": 1,
+            "postsPerPage": 10,
+            "totalPages": 1,
+            "totalCount": 1,
+            "previousPage": null,
+            "nextPage": null,
+            "blogDescription": "Blog",
+            "blogTitle": "Blog"
+          },
+          "items": [
+            "welcome"
+          ]
+        }
+      ],
+      "blogTags": {
+        "/therb-gh/blog/tags/becat": {
+          "name": "becat",
+          "items": [
+            "welcome"
+          ],
+          "permalink": "/therb-gh/blog/tags/becat"
+        },
+        "/therb-gh/blog/tags/hello": {
+          "name": "hello",
+          "items": [
+            "welcome"
+          ],
+          "permalink": "/therb-gh/blog/tags/hello"
+        },
+        "/therb-gh/blog/tags/therb": {
+          "name": "therb",
+          "items": [
+            "welcome"
+          ],
+          "permalink": "/therb-gh/blog/tags/therb"
+        }
+      },
+      "blogTagsListPath": "/therb-gh/blog/tags"
+    }
+  },
+  "docusaurus-plugin-content-pages": {
+    "default": [
+      {
+        "type": "jsx",
+        "permalink": "/therb-gh/",
+        "source": "@site/src/pages/index.tsx"
+      },
+      {
+        "type": "mdx",
+        "permalink": "/therb-gh/markdown-page",
+        "source": "@site/src/pages/markdown-page.md",
+        "title": "Markdown page example",
+        "description": "You don't need React to write simple standalone pages.",
+        "frontMatter": {
+          "title": "Markdown page example"
+        }
+      }
+    ]
+  },
+  "docusaurus-plugin-debug": {
+    "default": null
+  },
+  "docusaurus-theme-classic": {
+    "default": null
+  }
+}

@@ -8,25 +8,25 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 const config = {
   title: 'THERB 2.0',
   tagline: 'Renewal toolset for building thermal simulation',
-  url: 'https://your-docusaurus-test-site.com',
-  baseUrl: '/',
-  onBrokenLinks: 'throw',
+  url: ' http://katsuya0719.github.io',
+  baseUrl: '/therb-gh/',
+  onBrokenLinks: 'ignore',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/becat_logo.jpg',
-  organizationName: 'BeCAT', // Usually your GitHub org/user name.
-  projectName: 'THERB-GH', // Usually your repo name.
-  i18n:{
-    defaultLocale: 'ja',
-    locales:['ja','en'],
-    localeConfigs:{
-      ja:{
-        label:'日本語',
-      },
-      en:{
-        label:'English',
-      }
-    }
-  },
+  organizationName: 'katsuya0719', // Usually your GitHub org/user name.
+  projectName: 'therb-gh', // Usually your repo name.
+  // i18n:{
+  //   defaultLocale: 'ja',
+  //   locales:['ja','en'],
+  //   localeConfigs:{
+  //     ja:{
+  //       label:'日本語',
+  //     },
+  //     en:{
+  //       label:'English',
+  //     }
+  //   }
+  // },
 
   presets: [
     [
