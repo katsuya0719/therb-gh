@@ -232,6 +232,11 @@ namespace Model
         {
             _totalRooms = 0;
         }
+
+        public void initRoom()
+        {
+            _totalRooms = 0;
+        }
         
 
         public Room(Brep geometry)
@@ -422,6 +427,17 @@ namespace Model
             _totalGrounds = 0;
         }
 
+        public void initFace()
+        {
+            _totalFaces = 0;
+            _totalExWalls = 0;
+            _totalInWalls = 0;
+            _totalFlrCeilings = 0;
+            _totalRoofs = 0;
+            _totalGrounds = 0;
+        }
+
+
         public Face(Room parent, Surface geometry, Vector3d normal, Vector3d tempNormal):base(geometry)
         {
             guid = Guid.NewGuid();
@@ -607,12 +623,15 @@ namespace Model
         {
             _totalWindows = 0;
         }
+
+        public void initWindow()
+        {
+            _totalWindows = 0;
+        }
         
 
         public Window(Surface geometry):base(geometry)
         {
-            this.parent = parent;
-
             guid = Guid.NewGuid();
             _totalWindows += 1;
             id = _totalWindows;

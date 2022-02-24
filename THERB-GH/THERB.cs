@@ -26,7 +26,7 @@ namespace THERBgh
         public THERB()
           : base("THERB", "THERB",
               "Description",
-              "THERB-UI", "Modelling")
+              "THERB-GH", "Modelling")
         {
         }
 
@@ -72,6 +72,9 @@ namespace THERBgh
             DA.GetDataList(0, geos);
             DA.GetDataList(1, windows);
             DA.GetData(2, ref tol);
+
+            //static memberを初期化する
+            //new Room().initRoom()
 
             //Roomに対する処理
             foreach (Brep geo in geos)

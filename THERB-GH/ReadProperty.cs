@@ -24,7 +24,7 @@ namespace THERBgh
         public ReadProperty()
           : base("ReadProperty", "ReadProperty",
               "Description",
-              "THERB-UI", "Modelling")
+              "THERB-GH", "Modelling")
         {
         }
 
@@ -86,7 +86,7 @@ namespace THERBgh
         /// </summary>
         public override Guid ComponentGuid
         {
-            get { return new Guid("8706930f-23f5-48d3-885a-78a128be5948"); }
+            get { return new Guid("3701b3dc-c4b6-4d44-b859-fe3f581efb8c"); }
         }
     }
 }

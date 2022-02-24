@@ -11,7 +11,7 @@ using Model;
 
 namespace THERBgh
 {
-    public class SolveBoundary : GH_Component
+    public class UploadBauesAnalysis : GH_Component
     {
         /// <summary>
         /// Each implementation of GH_Component must provide a public 
@@ -20,10 +20,10 @@ namespace THERBgh
         /// Subcategory the panel. If you use non-existing tab or panel names, 
         /// new tabs/panels will automatically be created.
         /// </summary>
-        public SolveBoundary()
+        public UploadBauesAnalysis()
           : base("SolveBoundary", "SolveBoundary",
               "Description",
-              "THERB-UI", "Modelling")
+              "THERB-GH", "Modelling")
         {
         }
 
