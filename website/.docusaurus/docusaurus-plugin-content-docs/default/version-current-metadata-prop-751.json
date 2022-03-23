@@ -16,6 +16,20 @@
       },
       {
         "type": "category",
+        "label": "NewHasp",
+        "collapsible": true,
+        "collapsed": true,
+        "items": [
+          {
+            "type": "link",
+            "label": "How to use New Hasp",
+            "href": "/therb-gh/docs/NewHasp/HowToUse",
+            "docId": "NewHasp/HowToUse"
+          }
+        ]
+      },
+      {
+        "type": "category",
         "label": "Component",
         "collapsible": true,
         "collapsed": true,
@@ -45,6 +59,12 @@
             "label": "How to install",
             "href": "/therb-gh/docs/Usage/HowToInstall",
             "docId": "Usage/HowToInstall"
+          },
+          {
+            "type": "link",
+            "label": "Upload to server",
+            "href": "/therb-gh/docs/Usage/UploadToServer",
+            "docId": "Usage/UploadToServer"
           }
         ]
       }
@@ -63,6 +83,12 @@
       "description": "Let's discover Docusaurus in less than 5 minutes.",
       "sidebar": "tutorialSidebar"
     },
+    "NewHasp/HowToUse": {
+      "id": "NewHasp/HowToUse",
+      "title": "How to use New Hasp",
+      "description": "THERB-GHではNew Haspという熱負荷計算ソフトへの連携もできます。",
+      "sidebar": "tutorialSidebar"
+    },
     "Usage/CreateTherbModel": {
       "id": "Usage/CreateTherbModel",
       "title": "Create THERB Model",
@@ -73,6 +99,12 @@
       "id": "Usage/HowToInstall",
       "title": "How to install",
       "description": "インストール方法",
+      "sidebar": "tutorialSidebar"
+    },
+    "Usage/UploadToServer": {
+      "id": "Usage/UploadToServer",
+      "title": "Upload to server",
+      "description": "RhinoモデルからTHERBのデータを抽出できたら、そのファイルをサーバーにuploadして計算、データ処理、ビジュアライゼーションを行います。",
       "sidebar": "tutorialSidebar"
     }
   }
