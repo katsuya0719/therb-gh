@@ -80,7 +80,7 @@ export default [
   },
   {
     path: '/therb-gh/docs',
-    component: ComponentCreator('/therb-gh/docs','231'),
+    component: ComponentCreator('/therb-gh/docs','4f1'),
     routes: [
       {
         path: '/therb-gh/docs/Component/Modelling',
@@ -95,6 +95,12 @@ export default [
         'sidebar': "tutorialSidebar"
       },
       {
+        path: '/therb-gh/docs/NewHasp/HowToUse',
+        component: ComponentCreator('/therb-gh/docs/NewHasp/HowToUse','cda'),
+        exact: true,
+        'sidebar': "tutorialSidebar"
+      },
+      {
         path: '/therb-gh/docs/Usage/CreateTherbModel',
         component: ComponentCreator('/therb-gh/docs/Usage/CreateTherbModel','388'),
         exact: true,
@@ -103,6 +109,12 @@ export default [
       {
         path: '/therb-gh/docs/Usage/HowToInstall',
         component: ComponentCreator('/therb-gh/docs/Usage/HowToInstall','459'),
+        exact: true,
+        'sidebar': "tutorialSidebar"
+      },
+      {
+        path: '/therb-gh/docs/Usage/UploadToServer',
+        component: ComponentCreator('/therb-gh/docs/Usage/UploadToServer','311'),
         exact: true,
         'sidebar': "tutorialSidebar"
       }

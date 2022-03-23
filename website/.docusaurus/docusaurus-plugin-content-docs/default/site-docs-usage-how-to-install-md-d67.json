@@ -18,5 +18,9 @@
   "previous": {
     "title": "Create THERB Model",
     "permalink": "/therb-gh/docs/Usage/CreateTherbModel"
+  },
+  "next": {
+    "title": "Upload to server",
+    "permalink": "/therb-gh/docs/Usage/UploadToServer"
   }
 }
