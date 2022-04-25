@@ -16,20 +16,6 @@
       },
       {
         "type": "category",
-        "label": "NewHasp",
-        "collapsible": true,
-        "collapsed": true,
-        "items": [
-          {
-            "type": "link",
-            "label": "How to use New Hasp",
-            "href": "/therb-gh/docs/NewHasp/HowToUse",
-            "docId": "NewHasp/HowToUse"
-          }
-        ]
-      },
-      {
-        "type": "category",
         "label": "Component",
         "collapsible": true,
         "collapsed": true,
@@ -65,6 +51,20 @@
             "label": "Upload to server",
             "href": "/therb-gh/docs/Usage/UploadToServer",
             "docId": "Usage/UploadToServer"
+          }
+        ]
+      },
+      {
+        "type": "category",
+        "label": "NewHasp",
+        "collapsible": true,
+        "collapsed": true,
+        "items": [
+          {
+            "type": "link",
+            "label": "How to use New Hasp",
+            "href": "/therb-gh/docs/NewHasp/HowToUse",
+            "docId": "NewHasp/HowToUse"
           }
         ]
       }
