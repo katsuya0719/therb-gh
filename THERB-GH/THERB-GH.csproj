@@ -61,7 +61,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ReadProperty.cs" />
-    <Compile Include="SolveBoundary.cs" />
     <Compile Include="Model.cs" />
     <Compile Include="THERB.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

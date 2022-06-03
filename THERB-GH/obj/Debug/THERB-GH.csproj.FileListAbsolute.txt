@@ -1,4 +1,3 @@
-C:\Users\katsu\Documents\development\THERB-GH\THERB-GH\obj\Debug\THERB-GH.csproj.AssemblyReference.cache
 C:\Users\katsu\Documents\development\THERB-GH\THERB-GH\obj\Debug\THERB-GH.csproj.CoreCompileInputs.cache
 C:\Users\katsu\Documents\development\THERB-GH\THERB-GH\bin\THERB-GH.dll
 C:\Users\katsu\Documents\development\THERB-GH\THERB-GH\bin\THERB-GH.pdb

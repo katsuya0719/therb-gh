@@ -29,156 +29,6 @@ namespace Model
         Floor
     }
 
-    public class Baues
-    {
-        public List<Zone> zones;
-        //public List<SurfaceDetailed> surfaces;
-        //public List<FenestrationDetailed> fenestraions;
-
-        public Baues(List<Zone> zones)
-        {
-            this.zones = zones;
-            //this.surfaces = surfaces;
-            //this.fenestraions = fenestraions;
-        }
-    }
-
-    public class Zone
-    {
-        public string name;
-        public int multiplier;
-        public List<SurfaceDetailed> surfaces;
-        public int roomId;
-
-        public Zone(Room room)
-        {
-            name = "room" + room.id.ToString();
-            roomId = room.id;
-            multiplier = 1;
-            surfaces = new List<SurfaceDetailed>();
-
-        }
-
-        public void addSurface(SurfaceDetailed surface)
-        {
-            surfaces.Add(surface);
-        }
-        
-    }
-
-    public class BaseBaues
-    {
-        public string name;
-        public string constructionName;
-        public List<double> vertices;
-
-        public List<double> getBauesVertices(BrepVertexList vertices)
-        {
-            List<double> bauesVertices = new List<double>();
-            foreach (BrepVertex vertex in vertices)
-            {
-                Point3d pt = vertex.Location;
-                bauesVertices.Add(pt.X);
-                bauesVertices.Add(pt.Y);
-                bauesVertices.Add(pt.Z);
-            }
-            return bauesVertices;
-        }
-    }
-
-    public class SurfaceDetailed : BaseBaues
-    {
-        public int faceId;
-        public SurfaceType surfaceType;
-        public int surfaceTypeId; //そのsurface typeのid
-        public BoundaryCondition boundaryCondition;
-        public string boundaryConditionObject;
-        public List<FenestrationDetailed> fenestrations;
-        public static int _totalWalls;
-        public static int _totalRoofs;
-        public static int _totalCeilings;
-        public static int _totalFloors;
-
-        static SurfaceDetailed()
-        {
-            _totalWalls = 0;
-            _totalRoofs = 0;
-            _totalCeilings = 0;
-            _totalFloors = 0;
-            
-        }
-
-        public SurfaceDetailed(Face face)
-        {
-            fenestrations = new List<FenestrationDetailed>();
-            faceId = face.id;
-            //vertices = face.bauesVertices;
-            vertices = base.getBauesVertices(face.vertices);
-            switch (face.face)
-            {
-                case "wall":
-                    surfaceType = SurfaceType.Wall;
-                    _totalWalls += 1;
-                    surfaceTypeId = _totalWalls;
-                    break;
-                case "floor":
-                    surfaceType = SurfaceType.Floor;
-                    _totalFloors += 1;
-                    surfaceTypeId = _totalFloors;
-                    break;
-                case "roof":
-                    if (face.elementType == "exteriorroof")
-                    {
-                        surfaceType = SurfaceType.Roof;
-                        _totalRoofs += 1;
-                        surfaceTypeId = _totalRoofs;
-                        break;
-                    }
-                    else
-                    {
-                        surfaceType = SurfaceType.Ceiling;
-                        _totalCeilings += 1;
-                        surfaceTypeId = _totalCeilings;
-                        break;
-                    }
-            }
-            //TODO:命名規則を修正する必要
-            //name = "room" + face.parent.id + "_" + surfaceType.ToString() + surfaceTypeId.ToString();
-            name = "room" + face.parent.id + "_"+faceId.ToString();
-            boundaryCondition = face.bauesBC;
-            if (boundaryCondition == BoundaryCondition.Surface)
-            {
-                boundaryConditionObject = "room" + face.adjacencyFace.parent.id + "_" + face.adjacencyFace.id.ToString();
-            }
-
-        }
-
-        public void addFenestration(FenestrationDetailed fenestration)
-        {
-            fenestrations.Add(fenestration);
-        }
-    }
-
-    public class FenestrationDetailed : BaseBaues
-    {
-        public int windowId;
-        public static int _totalFenestrations;
-
-
-        static FenestrationDetailed() {
-            _totalFenestrations = 0;
-        }
-
-        public FenestrationDetailed(Window window)
-        {
-            windowId = window.id;
-            vertices = base.getBauesVertices(window.vertices);
-            _totalFenestrations += 1;
-            name = "window" + _totalFenestrations.ToString();
-            //name = "room" + window.parent.parentId.ToString() + "_" +window.parent 命名規則を考える必要
-        }
-    }
-
     public class BaseGeo{
         public Guid guid;
         public int id;
@@ -368,6 +218,7 @@ namespace Model
     {
         public int parentId;
         public Surface geometry;
+        public int partId;
         public Vector3d normal;
         public Point3d centerPt;
         public double tiltAngle;
@@ -389,7 +240,7 @@ namespace Model
     }
     public class Face : BaseFace
     {
-        public int partId;
+        //public int partId;
         //public faceType face{get; private set;}
         public string face { get; private set; }
         //public boundaryCondition bc{get; set;}

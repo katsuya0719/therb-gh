@@ -45,11 +45,10 @@ namespace THERBgh
         /// </summary>
         protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
         {
-            //pManager.AddGenericParameter("Rooms", "Rooms", "Room class", GH_ParamAccess.item);
-            //pManager.AddGenericParameter("Faces", "Faces", "Face class", GH_ParamAccess.item);
-            //pManager.AddGenericParameter("Windows", "Windows", "Window class", GH_ParamAccess.item);
+            pManager.AddGenericParameter("Rooms", "Rooms", "Room class", GH_ParamAccess.item);
+            pManager.AddGenericParameter("Faces", "Faces", "Face class", GH_ParamAccess.item);
+            pManager.AddGenericParameter("Windows", "Windows", "Window class", GH_ParamAccess.item);
             pManager.AddGenericParameter("Therb", "therb", "THERB class", GH_ParamAccess.item);
-            pManager.AddTextParameter("Baues", "Baues", "Baues", GH_ParamAccess.item);
         }
 
         /// <summary>
@@ -64,7 +63,6 @@ namespace THERBgh
             List<Surface> windows = new List<Surface>();
             List<Room> roomList = new List<Room>();
             List<Face> faceList = new List<Face>();
-            List<Zone> zoneList = new List<Zone>();
 
             //DA.GetData("geos", ref geos);
             //tolとwindowsは任意のパラメータとしたい
@@ -73,26 +71,54 @@ namespace THERBgh
             DA.GetDataList(1, windows);
             DA.GetData(2, ref tol);
 
+            //Brep同士をsplitする
+            //TODO:思ったような動きをしてくれない
+            List<Brep> splitGeos = new List<Brep>();
+
+            /*
+            for (int i = 0; i < geos.Count; i = i + 1){
+              List<Brep> cutterBreps = geos.FindAll(geo => geo != geos[i]);
+              Print("{0}", cutterBreps.Count);
+              foreach(Brep cutterBrep in cutterBreps){
+                Brep[] splitGeo = geos[i].Split(cutterBrep, 0.1);
+                bool test1 = splitGeo[0].Join(splitGeo[1], 0.1, false);
+                Print("{0}", test1);
+                //for (int j = 1; j < splitGeo.Count; j = j + 1){
+                //  splitGeo[0].Join(geos[j], 0.1, false);
+                //}
+                //foreach(Brep geo in splitGeo){
+                //splitGeos.Add(geo);
+                //}
+                splitGeos.Add(splitGeo[0]);
+              }
+            }
+            Print("{0}", splitGeos);
+            test = splitGeos;
+            */
+
             //Roomに対する処理
             foreach (Brep geo in geos)
             {
                 Room temp = new Room(geo);
-                BrepFaceList brepFaces = geo.Faces;
-                foreach(Surface srf in brepFaces)
+
+                //var surfaceDetailedList = new List<object>();
+                //TODO: SurfaceとFaceの違い理解
+                //BrepSurfaceList srfs = geo.Surfaces;
+                BrepFaceList srfs = geo.Faces;
+                foreach (Surface srf in srfs)
                 {
                     Vector3d normal = srf.NormalAt(0.5, 0.5);
-                    Vector3d reverseNormal = reviseNormal(srf, temp);
-                    Face face = new Face(temp, srf, normal, reverseNormal);
+                    Vector3d tempNormal = reviseNormal(srf, temp);
+                    Face face = new Face(temp, srf, normal, tempNormal);
+                    //Print("{0}", face.centerPt);
                     faceList.Add(face);
                     temp.addFace(face);
                 }
                 roomList.Add(temp);
-                Zone zone = new Zone(temp);
-                zoneList.Add(zone);
             }
 
             //FaceのboundaryConditionを計算する処理
-            List<Face> faceListBC = solveBoundary(faceList, tol,ref zoneList);
+            List<Face> faceListBC = solveBoundary(faceList, tol);
 
             //Roomに属するfaceの属性(wall,ceiling,roof)を集計するロジック
             foreach (Room room in roomList)
@@ -106,7 +132,7 @@ namespace THERBgh
             //windowがどのwallの上にあるかどうかを判断するロジック
             //FenestrationDetailedも書き出す
 
-            List<Window> windowList = windowOnFace(faceListBC, windows,ref zoneList);
+            List<Window> windowList = windowOnFace(faceListBC, windows);
 
             //window情報をfaceにaddする
             //refパラメータとか使ってwindowOnFaceに付加するのがいいかも
@@ -129,18 +155,15 @@ namespace THERBgh
             //var bauesJson=JsonConvert.SerializeObject(zoneList);
 
             Therb therb = new Therb(roomList, faceListWindow, windowList);
-            Baues baues = new Baues(zoneList);
 
-            //DA.SetData("Rooms", roomList);
-            //DA.SetData("Faces", faceListWindow);
-            //DA.SetData("Windows", windowList);
+            DA.SetData("Rooms", roomList);
+            DA.SetData("Faces", faceListWindow);
+            DA.SetData("Windows", windowList);
             DA.SetData("Therb", therb);
-            DA.SetData("Baues", baues);
-            //DA.SetData("Baues", bauesJson);
         }
 
 
-        private List<Window> windowOnFace(List<Face> faceList, List<Surface> windows, ref List<Zone> zoneList)
+        private List<Window> windowOnFace(List<Face> faceList, List<Surface> windows)
         {
             List<Face> externalFaces = faceList.FindAll(face => face.bc == "outdoor");
 
@@ -174,14 +197,12 @@ namespace THERBgh
                     //エラー処理を加える
                 }
                 windowList.Add(window);
-                FenestrationDetailed fenDetailed = new FenestrationDetailed(window);
-                zoneList[faceList[parent.id].parentId - 1].surfaces[parent.partId-1].addFenestration(fenDetailed);
 
             }
             return windowList;
         }
 
-        private List<Face> solveBoundary(List<Face> faceList, double tol,ref List<Zone> zoneList)
+        private List<Face> solveBoundary(List<Face> faceList, double tol)
         {
             List<Face> faceListBC = new List<Face>();
             for (int i=0;i<faceList.Count; i++)
@@ -232,9 +253,6 @@ namespace THERBgh
                 testFace.setElementType();
                 testFace.setConstructionId();
                 faceListBC.Add(testFace);
-
-                SurfaceDetailed srfDetail = new SurfaceDetailed(testFace);
-                zoneList[testFace.parent.id - 1].addSurface(srfDetail);
             }
             return faceListBC;
         }
