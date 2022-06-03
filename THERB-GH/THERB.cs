@@ -45,9 +45,9 @@ namespace THERBgh
         /// </summary>
         protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
         {
-            pManager.AddGenericParameter("Rooms", "Rooms", "Room class", GH_ParamAccess.item);
-            pManager.AddGenericParameter("Faces", "Faces", "Face class", GH_ParamAccess.item);
-            pManager.AddGenericParameter("Windows", "Windows", "Window class", GH_ParamAccess.item);
+            pManager.AddGenericParameter("Rooms", "Rooms", "Room class", GH_ParamAccess.list);
+            pManager.AddGenericParameter("Faces", "Faces", "Face class", GH_ParamAccess.list);
+            pManager.AddGenericParameter("Windows", "Windows", "Window class", GH_ParamAccess.list);
             pManager.AddGenericParameter("Therb", "therb", "THERB class", GH_ParamAccess.item);
         }
 
@@ -156,9 +156,9 @@ namespace THERBgh
 
             Therb therb = new Therb(roomList, faceListWindow, windowList);
 
-            DA.SetData("Rooms", roomList);
-            DA.SetData("Faces", faceListWindow);
-            DA.SetData("Windows", windowList);
+            DA.SetDataList("Rooms", roomList);
+            DA.SetDataList("Faces", faceListWindow);
+            DA.SetDataList("Windows", windowList);
             DA.SetData("Therb", therb);
         }
 
