@@ -6,3 +6,4 @@ C:\Users\katsu\Documents\development\THERB-GH\THERB-GH\bin\Newtonsoft.Json.xml
 C:\Users\katsu\Documents\development\THERB-GH\THERB-GH\obj\Debug\THERB-GH.csproj.CopyComplete
 C:\Users\katsu\Documents\development\THERB-GH\THERB-GH\obj\Debug\THERB-GH.dll
 C:\Users\katsu\Documents\development\THERB-GH\THERB-GH\obj\Debug\THERB-GH.pdb
+C:\Users\katsu\Documents\development\THERB-GH\THERB-GH\obj\Debug\THERB-GH.csproj.AssemblyReference.cache
