@@ -437,3 +437,6 @@ $RECYCLE.BIN/
 website/node_modules/
 
 THERB-GH/obj/Debug/THERB-GH.csproj.FileListAbsolute.txt
+THERB-GH/obj/
+THERB-GH/bin/
+.suo
