@@ -62,6 +62,7 @@ namespace Model
             this.windows = windows;
         }
     }
+
     public class Room : BaseGeo
     {
         public Brep geometry;
@@ -77,12 +78,15 @@ namespace Model
         public List<Face> eWalls;
         public List<Face> floors;
         public List<Face> roofs;
-        
         static Room()
         {
             _totalRooms = 0;
         }
-        
+
+        public static void InitTotalRoom()
+        {
+            _totalRooms = 0;
+        }
 
         public Room(Brep geometry)
         {
