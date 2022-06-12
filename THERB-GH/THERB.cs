@@ -63,6 +63,7 @@ namespace THERBgh
             List<Surface> windows = new List<Surface>();
             List<Room> roomList = new List<Room>();
             List<Face> faceList = new List<Face>();
+            Room.InitTotalRoom();
 
             //DA.GetData("geos", ref geos);
             //tolとwindowsは任意のパラメータとしたい
