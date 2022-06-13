@@ -26,7 +26,7 @@ namespace THERBgh
         public THERB()
           : base("THERB", "THERB",
               "Description",
-              "THERB-UI", "Modelling")
+              "THERB-GH", "Modelling")
         {
         }
 
@@ -45,8 +45,8 @@ namespace THERBgh
         /// </summary>
         protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
         {
-            pManager.AddGenericParameter("Rooms", "Rooms", "Room class", GH_ParamAccess.item);
-            pManager.AddGenericParameter("Faces", "Faces", "Face class", GH_ParamAccess.item);
+            pManager.AddGenericParameter("Rooms", "Rooms", "Room class", GH_ParamAccess.list);
+            pManager.AddGenericParameter("Faces", "Faces", "Face class", GH_ParamAccess.list);
             pManager.AddGenericParameter("Windows", "Windows", "Window class", GH_ParamAccess.item);
             pManager.AddGenericParameter("Therb", "therb", "THERB class", GH_ParamAccess.item);
         }

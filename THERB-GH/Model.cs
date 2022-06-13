@@ -108,7 +108,7 @@ namespace Model
             roofs = new List<Face>();
             VolumeMassProperties vmp = VolumeMassProperties.Compute(geometry);
             centroid = vmp.Centroid;
-            //TODO:どのタイミングで
+            //brepのボリュームを計算する
         }
 
         public void addFace(Face face)
@@ -225,6 +225,8 @@ namespace Model
         public int partId;
         public Vector3d normal;
         public Point3d centerPt;
+        public Point3d minPt;
+        public Point3d maxPt;
         public double tiltAngle;
         public BrepVertexList vertices;
         public double area;
@@ -240,6 +242,10 @@ namespace Model
             //normal = tempNormal; 今のところ、normalというattributeがない
             BrepVertexList vertices = geometry.ToBrep().Vertices;
             this.vertices = vertices;
+
+            // verticesの中からminimumのpointとmaximum pointを計算する => 齋藤君にお願いする 
+            Point3d minPt = getMinCoord(vertices);
+
         }
     }
     public class Face : BaseFace
@@ -262,9 +268,6 @@ namespace Model
         public static int _totalFlrCeilings;
         public static int _totalRoofs;
         public static int _totalGrounds;
-        //BAUES Analysis用の属性
-        public BoundaryCondition bauesBC;
-        //public int adjacencyFaceId;
         public Face adjacencyFace;
 
         static Face()

@@ -24,7 +24,7 @@ namespace THERBgh
         public ReadProperty()
           : base("ReadProperty", "ReadProperty",
               "Description",
-              "THERB-UI", "Modelling")
+              "THERB-GH", "Modelling")
         {
         }
 

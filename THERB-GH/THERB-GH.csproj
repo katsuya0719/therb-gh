@@ -60,8 +60,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Utils.cs" />
     <Compile Include="ReadProperty.cs" />
     <Compile Include="Model.cs" />
+    <Compile Include="ExportR.cs" />
     <Compile Include="THERB.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
