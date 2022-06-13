@@ -60,6 +60,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ExportD.cs" />
     <Compile Include="Utils.cs" />
     <Compile Include="ReadProperty.cs" />
     <Compile Include="Model.cs" />

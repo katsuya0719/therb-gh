@@ -58,7 +58,7 @@ namespace THERBgh
         {
             List<Room> roomList = new List<Room>();
             List<Face> faceList = new List<Face>();
-            List<Face> windowList = new List<Face>();
+            List<Window> windowList = new List<Window>();
             string dDat = "";
 
             DA.GetDataList(0, roomList);
@@ -75,9 +75,9 @@ namespace THERBgh
             List<Face> exteriorWalls = new List<Face>();
             List<Face> interiorWalls = new List<Face>();
             List<Face> exteriorRoofs = new List<Face>();
-            List<Face> interiorRoofs = new List<Face>();
+            List<Face> interiorRoofFloors = new List<Face>();
             List<Face> exteriorFloors = new List<Face>();
-            List<Face> interiorFloors = new List<Face>();
+            //List<Face> interiorFloors = new List<Face>();
             List<Face> groundFloors = new List<Face>();
             
 
@@ -93,17 +93,13 @@ namespace THERBgh
                 } else if (face.elementType == "exteriorroof")
                 {
                     exteriorRoofs.Add(face);
-                } else if (face.elementType == "interiorroof")
+                } else if (face.elementType == "interiorroof" || face.elementType == "interiorfloor")
                 {
-                    interiorRoofs.Add(face);
+                    interiorRoofFloors.Add(face);
                 }
                 else if (face.elementType == "exteriorfloor")
                 {
                     exteriorFloors.Add(face);
-                }
-                else if (face.elementType == "interiorfloor")
-                {
-                    interiorFloors.Add(face);
                 }
                 else if (face.elementType == "groundfloor")
                 {
@@ -111,28 +107,134 @@ namespace THERBgh
                 }
             });
 
+            //TODO:exteriorFloorの扱いがどうなるかを確認
+
             //1行目 部屋、壁の数をカウント
             dDat += fillEmpty(roomList.Count,4)
                 + fillEmpty(exteriorWalls.Count, 4)
                 + fillEmpty(windowList.Count, 4)
                 + fillEmpty(interiorWalls.Count, 4)
                 + fillEmpty(doorList.Count, 4)
-                + fillEmpty(interiorFloors.Count+ exteriorFloors.Count + interiorRoofs.Count, 4)
+                + fillEmpty(interiorRoofFloors.Count, 4)
                 + fillEmpty(exteriorRoofs.Count, 4)
                 + fillEmpty(groundFloors.Count, 4)
                 + fillEmpty(shadingList.Count, 4)
                 + fillEmpty(wingList.Count, 4) + " \r\n";
 
             //室の情報を抽出
+            roomList.ForEach(room =>
+            {
+                dDat += fillEmpty("Room " + room.id.ToString(), 12)
+                + fillEmpty(room.minPt.X, 9, 3)
+                + fillEmpty(room.minPt.Y, 8, 3)
+                + fillEmpty(room.minPt.Z, 8, 3)
+                + fillEmpty(room.maxPt.X, 8, 3)
+                + fillEmpty(room.maxPt.Y, 8, 3)
+                + fillEmpty(room.maxPt.Z, 8, 3)
+                 + "      18.800   16.7000 \r\n";
+                //volumeを抽出する必要
+            });
 
             //外壁の情報を抽出
             exteriorWalls.ForEach(exWall =>
             {
-                dDat += fillEmpty("Ex-wall " + exWall.id.ToString(), 13);
-                //TODO:minPtとmaxPtの座標を書き込み
-
+                dDat += fillEmpty("Ex-wall " + exWall.id.ToString(), 13)
+                + fillEmpty(exWall.minPt.X, 8, 3)
+                + fillEmpty(exWall.minPt.Y, 8, 3)
+                + fillEmpty(exWall.minPt.Z, 8, 3)
+                + fillEmpty(exWall.maxPt.X, 8, 3)
+                + fillEmpty(exWall.maxPt.Y, 8, 3)
+                + fillEmpty(exWall.maxPt.Z, 8, 3)
+                + fillEmpty(exWall.tiltAngle, 10, 3)
+                + fillEmpty(exWall.area, 12, 4)
+                + "    0\r\n  structure No. "
+                + fillEmpty(exWall.constructionId, 5)
+                + "  overhang No.     0      wing1 No.    0   wing2 No.    0 \r\n      window No. "
+                //TODO:windowIdsの処理を入れ込む必要
+                + "\r\n";
             });
-            
+
+            //窓の情報を抽出
+            windowList.ForEach(window =>
+            {
+                dDat += fillEmpty("Window " + window.id.ToString(), 13)
+                + fillEmpty(window.minPt.X, 8, 3)
+                + fillEmpty(window.minPt.Y, 8, 3)
+                + fillEmpty(window.minPt.Z, 8, 3)
+                + fillEmpty(window.maxPt.X, 8, 3)
+                + fillEmpty(window.maxPt.Y, 8, 3)
+                + fillEmpty(window.maxPt.Z, 8, 3)
+                + fillEmpty(window.tiltAngle, 10, 3)
+                + fillEmpty(window.area, 12, 4)
+                + "    0\r\n  structure No. "
+                + fillEmpty(window.constructionId, 5)
+                + "  overhang No.     0      wing1 No.    0   wing2 No.    0\r\n";
+            });
+
+            string doorIds = "   0   0   0   0   0   0   0   0   0   0   0";
+            //内壁の情報を抽出
+            interiorWalls.ForEach(inWall =>
+            {
+                dDat += fillEmpty("In-wall " + inWall.id.ToString(), 13)
+                + fillEmpty(inWall.minPt.X, 8, 3)
+                + fillEmpty(inWall.minPt.Y, 8, 3)
+                + fillEmpty(inWall.minPt.Z, 8, 3)
+                + fillEmpty(inWall.maxPt.X, 8, 3)
+                + fillEmpty(inWall.maxPt.Y, 8, 3)
+                + fillEmpty(inWall.maxPt.Z, 8, 3)
+                + fillEmpty(inWall.tiltAngle, 10, 3)
+                + fillEmpty(inWall.area, 12, 4)
+                + "    0\r\n  structure No. "
+                + fillEmpty(inWall.constructionId, 5)
+                +" \r\n     in-door No. " + doorIds + " \r\n";
+            });
+
+            //床・天井の情報を抽出
+            interiorRoofFloors.ForEach(inMat =>
+            {
+                dDat += fillEmpty("In-wall " + inMat.id.ToString(), 13)
+                + fillEmpty(inMat.minPt.X, 8, 3)
+                + fillEmpty(inMat.minPt.Y, 8, 3)
+                + fillEmpty(inMat.minPt.Z, 8, 3)
+                + fillEmpty(inMat.maxPt.X, 8, 3)
+                + fillEmpty(inMat.maxPt.Y, 8, 3)
+                + fillEmpty(inMat.maxPt.Z, 8, 3)
+                + fillEmpty(inMat.tiltAngle, 10, 3)
+                + fillEmpty(inMat.area, 12, 4)
+                + "    0\r\n  structure No. "
+                + fillEmpty(inMat.constructionId, 5) + "\r\n";
+            });
+
+            exteriorRoofs.ForEach(roof =>
+            {
+                dDat += fillEmpty("Roof " + roof.id.ToString(), 13)
+                + fillEmpty(roof.minPt.X, 8, 3)
+                + fillEmpty(roof.minPt.Y, 8, 3)
+                + fillEmpty(roof.minPt.Z, 8, 3)
+                + fillEmpty(roof.maxPt.X, 8, 3)
+                + fillEmpty(roof.maxPt.Y, 8, 3)
+                + fillEmpty(roof.maxPt.Z, 8, 3)
+                + fillEmpty(roof.tiltAngle, 10, 3)
+                + fillEmpty(roof.area, 12, 4)
+                + "    0\r\n  structure No. "
+                + fillEmpty(roof.constructionId, 5) + "\r\n";
+            });
+
+            groundFloors.ForEach(floor =>
+            {
+                dDat += fillEmpty("Ground " + floor.id.ToString(), 13)
+                + fillEmpty(floor.minPt.X, 8, 3)
+                + fillEmpty(floor.minPt.Y, 8, 3)
+                + fillEmpty(floor.minPt.Z, 8, 3)
+                + fillEmpty(floor.maxPt.X, 8, 3)
+                + fillEmpty(floor.maxPt.Y, 8, 3)
+                + fillEmpty(floor.maxPt.Z, 8, 3)
+                + fillEmpty(floor.tiltAngle, 10, 3)
+                + fillEmpty(floor.area, 12, 4)
+                + "    0\r\n  structure No. "
+                + fillEmpty(floor.constructionId, 5) + "\r\n";
+            });
+
 
             DA.SetData("d_dat", dDat);
         }

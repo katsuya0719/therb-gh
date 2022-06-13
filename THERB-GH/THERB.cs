@@ -228,7 +228,6 @@ namespace THERBgh
                 if (shootIt(testRay, targetSurfaces, tol, 2))
                 {
                     testFace.bc = "interior";
-                    testFace.bauesBC = BoundaryCondition.Surface;
                     //どのfaceに接しているのかをチェック
                     //testFace.centerPtから一番近いtargetSurfacesが隣接しているsurfaceだと判断する
                     Face adjacentFace = getClosestFaceFromFace(testFace, targetFaces);
@@ -242,12 +241,10 @@ namespace THERBgh
                     if(testFace.centerPt.Z <= tol)
                     {
                         testFace.bc = "ground";
-                        testFace.bauesBC = BoundaryCondition.Ground;
                     }
                     else
                     {
                         testFace.bc = "outdoor";
-                        testFace.bauesBC = BoundaryCondition.Outdoors;
                     }
                     testFace.adjacencyRoomId = 0;
                 }

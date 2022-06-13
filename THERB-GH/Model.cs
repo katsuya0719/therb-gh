@@ -33,6 +33,56 @@ namespace Model
         public Guid guid;
         public int id;
         public string displayName;
+        public Point3d minPt;
+        public Point3d maxPt;
+
+        public Point3d getMinCoord(BrepVertexList vertices)
+        {
+            Point3d origin = new Point3d(0, 0, 0);
+            int i = 0;
+            int minId = 0;
+            double minValue = 1000;
+            foreach (BrepVertex vertex in vertices)
+            {
+
+                Point3d checkPt = vertex.Location;
+                double distance = origin.DistanceTo(checkPt);
+                //Print("{0}:{1}", i, distance);
+                if (distance < minValue)
+                {
+                    minId = i;
+                    minValue = distance;
+                }
+                i += 1;
+            }
+            //Print("{0}:{1}", minId, minValue);
+
+            return vertices[minId].Location;
+        }
+
+        public Point3d getMaxCoord(BrepVertexList vertices)
+        {
+            Point3d origin = new Point3d(0, 0, 0);
+            int i = 0;
+            int maxId = 0;
+            double maxValue = -1000;
+            foreach (BrepVertex vertex in vertices)
+            {
+
+                Point3d checkPt = vertex.Location;
+                double distance = origin.DistanceTo(checkPt);
+                //Print("{0}:{1}", i, distance);
+                if (distance > maxValue)
+                {
+                    maxId = i;
+                    maxValue = distance;
+                }
+                i += 1;
+            }
+            //Print("{0}:{1}", minId, minValue);
+
+            return vertices[maxId].Location;
+        }
         /*
         public static int _totalCount;
 
@@ -70,8 +120,6 @@ namespace Model
         private List<Face> _faceList;
         public static int _totalRooms;
         public BrepVertexList vertices;
-        public Point3d minPt;
-        public Point3d maxPt;
         public List<Face> sWalls;
         public List<Face> wWalls;
         public List<Face> nWalls;
@@ -168,53 +216,7 @@ namespace Model
 
         //public static string generateDisplayName{
         //}
-        private Point3d getMinCoord(BrepVertexList vertices)
-        {
-            Point3d origin = new Point3d(0, 0, 0);
-            int i = 0;
-            int minId = 0;
-            double minValue = 1000;
-            foreach (BrepVertex vertex in vertices)
-            {
-
-                Point3d checkPt = vertex.Location;
-                double distance = origin.DistanceTo(checkPt);
-                //Print("{0}:{1}", i, distance);
-                if (distance < minValue)
-                {
-                    minId = i;
-                    minValue = distance;
-                }
-                i += 1;
-            }
-            //Print("{0}:{1}", minId, minValue);
-
-            return vertices[minId].Location;
-        }
-
-        private Point3d getMaxCoord(BrepVertexList vertices)
-        {
-            Point3d origin = new Point3d(0, 0, 0);
-            int i = 0;
-            int maxId = 0;
-            double maxValue = -1000;
-            foreach (BrepVertex vertex in vertices)
-            {
-
-                Point3d checkPt = vertex.Location;
-                double distance = origin.DistanceTo(checkPt);
-                //Print("{0}:{1}", i, distance);
-                if (distance > maxValue)
-                {
-                    maxId = i;
-                    maxValue = distance;
-                }
-                i += 1;
-            }
-            //Print("{0}:{1}", minId, minValue);
-
-            return vertices[maxId].Location;
-        }
+        
     }
 
     
@@ -225,8 +227,6 @@ namespace Model
         public int partId;
         public Vector3d normal;
         public Point3d centerPt;
-        public Point3d minPt;
-        public Point3d maxPt;
         public double tiltAngle;
         public BrepVertexList vertices;
         public double area;
@@ -243,8 +243,8 @@ namespace Model
             BrepVertexList vertices = geometry.ToBrep().Vertices;
             this.vertices = vertices;
 
-            // verticesの中からminimumのpointとmaximum pointを計算する => 齋藤君にお願いする 
-            Point3d minPt = getMinCoord(vertices);
+            minPt = getMinCoord(vertices);
+            maxPt = getMaxCoord(vertices);
 
         }
     }
