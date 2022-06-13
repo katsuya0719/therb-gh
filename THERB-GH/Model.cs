@@ -484,4 +484,22 @@ namespace Model
             tiltAngle = parent.tiltAngle;
         }
     }
+
+    //overhangはwallに紐づく
+    public class Overhang:BaseFace
+    {
+        public Face parent;
+        public static int _totalOverhang;
+
+        static Overhang()
+        {
+            _totalOverhang = 0;
+        }
+
+        public Overhang(Surface geometry) : base(geometry)
+        {
+
+        }
+
+    }
 }
