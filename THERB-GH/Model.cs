@@ -103,13 +103,15 @@ namespace Model
         public List<Room> rooms;
         public List<Face> faces;
         public List<Window> windows;
+        public List<Overhang> overhangs;
         //shadingとかものちのちつけていく
 
-        public Therb(List<Room> rooms, List<Face> faces, List<Window> windows)
+        public Therb(List<Room> rooms, List<Face> faces, List<Window> windows, List<Overhang> overhangs)
         {
             this.rooms = rooms;
             this.faces = faces;
             this.windows = windows;
+            this.overhangs = overhangs;
         }
     }
 
@@ -218,7 +220,6 @@ namespace Model
         //}
         
     }
-
     
     public class BaseFace : BaseGeo
     {
@@ -231,6 +232,8 @@ namespace Model
         public BrepVertexList vertices;
         public double area;
         public int constructionId; //とりあえず外壁1,内壁2,床(室内）5,屋根4,床（地面）5, 窓6　THERBのelement Idに相当/鈴木君からもらったデータにとりあえずそろえる
+        public Overhang overhang;
+        public int overhangId; //overhangは一つしか指定できない
 
         public BaseFace(Surface geometry)
         {
@@ -246,6 +249,11 @@ namespace Model
             minPt = getMinCoord(vertices);
             maxPt = getMaxCoord(vertices);
 
+        }
+        public void addOverhangs(Overhang overhang)
+        {
+            this.overhang = overhang;
+            overhangId = overhang.id;
         }
     }
     public class Face : BaseFace
@@ -469,8 +477,6 @@ namespace Model
 
         public Window(Surface geometry):base(geometry)
         {
-            this.parent = parent;
-
             guid = Guid.NewGuid();
             _totalWindows += 1;
             id = _totalWindows;
@@ -488,18 +494,35 @@ namespace Model
     //overhangはwallに紐づく
     public class Overhang:BaseFace
     {
-        public Face parent;
-        public static int _totalOverhang;
+        public Face parentFace; //overhangの場合は、parentFace,parentWindowどちらも持つ
+        public Window parentWindow;
+        public int parentWindowId;
+        public static int _totalOverhangs;
 
         static Overhang()
         {
-            _totalOverhang = 0;
+            _totalOverhangs = 0;
         }
 
         public Overhang(Surface geometry) : base(geometry)
         {
-
+            guid = Guid.NewGuid();
+            _totalOverhangs += 1;
+            id = _totalOverhangs;
+            this.constructionId = 1; //とりあえず外壁に揃えて1とする
         }
 
+        public void addParentFace(Face parentFace)
+        {
+            this.parentFace = parentFace;
+            parentId = parentFace.partId;
+            tiltAngle = parentFace.tiltAngle;
+        }
+
+        public void addParentWindow(Window parentWindow)
+        {
+            this.parentWindow = parentWindow;
+            parentWindowId = parentWindow.id;
+        }
     }
 }

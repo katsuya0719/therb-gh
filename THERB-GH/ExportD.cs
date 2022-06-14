@@ -39,6 +39,7 @@ namespace THERBgh
             pManager.AddGenericParameter("Rooms", "Rooms", "Room class", GH_ParamAccess.list);
             pManager.AddGenericParameter("Faces", "Faces", "Face class", GH_ParamAccess.list);
             pManager.AddGenericParameter("Windows", "Windows", "Window class", GH_ParamAccess.list);
+            pManager.AddGenericParameter("Overhangs", "Overhangs", "Overhang class", GH_ParamAccess.list);
         }
 
         /// <summary>
@@ -59,11 +60,13 @@ namespace THERBgh
             List<Room> roomList = new List<Room>();
             List<Face> faceList = new List<Face>();
             List<Window> windowList = new List<Window>();
+            List<Overhang> overhangList = new List<Overhang>();
             string dDat = "";
 
             DA.GetDataList(0, roomList);
             DA.GetDataList(1, faceList);
             DA.GetDataList(2, windowList);
+            DA.GetDataList(3, overhangList);
 
             //TODO:door,shadingの入力UIも作る
             List<Face> doorList = new List<Face>();
@@ -150,6 +153,7 @@ namespace THERBgh
                 + "    0\r\n  structure No. "
                 + fillEmpty(exWall.constructionId, 5)
                 + "  overhang No.     0      wing1 No.    0   wing2 No.    0 \r\n      window No. "
+                
                 //TODO:windowIdsの処理を入れ込む必要
                 + "\r\n";
             });
@@ -240,6 +244,7 @@ namespace THERBgh
         }
 
         //TODO:Utilsモジュールにうつす
+
         private string fillEmpty(int input, int totalLength)
         {
             string inputStr = input.ToString();
