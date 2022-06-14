@@ -433,7 +433,6 @@ $RECYCLE.BIN/
 !.vscode/launch.json
 !.vscode/extensions.json
 
-*.gha
 website/node_modules/
 
 THERB-GH/obj/Debug/THERB-GH.csproj.FileListAbsolute.txt
