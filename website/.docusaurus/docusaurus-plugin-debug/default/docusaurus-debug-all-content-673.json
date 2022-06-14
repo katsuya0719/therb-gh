@@ -40,8 +40,8 @@
                 "permalink": "/therb-gh/docs/intro"
               },
               "next": {
-                "title": "How to use New Hasp",
-                "permalink": "/therb-gh/docs/NewHasp/HowToUse"
+                "title": "Create THERB Model",
+                "permalink": "/therb-gh/docs/Usage/CreateTherbModel"
               }
             },
             {
@@ -84,12 +84,8 @@
               },
               "sidebar": "tutorialSidebar",
               "previous": {
-                "title": "Modelling",
-                "permalink": "/therb-gh/docs/Component/Modelling"
-              },
-              "next": {
-                "title": "Create THERB Model",
-                "permalink": "/therb-gh/docs/Usage/CreateTherbModel"
+                "title": "Upload to server",
+                "permalink": "/therb-gh/docs/Usage/UploadToServer"
               }
             },
             {
@@ -110,8 +106,8 @@
               },
               "sidebar": "tutorialSidebar",
               "previous": {
-                "title": "How to use New Hasp",
-                "permalink": "/therb-gh/docs/NewHasp/HowToUse"
+                "title": "Modelling",
+                "permalink": "/therb-gh/docs/Component/Modelling"
               },
               "next": {
                 "title": "How to install",
@@ -164,6 +160,10 @@
               "previous": {
                 "title": "How to install",
                 "permalink": "/therb-gh/docs/Usage/HowToInstall"
+              },
+              "next": {
+                "title": "How to use New Hasp",
+                "permalink": "/therb-gh/docs/NewHasp/HowToUse"
               }
             }
           ],
@@ -187,18 +187,6 @@
               },
               {
                 "type": "category",
-                "label": "NewHasp",
-                "collapsible": true,
-                "collapsed": true,
-                "items": [
-                  {
-                    "type": "doc",
-                    "id": "NewHasp/HowToUse"
-                  }
-                ]
-              },
-              {
-                "type": "category",
                 "label": "Usage",
                 "collapsible": true,
                 "collapsed": true,
@@ -214,6 +202,18 @@
                   {
                     "type": "doc",
                     "id": "Usage/UploadToServer"
+                  }
+                ]
+              },
+              {
+                "type": "category",
+                "label": "NewHasp",
+                "collapsible": true,
+                "collapsed": true,
+                "items": [
+                  {
+                    "type": "doc",
+                    "id": "NewHasp/HowToUse"
                   }
                 ]
               }
