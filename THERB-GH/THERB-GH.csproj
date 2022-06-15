@@ -14,6 +14,7 @@
     <FileAlignment>512</FileAlignment>
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <TargetFrameworkProfile />
+    <TargetExt>.gha</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
@@ -80,16 +81,18 @@
   </Target>
   -->
   <PropertyGroup>
-    <PostBuildEvent>Copy "$(TargetPath)" "$(TargetDir)$(ProjectName).gha"
-Erase "$(TargetPath)"</PostBuildEvent>
+      <PostBuildEvent>if exist "$(AppData)\Grasshopper\Libraries" copy "$(ProjectDir)$(OutputPath)\*.gha" "$(AppData)\Grasshopper\Libraries"
+      </PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
     <FallbackCulture>en-US</FallbackCulture>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+  <PropertyGroup Condition="$(Configuration) == 'Debug' AND $([MSBuild]::IsOSPlatform(Windows))">
     <StartProgram>C:\Program Files\Rhino 7\System\Rhino.exe</StartProgram>
-    <StartArguments>
-    </StartArguments>
+    <StartArguments>$(ProjectDir)\..\example\example.3dm</StartArguments>
     <StartAction>Program</StartAction>
   </PropertyGroup>
+  <Target Name="AfterClean">
+    <Delete Files="$(AppData)\Grasshopper\Libraries\THERB-GH.gha" />
+  </Target>
 </Project>
