@@ -72,33 +72,16 @@ namespace THERBgh
             DA.GetDataList(1, windows);
             DA.GetData(2, ref tol);
 
-            //Brep同士をsplitする
-            //TODO:思ったような動きをしてくれない
             List<Brep> splitGeos = new List<Brep>();
-
-            /*
-            for (int i = 0; i < geos.Count; i = i + 1){
-              List<Brep> cutterBreps = geos.FindAll(geo => geo != geos[i]);
-              Print("{0}", cutterBreps.Count);
-              foreach(Brep cutterBrep in cutterBreps){
-                Brep[] splitGeo = geos[i].Split(cutterBrep, 0.1);
-                bool test1 = splitGeo[0].Join(splitGeo[1], 0.1, false);
-                Print("{0}", test1);
-                //for (int j = 1; j < splitGeo.Count; j = j + 1){
-                //  splitGeo[0].Join(geos[j], 0.1, false);
-                //}
-                //foreach(Brep geo in splitGeo){
-                //splitGeos.Add(geo);
-                //}
-                splitGeos.Add(splitGeo[0]);
-              }
+            for (int i = 0; i < geos.Count; i = i + 1)
+            {
+                List<Brep> cutterBreps = geos.FindAll(geo => geo != geos[i]);
+                Brep[] splitGeo = geos[i].Split(cutterBreps, tol);
+                splitGeos.Add(Brep.JoinBreps(splitGeo, tol)[0]);
             }
-            Print("{0}", splitGeos);
-            test = splitGeos;
-            */
 
             //Roomに対する処理
-            foreach (Brep geo in geos)
+            foreach (Brep geo in splitGeos)
             {
                 Room temp = new Room(geo);
 
