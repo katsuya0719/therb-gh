@@ -126,6 +126,7 @@ namespace Model
         public List<Face> eWalls;
         public List<Face> floors;
         public List<Face> roofs;
+        public double volume;
         static Room()
         {
             _totalRooms = 0;
@@ -157,6 +158,7 @@ namespace Model
             VolumeMassProperties vmp = VolumeMassProperties.Compute(geometry);
             centroid = vmp.Centroid;
             //brepのボリュームを計算する
+            volume = geometry.GetVolume();
         }
 
         public void addFace(Face face)
