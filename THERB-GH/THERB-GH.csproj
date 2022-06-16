@@ -81,10 +81,6 @@
   </Target>
   -->
   <PropertyGroup>
-      <PostBuildEvent>if exist "$(AppData)\Grasshopper\Libraries" copy "$(ProjectDir)$(OutputPath)\*.gha" "$(AppData)\Grasshopper\Libraries"
-      </PostBuildEvent>
-  </PropertyGroup>
-  <PropertyGroup>
     <FallbackCulture>en-US</FallbackCulture>
   </PropertyGroup>
   <PropertyGroup Condition="$(Configuration) == 'Debug' AND $([MSBuild]::IsOSPlatform(Windows))">
@@ -94,5 +90,8 @@
   </PropertyGroup>
   <Target Name="AfterClean">
     <Delete Files="$(AppData)\Grasshopper\Libraries\THERB-GH.gha" />
+  </Target>
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="copy $(ProjectDir)$(OutputPath)*.gha $(AppData)\Grasshopper\Libraries" />
   </Target>
 </Project>
