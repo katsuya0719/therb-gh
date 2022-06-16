@@ -282,6 +282,16 @@ namespace Model
             _totalGrounds = 0;
         }
 
+        public static void InitTotalFace()
+        {
+            _totalFaces = 0;
+            _totalExWalls = 0;
+            _totalInWalls = 0;
+            _totalFlrCeilings = 0;
+            _totalRoofs = 0;
+            _totalGrounds = 0;
+        }
+
         public Face(Room parent, Surface geometry, Vector3d normal, Vector3d tempNormal):base(geometry)
         {
             guid = Guid.NewGuid();
@@ -467,9 +477,13 @@ namespace Model
         {
             _totalWindows = 0;
         }
-        
 
-        public Window(Surface geometry):base(geometry)
+        public static void InitTotalWindow()
+        {
+            _totalWindows = 0;
+        }
+
+            public Window(Surface geometry):base(geometry)
         {
             this.parent = parent;
 

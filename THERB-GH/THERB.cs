@@ -64,6 +64,7 @@ namespace THERBgh
             List<Room> roomList = new List<Room>();
             List<Face> faceList = new List<Face>();
             Room.InitTotalRoom();
+            Face.InitTotalFace();
 
             //DA.GetData("geos", ref geos);
             //tolとwindowsは任意のパラメータとしたい
@@ -117,10 +118,11 @@ namespace THERBgh
             //FenestrationDetailedも書き出す
 
             List<Window> windowList = windowOnFace(faceListBC, windows);
+            Window.InitTotalWindow();
 
             //window情報をfaceにaddする
             //refパラメータとか使ってwindowOnFaceに付加するのがいいかも
-            
+
             List<Face> faceListWindow = new List<Face>();
             foreach (Face face in faceListBC)
             {
