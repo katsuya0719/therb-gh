@@ -3,6 +3,7 @@ using Rhino.Geometry;
 using Rhino.Geometry.Collections;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Rhino.Geometry.Intersect;
 using Newtonsoft.Json;
 using Model;
@@ -240,6 +241,12 @@ namespace THERBgh
         }
 
         //TODO:Utilsモジュールにうつす
+        private string OutputWindowIds(Face face)
+        {
+            return fillEmpty(
+                face.windowIds.ToString(), 4) + String.Concat(Enumerable.Repeat(fillEmpty("0", 4), 
+                10));
+        }
         private string fillEmpty(int input, int totalLength)
         {
             string inputStr = input.ToString();
