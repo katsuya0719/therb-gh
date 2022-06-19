@@ -15,7 +15,7 @@ using Utils;
 
 namespace THERBgh
 {
-    public class ExportD : GH_Component
+    public class ExportB : GH_Component
     {
         /// <summary>
         /// Each implementation of GH_Component must provide a public 
@@ -24,9 +24,9 @@ namespace THERBgh
         /// Subcategory the panel. If you use non-existing tab or panel names, 
         /// new tabs/panels will automatically be created.
         /// </summary>
-        public ExportD()
-          : base("exportD", "exportD",
-              "export d.dat",
+        public ExportB()
+          : base("exportB", "exportB",
+              "export b.dat",
               "THERB-GH", "Modelling")
         {
         }
@@ -47,7 +47,7 @@ namespace THERBgh
         /// </summary>
         protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
         {
-            pManager.AddTextParameter("d_dat", "d_dat", "d.dat file", GH_ParamAccess.item);
+            pManager.AddTextParameter("b_dat", "b_dat", "b.dat file", GH_ParamAccess.item);
         }
 
         /// <summary>
@@ -240,11 +240,14 @@ namespace THERBgh
             });
 
 
-            DA.SetData("d_dat", dDat);
+            DA.SetData("b_dat", dDat);
         }
 
         //TODO:Utilsモジュールにうつす
-
+        private string windowIds(Face face)
+        {
+            face.windowIds
+        }
         private string fillEmpty(int input, int totalLength)
         {
             string inputStr = input.ToString();

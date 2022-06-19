@@ -128,6 +128,7 @@ namespace Model
         public List<Face> eWalls;
         public List<Face> floors;
         public List<Face> roofs;
+        public double volume;
         static Room()
         {
             _totalRooms = 0;
