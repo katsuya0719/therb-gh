@@ -160,6 +160,7 @@ namespace Model
             VolumeMassProperties vmp = VolumeMassProperties.Compute(geometry);
             centroid = vmp.Centroid;
             //brepのボリュームを計算する
+            volume = geometry.GetVolume();
         }
 
         public void addFace(Face face)
@@ -280,6 +281,16 @@ namespace Model
         public Face adjacencyFace;
 
         static Face()
+        {
+            _totalFaces = 0;
+            _totalExWalls = 0;
+            _totalInWalls = 0;
+            _totalFlrCeilings = 0;
+            _totalRoofs = 0;
+            _totalGrounds = 0;
+        }
+
+        public static void InitTotalFace()
         {
             _totalFaces = 0;
             _totalExWalls = 0;
@@ -474,9 +485,13 @@ namespace Model
         {
             _totalWindows = 0;
         }
-        
 
-        public Window(Surface geometry):base(geometry)
+        public static void InitTotalWindow()
+        {
+            _totalWindows = 0;
+        }
+
+            public Window(Surface geometry):base(geometry)
         {
             guid = Guid.NewGuid();
             _totalWindows += 1;
