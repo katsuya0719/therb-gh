@@ -5,6 +5,7 @@ title: Create THERB Model
 
 RhinoにモデリングしたジオメトリデータをTHERBデータに変換し、サーバーにuploadするまでの一通りの流れを説明します。  
 
+(守田君と楊さんに詳細を書いてもらう)
 ## Rhinoモデルの作成  
 ### 室データの作成  
 1. 室ごとにpolysurface、もしくはextrusionをモデリングします  

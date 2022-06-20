@@ -3,6 +3,7 @@ using Rhino.Geometry;
 using Rhino.Geometry.Collections;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Rhino.Geometry.Intersect;
 using Newtonsoft.Json;
 using Model;
@@ -15,7 +16,7 @@ using Utils;
 
 namespace THERBgh
 {
-    public class ExportD : GH_Component
+    public class ExportB : GH_Component
     {
         /// <summary>
         /// Each implementation of GH_Component must provide a public 
@@ -24,9 +25,9 @@ namespace THERBgh
         /// Subcategory the panel. If you use non-existing tab or panel names, 
         /// new tabs/panels will automatically be created.
         /// </summary>
-        public ExportD()
-          : base("exportD", "exportD",
-              "export d.dat",
+        public ExportB()
+          : base("exportB", "exportB",
+              "export b.dat",
               "THERB-GH", "Modelling")
         {
         }
@@ -39,6 +40,7 @@ namespace THERBgh
             pManager.AddGenericParameter("Rooms", "Rooms", "Room class", GH_ParamAccess.list);
             pManager.AddGenericParameter("Faces", "Faces", "Face class", GH_ParamAccess.list);
             pManager.AddGenericParameter("Windows", "Windows", "Window class", GH_ParamAccess.list);
+            pManager.AddGenericParameter("Overhangs", "Overhangs", "Overhang class", GH_ParamAccess.list);
         }
 
         /// <summary>
@@ -46,7 +48,7 @@ namespace THERBgh
         /// </summary>
         protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
         {
-            pManager.AddTextParameter("d_dat", "d_dat", "d.dat file", GH_ParamAccess.item);
+            pManager.AddTextParameter("b_dat", "b_dat", "b.dat file", GH_ParamAccess.item);
         }
 
         /// <summary>
@@ -59,13 +61,15 @@ namespace THERBgh
             List<Room> roomList = new List<Room>();
             List<Face> faceList = new List<Face>();
             List<Window> windowList = new List<Window>();
+            List<Overhang> overhangList = new List<Overhang>();
             string dDat = "";
 
             DA.GetDataList(0, roomList);
             DA.GetDataList(1, faceList);
             DA.GetDataList(2, windowList);
+            DA.GetDataList(3, overhangList);
 
-            //TODO:door,shadingの入力UIも作る
+            //TODO:doorの入力UIも作る
             List<Face> doorList = new List<Face>();
             List<Face> shadingList = new List<Face>();
             List<Face> wingList = new List<Face>();
@@ -131,6 +135,7 @@ namespace THERBgh
                 + fillEmpty(room.maxPt.X, 8, 3)
                 + fillEmpty(room.maxPt.Y, 8, 3)
                 + fillEmpty(room.maxPt.Z, 8, 3)
+                + fillEmpty(room.volume, 10, 3)
                  + "      18.800   16.7000 \r\n";
                 //volumeを抽出する必要
             });
@@ -150,6 +155,7 @@ namespace THERBgh
                 + "    0\r\n  structure No. "
                 + fillEmpty(exWall.constructionId, 5)
                 + "  overhang No.     0      wing1 No.    0   wing2 No.    0 \r\n      window No. "
+                + OutputWindowIds(exWall)
                 //TODO:windowIdsの処理を入れ込む必要
                 + "\r\n";
             });
@@ -236,10 +242,28 @@ namespace THERBgh
             });
 
 
-            DA.SetData("d_dat", dDat);
+            DA.SetData("b_dat", dDat);
         }
 
         //TODO:Utilsモジュールにうつす
+        private string OutputWindowIds(Face face)
+        {
+            const int MAX_IMPUT_ID_COUNT = 11;
+
+            string windowIdStrs = "";
+            for (int windowIdIndex = 0; windowIdIndex < MAX_IMPUT_ID_COUNT; windowIdIndex++)
+            {
+                if (windowIdIndex < face.windowIds.Count)
+                {
+                    windowIdStrs += string.Format("{0,4}", face.windowIds[windowIdIndex]);
+                }
+                else
+                {
+                    windowIdStrs += fillEmpty("0", 4);
+                }
+            }
+            return windowIdStrs;
+        }
         private string fillEmpty(int input, int totalLength)
         {
             string inputStr = input.ToString();

@@ -37,6 +37,7 @@ namespace THERBgh
         {
             pManager.AddBrepParameter("geos", "geometries", "list of geometries", GH_ParamAccess.list);
             pManager.AddSurfaceParameter("windows", "windows", "list of windows", GH_ParamAccess.list);
+            pManager.AddSurfaceParameter("overhangs", "overhangs", "list of overhangs", GH_ParamAccess.list);
             pManager.AddNumberParameter("tol", "tolerance", "tolerance", GH_ParamAccess.item);
         }
 
@@ -47,7 +48,8 @@ namespace THERBgh
         {
             pManager.AddGenericParameter("Rooms", "Rooms", "Room class", GH_ParamAccess.list);
             pManager.AddGenericParameter("Faces", "Faces", "Face class", GH_ParamAccess.list);
-            pManager.AddGenericParameter("Windows", "Windows", "Window class", GH_ParamAccess.item);
+            pManager.AddGenericParameter("Windows", "Windows", "Window class", GH_ParamAccess.list);
+            pManager.AddGenericParameter("Overhangs", "Overhangs", "Overhang class", GH_ParamAccess.list);
             pManager.AddGenericParameter("Therb", "therb", "THERB class", GH_ParamAccess.item);
         }
 
@@ -61,44 +63,34 @@ namespace THERBgh
             //var geos = new Brep();
             List<Brep> geos = new List<Brep>();
             List<Surface> windows = new List<Surface>();
+            List<Surface> overhangs = new List<Surface>();
+
             List<Room> roomList = new List<Room>();
             List<Face> faceList = new List<Face>();
+
+            //TODO:GrasshopperのほうのInitTotalRoomをC#側に移植する
             Room.InitTotalRoom();
+            Face.InitTotalFace();
+
 
             //DA.GetData("geos", ref geos);
             //tolとwindowsは任意のパラメータとしたい
             double tol = 0.1;
             DA.GetDataList(0, geos);
             DA.GetDataList(1, windows);
-            DA.GetData(2, ref tol);
+            DA.GetDataList(2, overhangs);
+            DA.GetData(3, ref tol);
 
-            //Brep同士をsplitする
-            //TODO:思ったような動きをしてくれない
             List<Brep> splitGeos = new List<Brep>();
-
-            /*
-            for (int i = 0; i < geos.Count; i = i + 1){
-              List<Brep> cutterBreps = geos.FindAll(geo => geo != geos[i]);
-              Print("{0}", cutterBreps.Count);
-              foreach(Brep cutterBrep in cutterBreps){
-                Brep[] splitGeo = geos[i].Split(cutterBrep, 0.1);
-                bool test1 = splitGeo[0].Join(splitGeo[1], 0.1, false);
-                Print("{0}", test1);
-                //for (int j = 1; j < splitGeo.Count; j = j + 1){
-                //  splitGeo[0].Join(geos[j], 0.1, false);
-                //}
-                //foreach(Brep geo in splitGeo){
-                //splitGeos.Add(geo);
-                //}
-                splitGeos.Add(splitGeo[0]);
-              }
+            for (int i = 0; i < geos.Count; i = i + 1)
+            {
+                List<Brep> cutterBreps = geos.FindAll(geo => geo != geos[i]);
+                Brep[] splitGeo = geos[i].Split(cutterBreps, tol);
+                splitGeos.Add(Brep.JoinBreps(splitGeo, tol)[0]);
             }
-            Print("{0}", splitGeos);
-            test = splitGeos;
-            */
 
             //Roomに対する処理
-            foreach (Brep geo in geos)
+            foreach (Brep geo in splitGeos)
             {
                 Room temp = new Room(geo);
 
@@ -131,13 +123,13 @@ namespace THERBgh
                 }
             }
             //windowがどのwallの上にあるかどうかを判断するロジック
-            //FenestrationDetailedも書き出す
 
             List<Window> windowList = windowOnFace(faceListBC, windows);
+            Window.InitTotalWindow();
 
             //window情報をfaceにaddする
             //refパラメータとか使ってwindowOnFaceに付加するのがいいかも
-            
+
             List<Face> faceListWindow = new List<Face>();
             foreach (Face face in faceListBC)
             {
@@ -150,28 +142,39 @@ namespace THERBgh
                 }
                 faceListWindow.Add(face);
             }
-            
+            //overhangがどのwallの上にあるかどうかを判断するロジック
+            List<Overhang> overhangList = overhangOnWindow(windowList,overhangs);
 
-            //BAUESの情報をjsonに書き出し
-            //var bauesJson=JsonConvert.SerializeObject(zoneList);
+            //overhang情報をfaceにaddする
+            List<Face> faceListOverhang = new List<Face>();
+            foreach(Window window in windowList)
+            {
+                foreach(Overhang overhang in overhangList)
+                {
+                    if(overhang.parentWindowId == window.id)
+                    {
+                        window.addOverhangs(overhang);
+                    }
+                }
+            }
 
-            Therb therb = new Therb(roomList, faceListWindow, windowList);
+            Therb therb = new Therb(roomList, faceListWindow, windowList,overhangList);
 
             DA.SetDataList("Rooms", roomList);
             DA.SetDataList("Faces", faceListWindow);
             DA.SetDataList("Windows", windowList);
+            DA.SetDataList("Overhangs", overhangList);
             DA.SetData("Therb", therb);
         }
 
 
         private List<Window> windowOnFace(List<Face> faceList, List<Surface> windows)
         {
+            //TODO:内壁に窓を配置するケースもあるっぽい
             List<Face> externalFaces = faceList.FindAll(face => face.bc == "outdoor");
 
             List<Window> windowList = new List<Window>();
             foreach(Surface windowGeo in windows) {
-                //int parentId = 0;
-                //double tiltAngle = 0;
                 Face parent = externalFaces[0];
                 double closestDistance = 10000;
                 Window window = new Window(windowGeo);
@@ -180,8 +183,6 @@ namespace THERBgh
                     double distance = window.centerPt.DistanceTo(exFace.centerPt);
                     if (distance < closestDistance)
                     {
-                        //parentId = exFace.id;
-                        //tiltAngle = exFace.tiltAngle;
                         parent = exFace;
                         closestDistance = distance;
                     }
@@ -189,8 +190,6 @@ namespace THERBgh
 
                 if (closestDistance < 10000)
                 {
-                    //window.parentId = parentId;
-                    //window.tiltAngle = tiltAngle;
                     window.addParent(parent);
                 }
                 else
@@ -201,6 +200,40 @@ namespace THERBgh
 
             }
             return windowList;
+        }
+
+        //TODO: refactorしてwindowOnFaceと一緒の関数にする
+        private List<Overhang> overhangOnWindow(List<Window> windowList, List<Surface> overhangs)
+        {
+            List<Overhang> overhangList = new List<Overhang>();
+            foreach (Surface overhangGeo in overhangs)
+            {
+                Window parent = windowList[0];
+                double closestDistance = 10000;
+                Overhang overhang = new Overhang(overhangGeo);
+                foreach (Window window in windowList)
+                {
+                    double distance = overhang.centerPt.DistanceTo(window.centerPt);
+                    if (distance < closestDistance)
+                    {
+                        parent = window;
+                        closestDistance = distance;
+                    }
+                }
+
+                if (closestDistance < 10000)
+                {
+                    overhang.addParentWindow(parent);
+                    overhang.addParentFace(parent.parent);
+                }
+                else
+                {
+                    //エラー処理を加える
+                }
+                overhangList.Add(overhang);
+
+            }
+            return overhangList;
         }
 
         private List<Face> solveBoundary(List<Face> faceList, double tol)
