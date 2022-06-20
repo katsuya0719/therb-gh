@@ -69,7 +69,7 @@ namespace THERBgh
             DA.GetDataList(2, windowList);
             DA.GetDataList(3, overhangList);
 
-            //TODO:door,shadingの入力UIも作る
+            //TODO:doorの入力UIも作る
             List<Face> doorList = new List<Face>();
             List<Face> shadingList = new List<Face>();
             List<Face> wingList = new List<Face>();
@@ -135,6 +135,7 @@ namespace THERBgh
                 + fillEmpty(room.maxPt.X, 8, 3)
                 + fillEmpty(room.maxPt.Y, 8, 3)
                 + fillEmpty(room.maxPt.Z, 8, 3)
+                + fillEmpty(room.volume, 10, 3)
                  + "      18.800   16.7000 \r\n";
                 //volumeを抽出する必要
             });
@@ -154,7 +155,7 @@ namespace THERBgh
                 + "    0\r\n  structure No. "
                 + fillEmpty(exWall.constructionId, 5)
                 + "  overhang No.     0      wing1 No.    0   wing2 No.    0 \r\n      window No. "
-                
+                + OutputWindowIds(exWall)
                 //TODO:windowIdsの処理を入れ込む必要
                 + "\r\n";
             });
@@ -248,8 +249,7 @@ namespace THERBgh
         private string OutputWindowIds(Face face)
         {
             return fillEmpty(
-                face.windowIds.ToString(), 4) + String.Concat(Enumerable.Repeat(fillEmpty("0", 4), 
-                10));
+                face.windowIds.ToString(), 4) + String.Concat(Enumerable.Repeat(fillEmpty("0", 4), 10));
         }
         private string fillEmpty(int input, int totalLength)
         {
