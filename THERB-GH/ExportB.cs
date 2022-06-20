@@ -248,8 +248,21 @@ namespace THERBgh
         //TODO:Utilsモジュールにうつす
         private string OutputWindowIds(Face face)
         {
-            return fillEmpty(
-                face.windowIds.ToString(), 4) + String.Concat(Enumerable.Repeat(fillEmpty("0", 4), 10));
+            const int MAX_IMPUT_ID_COUNT = 11;
+
+            string windowIdStrs = "";
+            for (int windowIdIndex = 0; windowIdIndex < MAX_IMPUT_ID_COUNT; windowIdIndex++)
+            {
+                if (windowIdIndex < face.windowIds.Count)
+                {
+                    windowIdStrs += string.Format("{0,4}", face.windowIds[windowIdIndex]);
+                }
+                else
+                {
+                    windowIdStrs += fillEmpty("0", 4);
+                }
+            }
+            return windowIdStrs;
         }
         private string fillEmpty(int input, int totalLength)
         {
