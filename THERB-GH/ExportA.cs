@@ -15,7 +15,7 @@ using Utils;
 
 namespace THERBgh
 {
-    public class ExportR : GH_Component
+    public class ExportA : GH_Component
     {
         /// <summary>
         /// Each implementation of GH_Component must provide a public 
@@ -24,9 +24,9 @@ namespace THERBgh
         /// Subcategory the panel. If you use non-existing tab or panel names, 
         /// new tabs/panels will automatically be created.
         /// </summary>
-        public ExportR()
-          : base("exportR", "exportR",
-              "export r.dat",
+        public ExportA()
+          : base("exportA", "exportA",
+              "export a.dat",
               "THERB-GH", "Modelling")
         {
         }
@@ -37,7 +37,6 @@ namespace THERBgh
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
         {
             pManager.AddGenericParameter("Rooms", "Rooms", "Room class", GH_ParamAccess.list);
-            pManager.AddGenericParameter("Faces", "Faces", "Face class", GH_ParamAccess.list);
         }
 
         /// <summary>
@@ -45,7 +44,7 @@ namespace THERBgh
         /// </summary>
         protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
         {
-            pManager.AddTextParameter("r_dat", "r_dat", "r.dat file", GH_ParamAccess.item);
+            pManager.AddTextParameter("a_dat", "a_dat", "a.dat file", GH_ParamAccess.item);
         }
 
         /// <summary>
@@ -56,11 +55,9 @@ namespace THERBgh
         protected override void SolveInstance(IGH_DataAccess DA)
         {
             List<Room> roomList = new List<Room>();
-            List<Face> faceList = new List<Face>();
-            string rDat = "";
+            string aDat = "";
 
             DA.GetDataList(0, roomList);
-            DA.GetDataList(1, faceList);
 
             if (roomList == null) return;
 
@@ -82,14 +79,11 @@ namespace THERBgh
                 {"CR",1},
             };
 
-
-
-            //TODO: 齋藤君に修正願い
             roomList.ForEach(room =>
             {
                 List<int> directions = room.getDirectionList();
                 //idList.Add(room.id);
-                rDat += fillEmpty(room.id, 5)
+                aDat += fillEmpty(room.id, 5)
                 + fillEmpty(directions[0], 5)
                 + fillEmpty(directions[1], 5)
                 + fillEmpty(directions[2], 5)
@@ -98,28 +92,6 @@ namespace THERBgh
                 + fillEmpty(directions[5], 5)
                 + fillEmpty(directions[6], 5) + " \r\n";
             });
-
-            //Faceデータに対する処理
-            roomList.ForEach(room =>
-            {
-                faceList.ForEach(face =>
-                {
-                    if (room.id == face.parentId)
-                    {
-                        rDat += fillEmpty(room.id, 5)
-                        + fillEmpty(face.id, 5)
-                        + fillEmpty(directionDict[face.direction], 5)
-                        + fillEmpty(directionCount[face.direction], 5)
-                        + fillEmpty(face.constructionId, 5)
-                        + fillEmpty(face.partId, 5)
-                        + fillEmpty(face.adjacencyRoomId, 5) + " \r\n";
-
-                        directionCount[face.direction] += 1;
-                    }
-                });
-            });
-            
-            DA.SetData("r_dat", rDat);
         }
 
         //TODO:Utilsモジュールにうつす
@@ -161,7 +133,7 @@ namespace THERBgh
         /// </summary>
         public override Guid ComponentGuid
         {
-            get { return new Guid("ac7ba740-49bd-45a4-8c84-8d9a69081c38"); }
+            get { return new Guid("4d940719-485a-4f3f-96ba-58a40632dbd4"); }
         }
     }
 }
