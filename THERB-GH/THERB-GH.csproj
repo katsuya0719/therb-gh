@@ -63,6 +63,7 @@
   <ItemGroup>
     <Compile Include="ExportB.cs" />
     <Compile Include="ExportA.cs" />
+    <Compile Include="ReadProperties.cs" />
     <Compile Include="RunSimulation.cs" />
     <Compile Include="Utils.cs" />
     <Compile Include="FilterFaceByProperty.cs" />

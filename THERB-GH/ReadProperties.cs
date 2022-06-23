@@ -11,7 +11,7 @@ using Model;
 
 namespace THERBgh
 {
-    public class FilterFaceByProperty : GH_Component
+    public class ReadProperty : GH_Component
     {
         /// <summary>
         /// Each implementation of GH_Component must provide a public 
@@ -20,9 +20,9 @@ namespace THERBgh
         /// Subcategory the panel. If you use non-existing tab or panel names, 
         /// new tabs/panels will automatically be created.
         /// </summary>
-        public FilterFaceByProperty()
-          : base("FilterFaceByProperty", "FilterFaceByProperty",
-              "Filter face by properties",
+        public ReadProperty()
+          : base("ReadProperty", "ReadProperty",
+              "Read properties from class",
               "THERB-GH", "Modelling")
         {
         }
@@ -33,7 +33,7 @@ namespace THERBgh
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
         {
             pManager.AddGenericParameter("Face", "Face", "Face list", GH_ParamAccess.list);
-            pManager.AddTextParameter("bc", "bc", "boundary condition to filter", GH_ParamAccess.item);
+            //pManager.AddTextParameter("property", "property", "property to extract", GH_ParamAccess.item);
             //pManager.AddTextParameter("class", "class", "room or face or window", GH_ParamAccess.item);
         }
 
@@ -43,8 +43,8 @@ namespace THERBgh
         protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
         {
             //TODO: RegisterOutputParamsをdynamicにしたい
-            pManager.AddGenericParameter("trueFace", "trueFace", "true Face list", GH_ParamAccess.list);
-            pManager.AddGenericParameter("falseFace", "falseFace", "false Face list", GH_ParamAccess.list);
+            //pManager.AddSurfaceParameter("surface", "surface", "extracted surface", GH_ParamAccess.list);
+            pManager.AddBrepParameter("surface", "surface", "extracted surface", GH_ParamAccess.list);
         }
 
         /// <summary>
@@ -55,30 +55,19 @@ namespace THERBgh
         protected override void SolveInstance(IGH_DataAccess DA)
         {
             List<Face> faceList = new List<Face>();
-            
             DA.GetDataList(0, faceList);
 
-            string bc = "";
-            DA.GetData(1, ref bc);
-            //keyが正しくなかったらエラーを返すようにする  
-            Enum.TryParse(bc, out BoundaryCondition boundaryCondition);
-
-            List<Face> trueFaceList = new List<Face>();
-            List<Face> falseFaceList = new List<Face>();
+            //string property = "";
+            //DA.GetData(1, ref property);
+            List<Surface> surfaceList = new List<Surface>();
 
             faceList.ForEach(face =>
             {
-                if (face.filterByBc(boundaryCondition)){
-                    trueFaceList.Add(face);
-                }
-                else
-                {
-                    falseFaceList.Add(face);
-                }
+                surfaceList.Add(face.geometry);
             });
 
-            DA.SetDataList("trueFace", trueFaceList);
-            DA.SetDataList("falseFace", falseFaceList);
+            //TODO:型の問題を解決
+            DA.SetDataList("surface", surfaceList);
         }
 
         /// <summary>
@@ -102,7 +91,7 @@ namespace THERBgh
         /// </summary>
         public override Guid ComponentGuid
         {
-            get { return new Guid("8706930f-23f5-48d3-885a-78a128be5948"); }
+            get { return new Guid("579d0d3a-7aae-40b9-82ed-1ddf74398f6c"); }
         }
     }
 }

@@ -11,7 +11,7 @@ using Model;
 
 namespace THERBgh
 {
-    public class FilterFaceByProperty : GH_Component
+    public class UpdateProperty : GH_Component
     {
         /// <summary>
         /// Each implementation of GH_Component must provide a public 
@@ -20,9 +20,9 @@ namespace THERBgh
         /// Subcategory the panel. If you use non-existing tab or panel names, 
         /// new tabs/panels will automatically be created.
         /// </summary>
-        public FilterFaceByProperty()
-          : base("FilterFaceByProperty", "FilterFaceByProperty",
-              "Filter face by properties",
+        public UpdateProperty()
+          : base("UpdateProperty", "UpdateProperty",
+              "update properties",
               "THERB-GH", "Modelling")
         {
         }
@@ -34,7 +34,6 @@ namespace THERBgh
         {
             pManager.AddGenericParameter("Face", "Face", "Face list", GH_ParamAccess.list);
             pManager.AddTextParameter("bc", "bc", "boundary condition to filter", GH_ParamAccess.item);
-            //pManager.AddTextParameter("class", "class", "room or face or window", GH_ParamAccess.item);
         }
 
         /// <summary>
