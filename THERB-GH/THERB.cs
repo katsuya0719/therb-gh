@@ -51,6 +51,7 @@ namespace THERBgh
             pManager.AddGenericParameter("Windows", "Windows", "Window class", GH_ParamAccess.list);
             pManager.AddGenericParameter("Overhangs", "Overhangs", "Overhang class", GH_ParamAccess.list);
             pManager.AddGenericParameter("Therb", "therb", "THERB class", GH_ParamAccess.item);
+            pManager.AddBrepParameter("test", "test", "test", GH_ParamAccess.list);
         }
 
         /// <summary>
@@ -165,6 +166,7 @@ namespace THERBgh
             DA.SetDataList("Windows", windowList);
             DA.SetDataList("Overhangs", overhangList);
             DA.SetData("Therb", therb);
+            DA.SetDataList("test", splitGeos);
         }
 
 
