@@ -79,12 +79,15 @@ namespace THERBgh
             DA.GetDataList(2, overhangs);
             DA.GetData(3, ref tol);
 
-            List<Brep> splitGeos = new List<Brep>();
-            for (int i = 0; i < geos.Count; i = i + 1)
+            List<Brep> splitGeos;
+            try
             {
-                List<Brep> cutterBreps = geos.FindAll(geo => geo != geos[i]);
-                Brep[] splitGeo = geos[i].Split(cutterBreps, tol);
-                splitGeos.Add(Brep.JoinBreps(splitGeo, tol)[0]);
+                splitGeos = SplitGeometry(geos, tol);
+            }
+            catch
+            {
+                AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "開かれたBrepが入れられました。");
+                return;
             }
 
             //Roomに対する処理
@@ -159,6 +162,29 @@ namespace THERBgh
             Therb therb = new Therb(roomList, faceListWindow, windowList, overhangList);
 
             DA.SetData("Therb", therb);
+        }
+
+        private List<Brep> SplitGeometry(List<Brep> breps, double tol)
+        {
+            if (breps.Count == 1)
+            {
+                if (!breps[0].IsSolid) throw new Exception();
+                return breps;
+            }
+            List<Brep> splitGeos = new List<Brep>();
+            for (int i = 0; i < breps.Count; i = i + 1)
+            {
+                if (!breps[i].IsSolid) throw new Exception();
+
+                List<Brep> cutterBreps = breps.FindAll(geo => geo != breps[i]);
+                Brep[] splitGeo = breps[i].Split(cutterBreps, tol);
+                Brep jointedBrep = Brep.JoinBreps(splitGeo, tol)[0];
+
+                if (!jointedBrep.IsSolid) throw new Exception();
+
+                splitGeos.Add(jointedBrep);
+            }
+            return splitGeos;
         }
 
 
