@@ -37,10 +37,7 @@ namespace THERBgh
         /// </summary>
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
         {
-            pManager.AddGenericParameter("Rooms", "Rooms", "Room class", GH_ParamAccess.list);
-            pManager.AddGenericParameter("Faces", "Faces", "Face class", GH_ParamAccess.list);
-            pManager.AddGenericParameter("Windows", "Windows", "Window class", GH_ParamAccess.list);
-            pManager.AddGenericParameter("Overhangs", "Overhangs", "Overhang class", GH_ParamAccess.list);
+            pManager.AddGenericParameter("Therb", "therb", "THERB class", GH_ParamAccess.item);
         }
 
         /// <summary>
@@ -58,16 +55,17 @@ namespace THERBgh
         /// to store data in output parameters.</param>
         protected override void SolveInstance(IGH_DataAccess DA)
         {
-            List<Room> roomList = new List<Room>();
-            List<Face> faceList = new List<Face>();
-            List<Window> windowList = new List<Window>();
-            List<Overhang> overhangList = new List<Overhang>();
+
             string dDat = "";
 
-            DA.GetDataList(0, roomList);
-            DA.GetDataList(1, faceList);
-            DA.GetDataList(2, windowList);
-            DA.GetDataList(3, overhangList);
+            Therb therb = null;
+            DA.GetData(0, ref therb);
+
+            List<Room> roomList = therb.rooms;
+            List<Face> faceList = therb.faces;
+            List<Window> windowList = therb.windows;
+            List<Overhang> overhangList = therb.overhangs;
+
 
             //TODO:doorの入力UIも作る
             List<Face> doorList = new List<Face>();

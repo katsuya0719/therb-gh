@@ -36,8 +36,7 @@ namespace THERBgh
         /// </summary>
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
         {
-            pManager.AddGenericParameter("Rooms", "Rooms", "Room class", GH_ParamAccess.list);
-            pManager.AddGenericParameter("Faces", "Faces", "Face class", GH_ParamAccess.list);
+            pManager.AddGenericParameter("Therb", "therb", "THERB class", GH_ParamAccess.item);
         }
 
         /// <summary>
@@ -55,12 +54,14 @@ namespace THERBgh
         /// to store data in output parameters.</param>
         protected override void SolveInstance(IGH_DataAccess DA)
         {
-            List<Room> roomList = new List<Room>();
-            List<Face> faceList = new List<Face>();
-            string rDat = "";
 
-            DA.GetDataList(0, roomList);
-            DA.GetDataList(1, faceList);
+            Therb therb = null;
+            DA.GetData(0, ref therb);
+
+            List<Room> roomList = therb.rooms;
+            List<Face> faceList = therb.faces;
+
+            string rDat = "";
 
             if (roomList == null) return;
 

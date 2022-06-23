@@ -36,9 +36,11 @@ namespace THERBgh
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
         {
             pManager.AddBrepParameter("geos", "geometries", "list of geometries", GH_ParamAccess.list);
-            pManager.AddSurfaceParameter("windows", "windows", "list of windows", GH_ParamAccess.list);
-            pManager.AddSurfaceParameter("overhangs", "overhangs", "list of overhangs", GH_ParamAccess.list);
-            pManager.AddNumberParameter("tol", "tolerance", "tolerance", GH_ParamAccess.item);
+            pManager.Register_SurfaceParam("windows", "windows", "list of windows", GH_ParamAccess.list);
+            pManager.Register_SurfaceParam("overhangs", "overhangs", "list of overhangs", GH_ParamAccess.list);
+            pManager.AddNumberParameter("tol", "tolerance", "tolerance", GH_ParamAccess.item, 0.1);
+            pManager[1].Optional = true;
+            pManager[2].Optional = true;
         }
 
         /// <summary>
@@ -46,10 +48,6 @@ namespace THERBgh
         /// </summary>
         protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
         {
-            pManager.AddGenericParameter("Rooms", "Rooms", "Room class", GH_ParamAccess.list);
-            pManager.AddGenericParameter("Faces", "Faces", "Face class", GH_ParamAccess.list);
-            pManager.AddGenericParameter("Windows", "Windows", "Window class", GH_ParamAccess.list);
-            pManager.AddGenericParameter("Overhangs", "Overhangs", "Overhang class", GH_ParamAccess.list);
             pManager.AddGenericParameter("Therb", "therb", "THERB class", GH_ParamAccess.item);
             pManager.AddBrepParameter("test", "test", "test", GH_ParamAccess.list);
         }
@@ -82,12 +80,15 @@ namespace THERBgh
             DA.GetDataList(2, overhangs);
             DA.GetData(3, ref tol);
 
-            List<Brep> splitGeos = new List<Brep>();
-            for (int i = 0; i < geos.Count; i = i + 1)
+            List<Brep> splitGeos;
+            try
             {
-                List<Brep> cutterBreps = geos.FindAll(geo => geo != geos[i]);
-                Brep[] splitGeo = geos[i].Split(cutterBreps, tol);
-                splitGeos.Add(Brep.JoinBreps(splitGeo, tol)[0]);
+                splitGeos = SplitGeometry(geos, tol);
+            }
+            catch
+            {
+                AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "開かれたBrepが入れられました。");
+                return;
             }
 
             //Roomに対する処理
@@ -159,14 +160,33 @@ namespace THERBgh
                 }
             }
 
-            Therb therb = new Therb(roomList, faceListWindow, windowList,overhangList);
+            Therb therb = new Therb(roomList, faceListWindow, windowList, overhangList);
 
-            DA.SetDataList("Rooms", roomList);
-            DA.SetDataList("Faces", faceListWindow);
-            DA.SetDataList("Windows", windowList);
-            DA.SetDataList("Overhangs", overhangList);
             DA.SetData("Therb", therb);
             DA.SetDataList("test", splitGeos);
+        }
+
+        private List<Brep> SplitGeometry(List<Brep> breps, double tol)
+        {
+            if (breps.Count == 1)
+            {
+                if (!breps[0].IsSolid) throw new Exception();
+                return breps;
+            }
+            List<Brep> splitGeos = new List<Brep>();
+            for (int i = 0; i < breps.Count; i = i + 1)
+            {
+                if (!breps[i].IsSolid) throw new Exception();
+
+                List<Brep> cutterBreps = breps.FindAll(geo => geo != breps[i]);
+                Brep[] splitGeo = breps[i].Split(cutterBreps, tol);
+                Brep jointedBrep = Brep.JoinBreps(splitGeo, tol)[0];
+
+                if (!jointedBrep.IsSolid) throw new Exception();
+
+                splitGeos.Add(jointedBrep);
+            }
+            return splitGeos;
         }
 
 
