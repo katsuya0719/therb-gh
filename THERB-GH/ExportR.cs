@@ -108,13 +108,13 @@ namespace THERBgh
                     {
                         rDat += fillEmpty(room.id, 5)
                         + fillEmpty(face.id, 5)
-                        + fillEmpty(directionDict[face.direction], 5)
-                        + fillEmpty(directionCount[face.direction], 5)
+                        + fillEmpty(directionDict[face.direction.ToString()], 5)
+                        + fillEmpty(directionCount[face.direction.ToString()], 5)
                         + fillEmpty(face.constructionId, 5)
                         + fillEmpty(face.partId, 5)
                         + fillEmpty(face.adjacencyRoomId, 5) + " \r\n";
 
-                        directionCount[face.direction] += 1;
+                        directionCount[face.direction.ToString()] += 1;
                     }
                 });
             });

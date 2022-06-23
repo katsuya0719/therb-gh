@@ -11,9 +11,24 @@ using Model;
 
 namespace THERBgh
 {
-    public class ReadProperty : GH_Component
+    enum FaceKeys
     {
-        private Therb _therb;
+        bc,
+        elementType,
+        direction,
+    }
+
+    enum Direction
+    {
+        N,
+        S,
+        W,
+        E,
+        F,
+        CR
+    }
+    public class FilterFaceByProperty : GH_Component
+    {
         /// <summary>
         /// Each implementation of GH_Component must provide a public 
         /// constructor without any arguments.
@@ -21,9 +36,9 @@ namespace THERBgh
         /// Subcategory the panel. If you use non-existing tab or panel names, 
         /// new tabs/panels will automatically be created.
         /// </summary>
-        public ReadProperty()
-          : base("ReadProperty", "ReadProperty",
-              "Description",
+        public FilterFaceByProperty()
+          : base("FilterFaceByProperty", "FilterFaceByProperty",
+              "Filter face by properties",
               "THERB-GH", "Modelling")
         {
         }
@@ -33,9 +48,9 @@ namespace THERBgh
         /// </summary>
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
         {
-            pManager.AddGenericParameter("Therb", "Therb", "Therb class", GH_ParamAccess.item);
-            //pManager.AddGenericParameter("Faces", "Faces", "Face class", GH_ParamAccess.list);
-            //pManager.AddGenericParameter("Windows", "Windows", "Window class", GH_ParamAccess.list);
+            pManager.AddGenericParameter("Face", "Face", "Face list", GH_ParamAccess.list);
+            pManager.AddTextParameter("bc", "bc", "boundary condition to filter", GH_ParamAccess.item);
+            //pManager.AddTextParameter("class", "class", "room or face or window", GH_ParamAccess.item);
         }
 
         /// <summary>
@@ -44,8 +59,8 @@ namespace THERBgh
         protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
         {
             //TODO: RegisterOutputParamsをdynamicにしたい
-            pManager.AddIntegerParameter("geo", "geo", "geometry", GH_ParamAccess.list);
-            pManager.AddIntegerParameter("ids", "ids", "ids", GH_ParamAccess.item);
+            pManager.AddGenericParameter("trueFace", "trueFace", "true Face list", GH_ParamAccess.list);
+            pManager.AddGenericParameter("falseFace", "falseFace", "false Face list", GH_ParamAccess.list);
         }
 
         /// <summary>
@@ -55,14 +70,31 @@ namespace THERBgh
         /// to store data in output parameters.</param>
         protected override void SolveInstance(IGH_DataAccess DA)
         {
-            if (!DA.GetData("Therb",ref _therb)) { return;  }
-            List<Brep> geoList = new List<Brep>();
-            foreach(Room room in _therb.rooms)
-            {
-                geoList.Add(room.geometry);
-            }
+            List<Face> faceList = new List<Face>();
             
-            DA.SetData("geometris", geoList);
+            DA.GetDataList(0, faceList);
+
+            string bc = "";
+            DA.GetData(1, ref bc);
+            //keyが正しくなかったらエラーを返すようにする  
+            Enum.TryParse(bc, out BoundaryCondition boundaryCondition);
+
+            List<Face> trueFaceList = new List<Face>();
+            List<Face> falseFaceList = new List<Face>();
+
+            faceList.ForEach(face =>
+            {
+                if (face.filterByBc(boundaryCondition)){
+                    trueFaceList.Add(face);
+                }
+                else
+                {
+                    falseFaceList.Add(face);
+                }
+            });
+
+            DA.SetDataList("trueFace", trueFaceList);
+            DA.SetDataList("falseFace", falseFaceList);
         }
 
         /// <summary>

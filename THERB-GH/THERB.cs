@@ -173,7 +173,7 @@ namespace THERBgh
         private List<Window> windowOnFace(List<Face> faceList, List<Surface> windows)
         {
             //TODO:内壁に窓を配置するケースもあるっぽい
-            List<Face> externalFaces = faceList.FindAll(face => face.bc == "outdoor");
+            List<Face> externalFaces = faceList.FindAll(face => face.bc == BoundaryCondition.exterior);
 
             List<Window> windowList = new List<Window>();
             foreach(Surface windowGeo in windows) {
@@ -262,7 +262,7 @@ namespace THERBgh
 
                 if (shootIt(testRay, targetSurfaces, tol, 2))
                 {
-                    testFace.bc = "interior";
+                    testFace.bc = BoundaryCondition.interior;
                     //どのfaceに接しているのかをチェック
                     //testFace.centerPtから一番近いtargetSurfacesが隣接しているsurfaceだと判断する
                     Face adjacentFace = getClosestFaceFromFace(testFace, targetFaces);
@@ -275,11 +275,11 @@ namespace THERBgh
                     //z座標<=0であれば、bc=groundとする
                     if(testFace.centerPt.Z <= tol)
                     {
-                        testFace.bc = "ground";
+                        testFace.bc = BoundaryCondition.ground;
                     }
                     else
                     {
-                        testFace.bc = "outdoor";
+                        testFace.bc = BoundaryCondition.exterior;
                     }
                     testFace.adjacencyRoomId = 0;
                 }

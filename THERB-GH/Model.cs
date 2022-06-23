@@ -16,9 +16,9 @@ namespace Model
     [JsonConverter(typeof(StringEnumConverter))]
     public enum BoundaryCondition
     {
-        Outdoors,
-        Surface,
-        Ground
+        exterior,
+        interior,
+        ground
     }
     [JsonConverter(typeof(StringEnumConverter))]
     public enum SurfaceType
@@ -174,16 +174,16 @@ namespace Model
             {
                 switch (face.direction)
                 {
-                    case "S":
+                    case Direction.S:
                         sWalls.Add(face);
                         break;
-                    case "N":
+                    case Direction.N:
                         nWalls.Add(face);
                         break;
-                    case "W":
+                    case Direction.W:
                         wWalls.Add(face);
                         break;
-                    case "E":
+                    case Direction.E:
                         eWalls.Add(face);
                         break;
                 }
@@ -258,17 +258,33 @@ namespace Model
             overhangId = overhang.id;
         }
     }
+
+    public enum FaceKeys
+    {
+        bc,
+        elementType,
+        direction,
+    }
+
+    public enum Direction
+    {
+        N,
+        S,
+        W,
+        E,
+        F,
+        CR
+    }
     public class Face : BaseFace
     {
         //public int partId;
         //public faceType face{get; private set;}
         public string face { get; private set; }
-        //public boundaryCondition bc{get; set;}
-        public string bc { get; set; }
+        public BoundaryCondition bc { get; set; }
         public string elementType { get; set; }
         public Room parent;
         public Vector3d tempNormal;
-        public string direction;
+        public Direction direction;
         public int adjacencyRoomId; //隣接しているRoomのId 外気に接している場合には0
         public List<Window> windows { get; private set; }
         public List<int> windowIds;
@@ -327,16 +343,53 @@ namespace Model
             windowIds = new List<int>();
         }
 
+        /*
+        public bool filterByKey<T>(T key,string value)
+        {
+            if (this.key == value)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        */
+        public bool filterByBc(BoundaryCondition bc)
+        {
+            if (this.bc == bc)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
 
-        private string defineDirection(Vector3d normal)
+        //TODO: 他のFaceKeysに関しても適用できるよう汎用性を持たせたい（上みたいな感じ）
+        public bool filterByDirection(Direction direction)
+        {
+            if (this.direction == direction)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        private Direction defineDirection(Vector3d normal)
         {
             if (face == "floor")
             {
-                return "F";
+                return Direction.F;
             }
             else if (face == "roof")
             {
-                return "CR";
+                return Direction.CR;
             }
 
             Vector3d northAngle = new Vector3d(0, 1, 0);
@@ -349,27 +402,27 @@ namespace Model
 
             if (angle1 < 45)
             {
-                return "N";
+                return Direction.N;
             }
             else if (angle1 == 45 && angle2 == 45)
             {
-                return "N";
+                return Direction.N;
             }
             else if (angle1 > 135)
             {
-                return "S";
+                return Direction.S;
             }
             else if (angle1 == 135 && angle2 == 135)
             {
-                return "S";
+                return Direction.S;
             }
             else if (angle2 <= 45)
             {
-                return "W";
+                return Direction.W;
             }
             else
             {
-                return "E";
+                return Direction.E;
             }
         }
 
@@ -406,6 +459,7 @@ namespace Model
 
         public void setElementType()
         {
+            /*
             string firstPhrase = "";
             if (bc == "outdoor")
             {
@@ -415,7 +469,8 @@ namespace Model
             {
                 firstPhrase = bc;
             }
-            elementType = firstPhrase + face;
+            */
+            elementType = bc.ToString() + face;
             //partIdをアサインする
             switch (elementType)
             {

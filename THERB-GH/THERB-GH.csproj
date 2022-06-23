@@ -65,7 +65,7 @@
     <Compile Include="ExportA.cs" />
     <Compile Include="RunSimulation.cs" />
     <Compile Include="Utils.cs" />
-    <Compile Include="ReadProperty.cs" />
+    <Compile Include="FilterFaceByProperty.cs" />
     <Compile Include="Model.cs" />
     <Compile Include="ExportR.cs" />
     <Compile Include="THERB.cs" />
