@@ -3,13 +3,13 @@
       Room 2   79.069  10.701   5.000  92.242  24.910  10.000   935.897      18.800   16.7000 
     Ex-wall 1  79.069  10.701   0.000  79.069  21.080   5.000    90.000     51.8939    0
   structure No.     1  overhang No.     0      wing1 No.    0   wing2 No.    0 
-      window No.    0   0   0   0   0   0   0   0   0   0   0
+      window No.    1   0   0   0   0   0   0   0   0   0   0
     Ex-wall 2  79.069  21.080   0.000  92.242  21.080   5.000    90.000     65.8654    0
   structure No.     1  overhang No.     0      wing1 No.    0   wing2 No.    0 
       window No.    0   0   0   0   0   0   0   0   0   0   0
     Ex-wall 3  92.242  10.701   0.000  92.242  21.080   5.000    90.000     51.8939    0
   structure No.     1  overhang No.     0      wing1 No.    0   wing2 No.    0 
-      window No.    1   0   0   0   0   0   0   0   0   0   0
+      window No.    0   0   0   0   0   0   0   0   0   0   0
     Ex-wall 4  79.069  10.701   0.000  92.242  10.701   5.000    90.000     65.8654    0
   structure No.     1  overhang No.     0      wing1 No.    0   wing2 No.    0 
       window No.    0   0   0   0   0   0   0   0   0   0   0
@@ -25,7 +25,7 @@
    Ex-wall 10  79.069  10.701   5.000  79.069  24.910  10.000    90.000     71.0462    0
   structure No.     1  overhang No.     0      wing1 No.    0   wing2 No.    0 
       window No.    0   0   0   0   0   0   0   0   0   0   0
-     Window 1  92.242  10.701   5.000  92.242  13.885   6.544    90.000      4.9169    0
+     Window 1  37.477  11.945   5.000  37.477  15.129   6.544    90.000      4.9169    0
   structure No.     6  overhang No.     0      wing1 No.    0   wing2 No.    0
     In-wall 6  79.069  10.701   5.000  92.242  21.080   5.000     0.000    136.7206    0
   structure No.     3

@@ -32,7 +32,7 @@ namespace THERBgh
         /// </summary>
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
         {
-            pManager.AddGenericParameter("Face", "Face", "Face list", GH_ParamAccess.list);
+            pManager.AddGenericParameter("Therb", "Therb", "Therb data", GH_ParamAccess.item);
             //pManager.AddTextParameter("property", "property", "property to extract", GH_ParamAccess.item);
             //pManager.AddTextParameter("class", "class", "room or face or window", GH_ParamAccess.item);
         }
@@ -54,8 +54,12 @@ namespace THERBgh
         /// to store data in output parameters.</param>
         protected override void SolveInstance(IGH_DataAccess DA)
         {
-            List<Face> faceList = new List<Face>();
-            DA.GetDataList(0, faceList);
+            Therb therb = null;
+            DA.GetData(0, ref therb);
+
+            List<Face> faceList = therb.faces;
+            //List<Face> faceList = new List<Face>();
+            //DA.GetDataList(0, faceList);
 
             //string property = "";
             //DA.GetData(1, ref property);
@@ -91,7 +95,7 @@ namespace THERBgh
         /// </summary>
         public override Guid ComponentGuid
         {
-            get { return new Guid("579d0d3a-7aae-40b9-82ed-1ddf74398f6c"); }
+            get { return new Guid("01bf9c59-9cce-48b5-b00b-0c0ecb858f63"); }
         }
     }
 }
