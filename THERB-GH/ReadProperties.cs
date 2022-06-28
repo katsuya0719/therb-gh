@@ -43,8 +43,7 @@ namespace THERBgh
         protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
         {
             //TODO: RegisterOutputParamsをdynamicにしたい
-            //pManager.AddSurfaceParameter("surface", "surface", "extracted surface", GH_ParamAccess.list);
-            pManager.AddBrepParameter("surface", "surface", "extracted surface", GH_ParamAccess.list);
+            pManager.AddSurfaceParameter("surface", "surface", "extracted surface", GH_ParamAccess.list);
         }
 
         /// <summary>
@@ -63,11 +62,11 @@ namespace THERBgh
 
             //string property = "";
             //DA.GetData(1, ref property);
-            List<Surface> surfaceList = new List<Surface>();
+            List<NurbsSurface> surfaceList = new List<NurbsSurface>();
 
             faceList.ForEach(face =>
             {
-                surfaceList.Add(face.geometry);
+                surfaceList.Add(face.geometry.ToNurbsSurface());
             });
 
             //TODO:型の問題を解決

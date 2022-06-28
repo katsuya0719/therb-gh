@@ -100,8 +100,9 @@ namespace THERBgh
                 //TODO: SurfaceとFaceの違い理解
                 //BrepSurfaceList srfs = geo.Surfaces;
                 BrepFaceList srfs = geo.Faces;
-                foreach (Surface srf in srfs)
+                foreach (BrepFace brepface in srfs)
                 {
+                    Surface srf = brepface.ToNurbsSurface();
                     Vector3d normal = srf.NormalAt(0.5, 0.5);
                     Vector3d tempNormal = reviseNormal(srf, temp);
                     Face face = new Face(temp, srf, normal, tempNormal);
