@@ -141,7 +141,7 @@ namespace THERBgh
             //外壁の情報を抽出
             exteriorWalls.ForEach(exWall =>
             {
-                dDat += fillEmpty("Ex-wall " + exWall.id.ToString(), 13)
+                dDat += fillEmpty("Ex-wall " + exWall.partId.ToString(), 13)
                 + fillEmpty(exWall.minPt.X, 8, 3)
                 + fillEmpty(exWall.minPt.Y, 8, 3)
                 + fillEmpty(exWall.minPt.Z, 8, 3)
@@ -161,7 +161,7 @@ namespace THERBgh
             //窓の情報を抽出
             windowList.ForEach(window =>
             {
-                dDat += fillEmpty("Window " + window.id.ToString(), 13)
+                dDat += fillEmpty("Window " + window.partId.ToString(), 13)
                 + fillEmpty(window.minPt.X, 8, 3)
                 + fillEmpty(window.minPt.Y, 8, 3)
                 + fillEmpty(window.minPt.Z, 8, 3)
@@ -179,7 +179,7 @@ namespace THERBgh
             //内壁の情報を抽出
             interiorWalls.ForEach(inWall =>
             {
-                dDat += fillEmpty("In-wall " + inWall.id.ToString(), 13)
+                dDat += fillEmpty("In-wall " + inWall.partId.ToString(), 13)
                 + fillEmpty(inWall.minPt.X, 8, 3)
                 + fillEmpty(inWall.minPt.Y, 8, 3)
                 + fillEmpty(inWall.minPt.Z, 8, 3)
@@ -196,7 +196,7 @@ namespace THERBgh
             //床・天井の情報を抽出
             interiorRoofFloors.ForEach(inMat =>
             {
-                dDat += fillEmpty("In-wall " + inMat.id.ToString(), 13)
+                dDat += fillEmpty("In-wall " + inMat.partId.ToString(), 13)
                 + fillEmpty(inMat.minPt.X, 8, 3)
                 + fillEmpty(inMat.minPt.Y, 8, 3)
                 + fillEmpty(inMat.minPt.Z, 8, 3)
@@ -211,7 +211,7 @@ namespace THERBgh
 
             exteriorRoofs.ForEach(roof =>
             {
-                dDat += fillEmpty("Roof " + roof.id.ToString(), 13)
+                dDat += fillEmpty("Roof " + roof.partId.ToString(), 13)
                 + fillEmpty(roof.minPt.X, 8, 3)
                 + fillEmpty(roof.minPt.Y, 8, 3)
                 + fillEmpty(roof.minPt.Z, 8, 3)
@@ -226,7 +226,7 @@ namespace THERBgh
 
             groundFloors.ForEach(floor =>
             {
-                dDat += fillEmpty("Ground " + floor.id.ToString(), 13)
+                dDat += fillEmpty("Ground " + floor.partId.ToString(), 13)
                 + fillEmpty(floor.minPt.X, 8, 3)
                 + fillEmpty(floor.minPt.Y, 8, 3)
                 + fillEmpty(floor.minPt.Z, 8, 3)

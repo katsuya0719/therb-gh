@@ -38,16 +38,16 @@ namespace Model
 
         public Point3d getMinCoord(BrepVertexList vertices)
         {
-            Point3d origin = new Point3d(0, 0, 0);
+            //(0,0,0)をoriginにすると、マイナスの座標を含むケースでうまくいかない
+            //TODO:this logic should be elaborated more
+            Point3d origin = new Point3d(-1000, -1000, -1000);
             int i = 0;
             int minId = 0;
-            double minValue = 1000;
+            double minValue = 1000000;
             foreach (BrepVertex vertex in vertices)
             {
-
                 Point3d checkPt = vertex.Location;
                 double distance = origin.DistanceTo(checkPt);
-                //Print("{0}:{1}", i, distance);
                 if (distance < minValue)
                 {
                     minId = i;
@@ -62,7 +62,7 @@ namespace Model
 
         public Point3d getMaxCoord(BrepVertexList vertices)
         {
-            Point3d origin = new Point3d(0, 0, 0);
+            Point3d origin = new Point3d(-1000, -1000, -1000);
             int i = 0;
             int maxId = 0;
             double maxValue = -1000;
