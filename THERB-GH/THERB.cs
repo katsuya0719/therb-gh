@@ -36,8 +36,8 @@ namespace THERBgh
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
         {
             pManager.AddBrepParameter("geos", "geometries", "list of geometries", GH_ParamAccess.list);
-            pManager.Register_SurfaceParam("windows", "windows", "list of windows", GH_ParamAccess.list);
-            pManager.Register_SurfaceParam("overhangs", "overhangs", "list of overhangs", GH_ParamAccess.list);
+            pManager.AddSurfaceParameter("windows", "windows", "list of windows", GH_ParamAccess.list);
+            pManager.AddSurfaceParameter("overhangs", "overhangs", "list of overhangs", GH_ParamAccess.list);
             pManager.AddNumberParameter("tol", "tolerance", "tolerance", GH_ParamAccess.item, 0.1);
             pManager[1].Optional = true;
             pManager[2].Optional = true;
