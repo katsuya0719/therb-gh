@@ -32,7 +32,10 @@ namespace THERBgh
         /// </summary>
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
         {
-            pManager.AddGenericParameter("Therb", "Therb", "Therb data", GH_ParamAccess.item);
+            //pManager.AddGenericParameter("Therb", "Therb", "Therb data", GH_ParamAccess.item);
+            pManager.AddGenericParameter("Faces", "Faces", "list of Face", GH_ParamAccess.list);
+            pManager[0].Optional = true;
+            //pManager[1].Optional = true;
             //pManager.AddTextParameter("property", "property", "property to extract", GH_ParamAccess.item);
             //pManager.AddTextParameter("class", "class", "room or face or window", GH_ParamAccess.item);
         }
@@ -45,6 +48,10 @@ namespace THERBgh
             //TODO: RegisterOutputParamsをdynamicにしたい
             //pManager.AddSurfaceParameter("surface", "surface", "extracted surface", GH_ParamAccess.list);
             pManager.AddSurfaceParameter("surface", "surface", "extracted surface", GH_ParamAccess.list);
+            pManager.AddTextParameter("elementType", "element type", "element type", GH_ParamAccess.list);
+            pManager.AddNumberParameter("normal", "normal", "normal direction", GH_ParamAccess.list);
+            pManager.AddTextParameter("direction", "direction", "direction", GH_ParamAccess.list);
+            pManager.AddIntegerParameter("AdjacencyRoomId", "AdjacencyRoomId", "adjacency room id", GH_ParamAccess.list);
         }
 
         /// <summary>
@@ -54,19 +61,33 @@ namespace THERBgh
         /// to store data in output parameters.</param>
         protected override void SolveInstance(IGH_DataAccess DA)
         {
-            Therb therb = null;
-            DA.GetData(0, ref therb);
-
-            List<Face> faceList = therb.faces;
+            //Therb therb = null;
+            List<Face> faceList = new List<Face>();
+            //DA.GetData(0, ref therb);
+            DA.GetDataList(0, faceList);
+            //faceList.AddRange(therb.faces);
+            //List<Face> faceList = therb.faces;
             List<Surface> surfaceList = new List<Surface>();
+            List<string> elementTypeList = new List<string>();
+            List<Vector3d> normalList = new List<Vector3d>();
+            List<string> directionList = new List<string>();
+            List<int> adjacencyRoomIdList = new List<int>();
 
             faceList.ForEach(face =>
             {
                 surfaceList.Add(face.geometry);
+                elementTypeList.Add(face.elementType);
+                normalList.Add(face.tempNormal);
+                directionList.Add(face.direction.ToString());
+                adjacencyRoomIdList.Add(face.adjacencyRoomId);
             });
 
             //TODO:型の問題を解決
             DA.SetDataList("surface", surfaceList);
+            DA.SetDataList("elementType", elementTypeList);
+            DA.SetDataList("normal", normalList);
+            DA.SetDataList("direction", directionList);
+            DA.SetDataList("AdjacencyRoomId", adjacencyRoomIdList);
         }
 
         /// <summary>

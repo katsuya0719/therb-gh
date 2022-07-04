@@ -161,7 +161,7 @@ namespace THERBgh
             //窓の情報を抽出
             windowList.ForEach(window =>
             {
-                dDat += fillEmpty("Window " + window.partId.ToString(), 13)
+                dDat += fillEmpty("Window " + window.id.ToString(), 13)
                 + fillEmpty(window.minPt.X, 8, 3)
                 + fillEmpty(window.minPt.Y, 8, 3)
                 + fillEmpty(window.minPt.Z, 8, 3)
@@ -196,7 +196,7 @@ namespace THERBgh
             //床・天井の情報を抽出
             interiorRoofFloors.ForEach(inMat =>
             {
-                dDat += fillEmpty("In-wall " + inMat.partId.ToString(), 13)
+                dDat += fillEmpty("flr&cling " + inMat.partId.ToString(), 13)
                 + fillEmpty(inMat.minPt.X, 8, 3)
                 + fillEmpty(inMat.minPt.Y, 8, 3)
                 + fillEmpty(inMat.minPt.Z, 8, 3)

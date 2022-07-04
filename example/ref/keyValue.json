@@ -1,0 +1,5 @@
+{
+  "boundaryCondition":["exterior","interior","ground"],
+  "surfaceType":["Wall","Roof","Ceiling","Floor"],
+  "direction":["N","S","W","E","F","CR"]
+}
