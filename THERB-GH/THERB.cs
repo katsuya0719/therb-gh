@@ -36,8 +36,8 @@ namespace THERBgh
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
         {
             pManager.AddBrepParameter("geos", "geometries", "list of geometries", GH_ParamAccess.list);
-            pManager.Register_SurfaceParam("windows", "windows", "list of windows", GH_ParamAccess.list);
-            pManager.Register_SurfaceParam("overhangs", "overhangs", "list of overhangs", GH_ParamAccess.list);
+            pManager.AddSurfaceParameter("windows", "windows", "list of windows", GH_ParamAccess.list);
+            pManager.AddSurfaceParameter("overhangs", "overhangs", "list of overhangs", GH_ParamAccess.list);
             pManager.AddNumberParameter("tol", "tolerance", "tolerance", GH_ParamAccess.item, 0.1);
             pManager[1].Optional = true;
             pManager[2].Optional = true;
@@ -81,15 +81,7 @@ namespace THERBgh
             DA.GetData(3, ref tol);
 
             List<Brep> splitGeos;
-            try
-            {
-                splitGeos = SplitGeometry(geos, tol);
-            }
-            catch
-            {
-                AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "開かれたBrepが入れられました。");
-                return;
-            }
+            splitGeos = SplitGeometry(geos, tol);
 
             //Roomに対する処理
             foreach (Brep geo in splitGeos)
@@ -100,8 +92,20 @@ namespace THERBgh
                 //TODO: SurfaceとFaceの違い理解
                 //BrepSurfaceList srfs = geo.Surfaces;
                 BrepFaceList srfs = geo.Faces;
-                foreach (Surface srf in srfs)
+                foreach (var brepface in srfs)
                 {
+                    Brep brep = brepface.DuplicateFace(false);
+                    Surface srf;
+                    if (brep.IsSurface)
+                    {
+                        srf = brepface.ToNurbsSurface();
+                    }
+                    else
+                    {
+                        var edges = brep.Edges;
+                        if (edges.Count < 2 | 4 < edges.Count) throw new Exception("Edgeの分割に失敗しました。");
+                        srf = Brep.CreateEdgeSurface(edges).Faces[0].ToNurbsSurface();
+                    }
                     Vector3d normal = srf.NormalAt(0.5, 0.5);
                     Vector3d tempNormal = reviseNormal(srf, temp);
                     Face face = new Face(temp, srf, normal, tempNormal);
@@ -170,19 +174,19 @@ namespace THERBgh
         {
             if (breps.Count == 1)
             {
-                if (!breps[0].IsSolid) throw new Exception();
+                if (!breps[0].IsSolid) throw new Exception("開かれたBrepが入れられました");
                 return breps;
             }
             List<Brep> splitGeos = new List<Brep>();
             for (int i = 0; i < breps.Count; i = i + 1)
             {
-                if (!breps[i].IsSolid) throw new Exception();
+                if (!breps[i].IsSolid) throw new Exception("開かれたBrepが入れられました");
 
                 List<Brep> cutterBreps = breps.FindAll(geo => geo != breps[i]);
                 Brep[] splitGeo = breps[i].Split(cutterBreps, tol);
                 Brep jointedBrep = Brep.JoinBreps(splitGeo, tol)[0];
 
-                if (!jointedBrep.IsSolid) throw new Exception();
+                if (!jointedBrep.IsSolid) throw new Exception("BrepのJointが失敗しました。");
 
                 splitGeos.Add(jointedBrep);
             }

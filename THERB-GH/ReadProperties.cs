@@ -44,7 +44,7 @@ namespace THERBgh
         {
             //TODO: RegisterOutputParamsをdynamicにしたい
             //pManager.AddSurfaceParameter("surface", "surface", "extracted surface", GH_ParamAccess.list);
-            pManager.AddBrepParameter("surface", "surface", "extracted surface", GH_ParamAccess.list);
+            pManager.AddSurfaceParameter("surface", "surface", "extracted surface", GH_ParamAccess.list);
         }
 
         /// <summary>
@@ -58,11 +58,6 @@ namespace THERBgh
             DA.GetData(0, ref therb);
 
             List<Face> faceList = therb.faces;
-            //List<Face> faceList = new List<Face>();
-            //DA.GetDataList(0, faceList);
-
-            //string property = "";
-            //DA.GetData(1, ref property);
             List<Surface> surfaceList = new List<Surface>();
 
             faceList.ForEach(face =>
