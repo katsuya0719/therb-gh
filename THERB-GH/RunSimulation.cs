@@ -53,7 +53,7 @@ namespace THERBgh
         /// new tabs/panels will automatically be created.
         /// </summary>
         public RunSimulation()
-          : base("THERB", "THERB",
+          : base("RunSimulation", "Run simulation",
               "Run THERB simulation",
               "THERB-GH", "Simulation")
         {
