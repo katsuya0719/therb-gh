@@ -33,7 +33,8 @@ namespace THERBgh
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
         {
             pManager.AddGenericParameter("Face", "Face", "Face list", GH_ParamAccess.list);
-            pManager.AddTextParameter("bc", "bc", "boundary condition to filter", GH_ParamAccess.item);
+            pManager.AddTextParameter("property", "property", "property to update", GH_ParamAccess.item);
+            pManager.AddTextParameter("value", "value", "value for assigning to property ", GH_ParamAccess.item);
         }
 
         /// <summary>
@@ -42,8 +43,7 @@ namespace THERBgh
         protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
         {
             //TODO: RegisterOutputParamsをdynamicにしたい
-            pManager.AddGenericParameter("trueFace", "trueFace", "true Face list", GH_ParamAccess.list);
-            pManager.AddGenericParameter("falseFace", "falseFace", "false Face list", GH_ParamAccess.list);
+            pManager.AddGenericParameter("Face", "Face", "updated Face", GH_ParamAccess.list);
         }
 
         /// <summary>
