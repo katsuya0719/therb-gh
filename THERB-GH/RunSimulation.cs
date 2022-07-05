@@ -155,6 +155,7 @@ namespace THERBgh
                 }
                 else　return;
             }
+
             #region TRY CommonOpenFileDialog
             /*
             using (CommonOpenFileDialog COFD = new CommonOpenFileDialog()
@@ -171,27 +172,18 @@ namespace THERBgh
             */
             #endregion
 
-
-            string folderFrom = dirPath; //コピー元のフォルダー
-            string folderTo = namePath; //コピー先のフォルダー
-
-            //foreach (string pathFrom in System.IO.Directory.GetFiles(folderFrom, "*", System.IO.SearchOption.AllDirectories)) //←.NET Framework 3.5以前の場合
-            foreach (string pathFrom in System.IO.Directory.EnumerateFiles(folderFrom, "*", System.IO.SearchOption.AllDirectories))
+            foreach (string pathFrom in Directory.EnumerateFiles(dirPath, "*", SearchOption.AllDirectories))
             {
-                //コピー先のパスを作成
-                string pathTo = pathFrom.Replace(folderFrom, folderTo);
+                string pathTo = pathFrom.Replace(dirPath, namePath);
 
-                //コピー先のフォルダーが存在するか確認し、なければ作成します。
-                string targetFolder = System.IO.Path.GetDirectoryName(pathTo);
-                if (System.IO.Directory.Exists(targetFolder) == false)
+                string targetFolder = Path.GetDirectoryName(pathTo);
+                if (Directory.Exists(targetFolder) == false)
                 {
-                    System.IO.Directory.CreateDirectory(targetFolder);
+                    Directory.CreateDirectory(targetFolder);
                 }
-
-                //１ファイルのコピー実行。同名のファイルがある場合上書きします。
-                //System.Diagnostics.Debug.WriteLine("コピー" + pathFrom + " → " + pathTo);
-                System.IO.File.Copy(pathFrom, pathTo, true);
+                File.Copy(pathFrom, pathTo, true);
             }
+
             //処理2. inputのb.dat,r.datデータをc://therb/{name}フォルダにb.dat,r.datファイルとして書き込み  
 
             using (StreamWriter writer = File.CreateText(Path.Combine(namePath, CREATE_FILE_B)))
