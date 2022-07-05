@@ -36,7 +36,7 @@ namespace THERBgh
         /// </summary>
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
         {
-            pManager.AddGenericParameter("Rooms", "Rooms", "Room class", GH_ParamAccess.list);
+            pManager.AddGenericParameter("Therb", "therb", "THERB class", GH_ParamAccess.item);
         }
 
         /// <summary>
@@ -54,44 +54,28 @@ namespace THERBgh
         /// to store data in output parameters.</param>
         protected override void SolveInstance(IGH_DataAccess DA)
         {
-            List<Room> roomList = new List<Room>();
-            string aDat = "";
+            Therb therb = null;
+            DA.GetData(0, ref therb);
 
-            DA.GetDataList(0, roomList);
+            if (therb == null) return;
 
-            if (roomList == null) return;
-
-            var directionDict = new Dictionary<string, int>(){
-                {"S",1},
-                {"W",2},
-                {"N",3},
-                {"E",4},
-                {"F",5},
-                {"CR",6},
-            };
-
-            var directionCount = new Dictionary<string, int>(){
-                {"S",1},
-                {"W",1},
-                {"N",1},
-                {"E",1},
-                {"F",1},
-                {"CR",1},
-            };
+            List<Room> roomList = therb.rooms;
+            string aDat = "*hourly data od forced room air ventilation \r\n";
 
             roomList.ForEach(room =>
             {
-                List<int> directions = room.getDirectionList();
-                //idList.Add(room.id);
-                aDat += fillEmpty(room.id, 5)
-                + fillEmpty(directions[0], 5)
-                + fillEmpty(directions[1], 5)
-                + fillEmpty(directions[2], 5)
-                + fillEmpty(directions[3], 5)
-                + fillEmpty(directions[4], 5)
-                + fillEmpty(directions[5], 5)
-                + fillEmpty(directions[6], 5) + " \r\n";
+                aDat += "into room" + fillEmpty(room.id, 3) + "from " + fillEmpty(0, 3)
+                    + "=>  \r\n"
+                    + fillEmpty("from outdoor=0", 25)
+                    + fillEmpty("- ", 6)
+                    + fillEmpty(room.volume / 2, 7, 1) + "\r\n" //12回繰り返して呼ぶようにしたい
+                    + fillEmpty("quantity (m3/h)", 25)
+                    + fillEmpty("- ", 6) + "\r\n"
+                    + fillEmpty("(-1.:natural vent.)", 25)
+                    + fillEmpty(room.volume / 2, 7, 1) + "\r\n"; //12回繰り返して呼ぶようにしたい
             });
+
+            DA.SetData("a_dat", aDat);
         }
 
         //TODO:Utilsモジュールにうつす
@@ -110,6 +94,16 @@ namespace THERBgh
             string emptyString = new string(' ', totalLength - inputLength);
 
             return emptyString + input;
+        }
+
+        private string fillEmpty(double input, int totalLength, int digit)
+        {
+            string zeros = new String('0', digit);
+            string format = "{0:0." + zeros + "}";
+            string inputValue = string.Format(format, input);
+            string emptyString = new string(' ', totalLength - inputValue.Length);
+
+            return emptyString + inputValue;
         }
 
         /// <summary>
