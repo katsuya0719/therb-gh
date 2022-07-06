@@ -35,8 +35,16 @@ namespace THERBgh
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
         {
             pManager.AddGenericParameter("Face", "Face", "Face list", GH_ParamAccess.list);
-            pManager.AddTextParameter("property", "property", "property to update", GH_ParamAccess.item);
-            pManager.AddTextParameter("value", "value", "value for assigning to property ", GH_ParamAccess.item);
+            pManager.AddIntegerParameter("property", "property", "property to update", GH_ParamAccess.item);
+            var propertyInput = (Param_Integer)pManager[1];
+            propertyInput.AddNamedValue("concrete_exteriorWall", (int)BoundaryCondition.exterior);
+            propertyInput.AddNamedValue("concrete_exteriorFloor", (int)BoundaryCondition.interior);
+            propertyInput.AddNamedValue("None", -1);
+            pManager.AddIntegerParameter("value", "value", "value for assigning to property ", GH_ParamAccess.item);
+            var valueInput = (Param_Integer)pManager[2];
+            valueInput.AddNamedValue("1", 1);
+            valueInput.AddNamedValue("2", 2);
+            valueInput.AddNamedValue("None", -1);
         }
 
         /// <summary>
@@ -45,7 +53,7 @@ namespace THERBgh
         protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
         {
             //TODO: RegisterOutputParamsをdynamicにしたい
-            pManager.AddGenericParameter("Face", "Face", "updated Face", GH_ParamAccess.list);
+            pManager.AddGenericParameter("Face", "Face", "updated Face list", GH_ParamAccess.list);
         }
 
         /// <summary>
@@ -56,31 +64,29 @@ namespace THERBgh
         protected override void SolveInstance(IGH_DataAccess DA)
         {
             List<Face> faceList = new List<Face>();
+            int propertyInt = -1;
+            int value = -1;
 
             DA.GetDataList(0, faceList);
-
-            string bc = "";
-            DA.GetData(1, ref bc);
-            //keyが正しくなかったらエラーを返すようにする  
-            Enum.TryParse(bc, out BoundaryCondition boundaryCondition);
-
-            List<Face> trueFaceList = new List<Face>();
-            List<Face> falseFaceList = new List<Face>();
-
-            faceList.ForEach(face =>
+            DA.GetData(1, ref propertyInt);
+            DA.GetData(2, ref value);
+            if (propertyInt < -1 | 2 < propertyInt)
             {
-                if (face.filterByBc(boundaryCondition))
-                {
-                    trueFaceList.Add(face);
-                }
-                else
-                {
-                    falseFaceList.Add(face);
-                }
-            });
+                throw new Exception("propertyに範囲外の数字が入れられました。");
+            }
+            if (value < -1 | 2 < value)
+            {
+                throw new Exception("valueに範囲外の数字が入れられました。");
+            }
 
-            DA.SetDataList("trueFace", trueFaceList);
-            DA.SetDataList("falseFace", falseFaceList);
+            if (value == -1) return;
+            
+            foreach (var face in faceList)
+            {
+                face.constructionId = value;
+            }
+
+            DA.SetDataList("Face", faceList);
         }
 
         /// <summary>
@@ -104,7 +110,7 @@ namespace THERBgh
         /// </summary>
         public override Guid ComponentGuid
         {
-            get { return new Guid("8706930f-23f5-48d3-885a-78a128be5948"); }
+            get { return new Guid("41C9E254-FA7B-4750-A1C9-094938D1DAF2"); }
         }
     }
 }
