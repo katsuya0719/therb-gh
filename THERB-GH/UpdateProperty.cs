@@ -1,8 +1,10 @@
 ﻿using Grasshopper.Kernel;
+using Grasshopper.Kernel.Parameters;
 using Rhino.Geometry;
 using System;
 using System.Collections.Generic;
 using Model;
+using System.Windows.Forms;
 
 // In order to load the result of this wizard, you will also need to
 // add the output bin/ folder of this project to the list of loaded
@@ -54,7 +56,7 @@ namespace THERBgh
         protected override void SolveInstance(IGH_DataAccess DA)
         {
             List<Face> faceList = new List<Face>();
-            
+
             DA.GetDataList(0, faceList);
 
             string bc = "";
@@ -67,7 +69,8 @@ namespace THERBgh
 
             faceList.ForEach(face =>
             {
-                if (face.filterByBc(boundaryCondition)){
+                if (face.filterByBc(boundaryCondition))
+                {
                     trueFaceList.Add(face);
                 }
                 else
