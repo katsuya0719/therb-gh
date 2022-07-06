@@ -1,8 +1,10 @@
 ﻿using Grasshopper.Kernel;
+using Grasshopper.Kernel.Parameters;
 using Rhino.Geometry;
 using System;
 using System.Collections.Generic;
 using Model;
+using System.Windows.Forms;
 
 // In order to load the result of this wizard, you will also need to
 // add the output bin/ folder of this project to the list of loaded
@@ -33,10 +35,30 @@ namespace THERBgh
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
         {
             pManager.AddGenericParameter("Therb", "Therb", "Therb data", GH_ParamAccess.item);
-            //pManager.AddTextParameter("bc", "bc", "boundary condition to filter", GH_ParamAccess.item);
-            pManager.AddTextParameter("elementType", "elementType", "element type to filter", GH_ParamAccess.item);
-            //pManager[1].Optional = true;
-            //pManager[2].Optional = true;
+            pManager.AddIntegerParameter("bc", "bc", "boundary condition to filter", GH_ParamAccess.item, -1);
+            pManager.AddIntegerParameter("surfT", "surfT", "surface type to filter", GH_ParamAccess.item, -1);
+            pManager.AddIntegerParameter("direction", "direction", "direction to filter", GH_ParamAccess.item, -1);
+            var bcInput = (Param_Integer)pManager[1];
+            bcInput.AddNamedValue("exterior", (int)BoundaryCondition.exterior);
+            bcInput.AddNamedValue("interior", (int)BoundaryCondition.interior);
+            bcInput.AddNamedValue("ground", (int)BoundaryCondition.ground);
+            bcInput.AddNamedValue("None", -1);
+            var stInput = (Param_Integer)pManager[2];
+            stInput.AddNamedValue("Wall", (int)SurfaceType.Wall);
+            stInput.AddNamedValue("Roof", (int)SurfaceType.Roof);
+            stInput.AddNamedValue("Ceiling", (int)SurfaceType.Ceiling);
+            stInput.AddNamedValue("Floor", (int)SurfaceType.Floor);
+            stInput.AddNamedValue("None", -1);
+            var dInput = (Param_Integer)pManager[3];
+            dInput.AddNamedValue("N", (int)Direction.N);
+            dInput.AddNamedValue("S", (int)Direction.S);
+            dInput.AddNamedValue("W", (int)Direction.W);
+            dInput.AddNamedValue("E", (int)Direction.E);
+            dInput.AddNamedValue("F", (int)Direction.F);
+            dInput.AddNamedValue("CR", (int)Direction.CR);
+            dInput.AddNamedValue("None", -1);
+
+            //pManager.AddTextParameter("class", "class", "room or face or window", GH_ParamAccess.item);
         }
 
         /// <summary>
@@ -63,14 +85,26 @@ namespace THERBgh
 
             List<Face> faceList = Therb.faces;
 
-            //string bc = "";
-            //DA.GetData(1, ref bc);
+            int bc = -1, surfT = -1, direction = -1;
+            DA.GetData(1, ref bc);
+            DA.GetData(2, ref surfT);
+            DA.GetData(3, ref direction);
             //keyが正しくなかったらエラーを返すようにする  
             //Enum.TryParse(bc, out BoundaryCondition boundaryCondition);
+            if (bc < -1 | Enum.GetNames(typeof(BoundaryCondition)).Length < bc)
+            {
+                throw new Exception("bcに範囲外の数字が入れられました。");
+            }
+            if (surfT < -1 | Enum.GetNames(typeof(SurfaceType)).Length < surfT)
+            {
+                throw new Exception("surfTに範囲外の数字が入れられました。");
+            }
+            if (direction < -1 | Enum.GetNames(typeof(Direction)).Length < direction)
+            {
+                throw new Exception("directionに範囲外の数字が入れられました。");
+            }
 
-            string elementType = "";
-            DA.GetData(1, ref elementType);
-
+            var boundaryCondition = (BoundaryCondition)bc;
 
             List<Face> trueFaceList = new List<Face>();
             List<Face> falseFaceList = new List<Face>();
