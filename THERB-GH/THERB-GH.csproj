@@ -65,6 +65,7 @@
     <Compile Include="ExportA.cs" />
     <Compile Include="ReadProperties.cs" />
     <Compile Include="RunSimulation.cs" />
+    <Compile Include="SplitGeos.cs" />
     <Compile Include="Utils.cs" />
     <Compile Include="FilterFaceByProperty.cs" />
     <Compile Include="Model.cs" />
