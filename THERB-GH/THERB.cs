@@ -103,7 +103,7 @@ namespace THERBgh
                     else
                     {
                         var edges = brep.Edges;
-                        if (edges.Count < 2 | 4 < edges.Count) throw new Exception("Edgeの分割に失敗しました。");
+                        if (edges.Count < 2) throw new Exception("Edgeの分割に失敗しました。");
                         srf = Brep.CreateEdgeSurface(edges).Faces[0].ToNurbsSurface();
                     }
                     Vector3d normal = srf.NormalAt(0.5, 0.5);
@@ -174,13 +174,13 @@ namespace THERBgh
         {
             if (breps.Count == 1)
             {
-                if (!breps[0].IsSolid) throw new Exception("開かれたBrepが入れられました");
+                //if (!breps[0].IsSolid) throw new Exception("開かれたBrepが入れられました");
                 return breps;
             }
             List<Brep> splitGeos = new List<Brep>();
             for (int i = 0; i < breps.Count; i = i + 1)
             {
-                if (!breps[i].IsSolid) throw new Exception("開かれたBrepが入れられました");
+                //if (!breps[i].IsSolid) throw new Exception("開かれたBrepが入れられました");
 
                 List<Brep> cutterBreps = breps.FindAll(geo => geo != breps[i]);
                 Brep[] splitGeo = breps[i].Split(cutterBreps, tol);
