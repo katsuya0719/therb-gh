@@ -1,9 +1,0 @@
-*hourly data od forced room air ventilation 
-into room  1from   0=>  
-           from outdoor=0    -   341.8
-          quantity (m3/h)    - 
-      (-1.:natural vent.)  341.8
-into room  2from   0=>  
-           from outdoor=0    -   467.9
-          quantity (m3/h)    - 
-      (-1.:natural vent.)  467.9
