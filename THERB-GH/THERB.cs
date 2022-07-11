@@ -109,7 +109,6 @@ namespace THERBgh
                     Vector3d normal = srf.NormalAt(0.5, 0.5);
                     Vector3d tempNormal = reviseNormal(srf, temp);
                     Face face = new Face(temp, srf, normal, tempNormal);
-                    //Print("{0}", face.centerPt);
                     faceList.Add(face);
                     temp.addFace(face);
                 }

@@ -33,8 +33,10 @@ namespace THERBgh
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
         {
             pManager.AddGenericParameter("Therb", "Therb", "Therb data", GH_ParamAccess.item);
-            pManager.AddTextParameter("bc", "bc", "boundary condition to filter", GH_ParamAccess.item);
-            //pManager.AddTextParameter("class", "class", "room or face or window", GH_ParamAccess.item);
+            //pManager.AddTextParameter("bc", "bc", "boundary condition to filter", GH_ParamAccess.item);
+            pManager.AddTextParameter("elementType", "elementType", "element type to filter", GH_ParamAccess.item);
+            //pManager[1].Optional = true;
+            //pManager[2].Optional = true;
         }
 
         /// <summary>
@@ -61,23 +63,35 @@ namespace THERBgh
 
             List<Face> faceList = Therb.faces;
 
-            string bc = "";
-            DA.GetData(1, ref bc);
+            //string bc = "";
+            //DA.GetData(1, ref bc);
             //keyが正しくなかったらエラーを返すようにする  
-            Enum.TryParse(bc, out BoundaryCondition boundaryCondition);
+            //Enum.TryParse(bc, out BoundaryCondition boundaryCondition);
+
+            string elementType = "";
+            DA.GetData(1, ref elementType);
+
 
             List<Face> trueFaceList = new List<Face>();
             List<Face> falseFaceList = new List<Face>();
 
             faceList.ForEach(face =>
             {
-                if (face.filterByBc(boundaryCondition)){
+                if (face.elementType == elementType)
+                {
                     trueFaceList.Add(face);
                 }
                 else
                 {
                     falseFaceList.Add(face);
                 }
+                //if (face.filterByBc(boundaryCondition)){
+                //    trueFaceList.Add(face);
+                //}
+                //else
+                //{
+                //    falseFaceList.Add(face);
+                //}
             });
 
             DA.SetDataList("trueFace", trueFaceList);

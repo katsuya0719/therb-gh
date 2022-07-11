@@ -21,3 +21,5 @@ THERB-GH のインストール方法について紹介します。
 ## 使い方  
 [ドキュメンテーションページ](https://katsuya0719.github.io/therb-gh/docs/Usage/CreateTherbModel)に詳細が書いてあります  
 
+## 注意事項  
+下図のようにジオメトリ同士をsplitしたあとに、L字のsurfaceができるようなモデルだと計算精度に誤差が出てしまいます。  

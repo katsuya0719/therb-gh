@@ -47,6 +47,7 @@ namespace THERBgh
         {
             //TODO: RegisterOutputParamsをdynamicにしたい
             //pManager.AddSurfaceParameter("surface", "surface", "extracted surface", GH_ParamAccess.list);
+            pManager.AddIntegerParameter("partId", "partId", "id", GH_ParamAccess.list);
             pManager.AddSurfaceParameter("surface", "surface", "extracted surface", GH_ParamAccess.list);
             pManager.AddTextParameter("elementType", "element type", "element type", GH_ParamAccess.list);
             pManager.AddNumberParameter("normal", "normal", "normal direction", GH_ParamAccess.list);
@@ -67,6 +68,7 @@ namespace THERBgh
             DA.GetDataList(0, faceList);
             //faceList.AddRange(therb.faces);
             //List<Face> faceList = therb.faces;
+            List<int> partIdList = new List<int>();
             List<Surface> surfaceList = new List<Surface>();
             List<string> elementTypeList = new List<string>();
             List<Vector3d> normalList = new List<Vector3d>();
@@ -75,6 +77,7 @@ namespace THERBgh
 
             faceList.ForEach(face =>
             {
+                partIdList.Add(face.partId);
                 surfaceList.Add(face.geometry);
                 elementTypeList.Add(face.elementType);
                 normalList.Add(face.tempNormal);
@@ -82,7 +85,7 @@ namespace THERBgh
                 adjacencyRoomIdList.Add(face.adjacencyRoomId);
             });
 
-            //TODO:型の問題を解決
+            DA.SetDataList("partId", partIdList);
             DA.SetDataList("surface", surfaceList);
             DA.SetDataList("elementType", elementTypeList);
             DA.SetDataList("normal", normalList);
