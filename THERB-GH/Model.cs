@@ -17,7 +17,6 @@ namespace Model
     [JsonConverter(typeof(StringEnumConverter))]
     public enum BoundaryCondition
     {
-        None = -1,
         exterior,
         interior,
         ground
@@ -25,7 +24,6 @@ namespace Model
     [JsonConverter(typeof(StringEnumConverter))]
     public enum SurfaceType
     {
-        None = -1,
         Wall,
         Roof,
         Ceiling,
@@ -271,7 +269,6 @@ namespace Model
 
     public enum Direction
     {
-        None = -1,
         N,
         S,
         W,
@@ -279,78 +276,6 @@ namespace Model
         F,
         CR
     }
-    public class Faces : Collection<Face>
-    {
-
-        public Faces(){ }
-        public Faces(List<Face> faces)
-        {
-            foreach (var face in faces) this.Add(face);
-        }
-
-        public Faces Filter(BoundaryCondition bc)
-        {
-            var result = new Faces();
-            foreach (var face in this)
-            {
-                if (face.filterByBc(bc)) result.Add(face);
-            }
-            return result;
-        }
-
-        public Faces Filter(Direction direction)
-        {
-            var result = new Faces();
-            foreach (var face in this)
-            {
-                if (face.filterByDirection(direction)) result.Add(face);
-            }
-            return result;
-        }
-
-        public Faces Filter(SurfaceType surfT)
-        {
-            var result = new Faces();
-            foreach (var face in this)
-            {
-                if (face.filterBySurfaceType(surfT)) result.Add(face);
-            }
-            return result;
-        }
-        public List<Face> ToList()
-        {
-            var result = new List<Face>();
-            foreach (var face in this) result.Add(face);
-            return result;
-        }
-
-        public static Faces operator +(Faces a, Faces b)
-        {
-            a.AddRange(b);
-            return a;
-        }
-
-        public static Faces operator -(Faces a, Faces b)
-        {
-            for (int i = a.Count-1; 0 < i-1 ; i--)
-            {
-                if (b.Contains(a[i])) a.RemoveAt(i);
-            }
-            return a;
-        }
-
-        //or分岐用
-        public void AddRange(Faces others)
-        {
-            foreach(var otherFace in others)
-            {
-                if (!this.Contains(otherFace)) this.Add(otherFace);
-            }
-        }
-
-
-    }
-
     public class Face : BaseFace
     {
         //public int partId;

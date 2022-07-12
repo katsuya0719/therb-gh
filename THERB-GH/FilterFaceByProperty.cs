@@ -108,15 +108,19 @@ namespace THERBgh
             List<Face> trueFaceList = new List<Face>();
             List<Face> falseFaceList = new List<Face>();
 
-            var faces = new Faces(faceList);
-
-            var trueFaces = faces
-                .Filter((BoundaryCondition)bc)
-                .Filter((SurfaceType)surfT)
-                .Filter((Direction)direction);
-            var falseFaces = faces - trueFaces;
-            trueFaceList = trueFaces.ToList();
-            falseFaceList = falseFaces.ToList();
+            foreach(var face in faceList)
+            {
+                if(bc == -1 | face.filterByBc((BoundaryCondition)bc) &&
+                    surfT == -1 | face.filterBySurfaceType((SurfaceType)surfT) &&
+                    direction == -1 | face.filterByDirection((Direction)direction))
+                {
+                    trueFaceList.Add(face);
+                }
+                else
+                {
+                    falseFaceList.Add(face);
+                }
+            }
 
             DA.SetDataList("trueFace", trueFaceList);
             DA.SetDataList("falseFace", falseFaceList);
