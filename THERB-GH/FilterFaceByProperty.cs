@@ -93,7 +93,7 @@ namespace THERBgh
             //Enum.TryParse(bc, out BoundaryCondition boundaryCondition);
             if (bc < -1 | Enum.GetNames(typeof(BoundaryCondition)).Length < bc)
             {
-                throw new Exception("bcに範囲外の数字が入れられました。");
+                throw new ArgumentException("範囲外の数字が入れられました。", "bc");
             }
             if (surfT < -1 | Enum.GetNames(typeof(SurfaceType)).Length < surfT)
             {
@@ -104,29 +104,19 @@ namespace THERBgh
                 throw new Exception("directionに範囲外の数字が入れられました。");
             }
 
-            var boundaryCondition = (BoundaryCondition)bc;
 
             List<Face> trueFaceList = new List<Face>();
             List<Face> falseFaceList = new List<Face>();
 
-            faceList.ForEach(face =>
-            {
-                if (face.elementType == elementType)
-                {
-                    trueFaceList.Add(face);
-                }
-                else
-                {
-                    falseFaceList.Add(face);
-                }
-                //if (face.filterByBc(boundaryCondition)){
-                //    trueFaceList.Add(face);
-                //}
-                //else
-                //{
-                //    falseFaceList.Add(face);
-                //}
-            });
+            var faces = new Faces(faceList);
+
+            var trueFaces = faces
+                .Filter((BoundaryCondition)bc)
+                .Filter((SurfaceType)surfT)
+                .Filter((Direction)direction);
+            var falseFaces = faces - trueFaces;
+            trueFaceList = trueFaces.ToList();
+            falseFaceList = falseFaces.ToList();
 
             DA.SetDataList("trueFace", trueFaceList);
             DA.SetDataList("falseFace", falseFaceList);
