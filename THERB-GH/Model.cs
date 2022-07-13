@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using Rhino.Geometry.Collections;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using System.Collections.ObjectModel;
 
 // In order to load the result of this wizard, you will also need to
 // add the output bin/ folder of this project to the list of loaded
@@ -285,6 +286,7 @@ namespace Model
         public Room parent;
         public Vector3d tempNormal;
         public Direction direction;
+        public SurfaceType surfaceType;
         public int adjacencyRoomId; //隣接しているRoomのId 外気に接している場合には0
         public List<Window> windows { get; private set; }
         public List<int> windowIds;
@@ -372,6 +374,17 @@ namespace Model
         public bool filterByDirection(Direction direction)
         {
             if (this.direction == direction)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        public bool filterBySurfaceType(SurfaceType surfT)
+        {
+            if (this.surfaceType == surfT)
             {
                 return true;
             }
