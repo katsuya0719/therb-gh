@@ -481,7 +481,8 @@ namespace THERBgh
                     var curSurf = curSurfs[i];
                     Plane curPlane;
                     curSurf.TryGetPlane(out curPlane);
-                    if(!IsOnPlane(curPlane, otherPlane.Origin)) continue;
+                    if (!IsOnPlane(curPlane, otherPlane.Origin)) continue;
+                    if (!IsParallel(curPlane.Normal, otherPlane.Normal)) continue;
                     List<Surface> surfs;
                     var otherMaxU = otherSurf.Domain(0).ParameterAt(1d);
                     var otherMaxV = otherSurf.Domain(1).ParameterAt(1d);
