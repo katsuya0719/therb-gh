@@ -67,9 +67,9 @@
     <Compile Include="RunSimulation.cs" />
     <Compile Include="UpdateProperty.cs" />
     <Compile Include="SplitGeos.cs" />
-    <Compile Include="Utils.cs" />
+    <Compile Include="Model_\Utils.cs" />
     <Compile Include="FilterFaceByProperty.cs" />
-    <Compile Include="Model.cs" />
+    <Compile Include="Model_\Model.cs" />
     <Compile Include="ExportR.cs" />
     <Compile Include="THERB.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
