@@ -463,11 +463,7 @@ namespace THERBgh
 
         private static bool IsParallel(Vector3d vec1, Vector3d vec2)
         {
-            vec1.Unitize();
-            vec2.Unitize();
-            var distance = ((Point3d)vec1).DistanceTo((Point3d)vec2);
-            distance = Math.Min(distance, 2 - distance);
-            return distance < STRIC_TOL;
+            return Vector3d.CrossProduct(vec1, vec2).IsZero;
         }
 
         private static List<Surface> SplitSurface(List<Surface> curSurfs, List<Surface> otherSurfs)
