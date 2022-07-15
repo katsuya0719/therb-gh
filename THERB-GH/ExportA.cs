@@ -2,6 +2,7 @@
 using Rhino.Geometry;
 using Rhino.Geometry.Collections;
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using Rhino.Geometry.Intersect;
 using Newtonsoft.Json;
@@ -68,11 +69,11 @@ namespace THERBgh
                     + "=>  \r\n"
                     + fillEmpty("from outdoor=0", 25)
                     + fillEmpty("- ", 6)
-                    + fillEmpty(room.volume / 2, 7, 1) + "\r\n" //12回繰り返して呼ぶようにしたい
+                    + string.Join("", Enumerable.Repeat(fillEmpty(room.volume / 2, 7, 1), 12)) + "\r\n" //12回繰り返して呼ぶようにしたい
                     + fillEmpty("quantity (m3/h)", 25)
                     + fillEmpty("- ", 6) + "\r\n"
                     + fillEmpty("(-1.:natural vent.)", 25)
-                    + fillEmpty(room.volume / 2, 7, 1) + "\r\n"; //12回繰り返して呼ぶようにしたい
+                    + string.Join("", Enumerable.Repeat(fillEmpty(room.volume / 2, 7, 1), 12)) + "\r\n"; //12回繰り返して呼ぶようにしたい
             });
 
             DA.SetData("a_dat", aDat);
