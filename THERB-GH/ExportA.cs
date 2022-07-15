@@ -65,47 +65,21 @@ namespace THERBgh
 
             roomList.ForEach(room =>
             {
-                aDat += "into room" + fillEmpty(room.id, 3) + "from " + fillEmpty(0, 3)
+                aDat += "into room" + Converter.FillEmpty(room.id, 3) + "from " + Converter.FillEmpty(0, 3)
                     + "=>  \r\n"
-                    + fillEmpty("from outdoor=0", 25)
-                    + fillEmpty("- ", 6)
-                    + string.Join("", Enumerable.Repeat(fillEmpty(room.volume / 2, 7, 1), 12)) + "\r\n" //12回繰り返して呼ぶようにしたい
-                    + fillEmpty("quantity (m3/h)", 25)
-                    + fillEmpty("- ", 6) + "\r\n"
-                    + fillEmpty("(-1.:natural vent.)", 25)
-                    + string.Join("", Enumerable.Repeat(fillEmpty(room.volume / 2, 7, 1), 12)) + "\r\n"; //12回繰り返して呼ぶようにしたい
+                    + Converter.FillEmpty("from outdoor=0", 25)
+                    + Converter.FillEmpty("- ", 6)
+                    + string.Join("", Enumerable.Repeat(Converter.FillEmpty(room.volume / 2, 7, 1), 12)) + "\r\n" //12回繰り返して呼ぶようにしたい
+                    + Converter.FillEmpty("quantity (m3/h)", 25)
+                    + Converter.FillEmpty("- ", 6) + "\r\n"
+                    + Converter.FillEmpty("(-1.:natural vent.)", 25)
+                    + string.Join("", Enumerable.Repeat(Converter.FillEmpty(room.volume / 2, 7, 1), 12)) + "\r\n"; //12回繰り返して呼ぶようにしたい
             });
 
             DA.SetData("a_dat", aDat);
         }
 
         //TODO:Utilsモジュールにうつす
-        private string fillEmpty(int input, int totalLength)
-        {
-            string inputStr = input.ToString();
-            int inputLength = inputStr.Length;
-            string emptyString = new string(' ', totalLength - inputLength);
-
-            return emptyString + inputStr;
-        }
-
-        private string fillEmpty(string input, int totalLength)
-        {
-            int inputLength = input.Length;
-            string emptyString = new string(' ', totalLength - inputLength);
-
-            return emptyString + input;
-        }
-
-        private string fillEmpty(double input, int totalLength, int digit)
-        {
-            string zeros = new String('0', digit);
-            string format = "{0:0." + zeros + "}";
-            string inputValue = string.Format(format, input);
-            string emptyString = new string(' ', totalLength - inputValue.Length);
-
-            return emptyString + inputValue;
-        }
 
         /// <summary>
         /// Provides an Icon for every component that will be visible in the User Interface.

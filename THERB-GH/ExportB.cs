@@ -112,28 +112,28 @@ namespace THERBgh
             //TODO:exteriorFloorの扱いがどうなるかを確認
 
             //1行目 部屋、壁の数をカウント
-            dDat += fillEmpty(roomList.Count,4)
-                + fillEmpty(exteriorWalls.Count, 4)
-                + fillEmpty(windowList.Count, 4)
-                + fillEmpty(interiorWalls.Count, 4)
-                + fillEmpty(doorList.Count, 4)
-                + fillEmpty(interiorRoofFloors.Count, 4)
-                + fillEmpty(exteriorRoofs.Count, 4)
-                + fillEmpty(groundFloors.Count, 4)
-                + fillEmpty(shadingList.Count, 4)
-                + fillEmpty(wingList.Count, 4) + " \r\n";
+            dDat += Converter.FillEmpty(roomList.Count,4)
+                + Converter.FillEmpty(exteriorWalls.Count, 4)
+                + Converter.FillEmpty(windowList.Count, 4)
+                + Converter.FillEmpty(interiorWalls.Count, 4)
+                + Converter.FillEmpty(doorList.Count, 4)
+                + Converter.FillEmpty(interiorRoofFloors.Count, 4)
+                + Converter.FillEmpty(exteriorRoofs.Count, 4)
+                + Converter.FillEmpty(groundFloors.Count, 4)
+                + Converter.FillEmpty(shadingList.Count, 4)
+                + Converter.FillEmpty(wingList.Count, 4) + " \r\n";
 
             //室の情報を抽出
             roomList.ForEach(room =>
             {
-                dDat += fillEmpty("Room " + room.id.ToString(), 12)
-                + fillEmpty(room.minPt.X, 9, 3)
-                + fillEmpty(room.minPt.Y, 8, 3)
-                + fillEmpty(room.minPt.Z, 8, 3)
-                + fillEmpty(room.maxPt.X, 8, 3)
-                + fillEmpty(room.maxPt.Y, 8, 3)
-                + fillEmpty(room.maxPt.Z, 8, 3)
-                + fillEmpty(room.volume, 10, 3)
+                dDat += Converter.FillEmpty("Room " + room.id.ToString(), 12)
+                + Converter.FillEmpty(room.minPt.X, 9, 3)
+                + Converter.FillEmpty(room.minPt.Y, 8, 3)
+                + Converter.FillEmpty(room.minPt.Z, 8, 3)
+                + Converter.FillEmpty(room.maxPt.X, 8, 3)
+                + Converter.FillEmpty(room.maxPt.Y, 8, 3)
+                + Converter.FillEmpty(room.maxPt.Z, 8, 3)
+                + Converter.FillEmpty(room.volume, 10, 3)
                  + "      18.800   16.7000 \r\n";
                 //volumeを抽出する必要
             });
@@ -141,17 +141,17 @@ namespace THERBgh
             //外壁の情報を抽出
             exteriorWalls.ForEach(exWall =>
             {
-                dDat += fillEmpty("Ex-wall " + exWall.partId.ToString(), 13)
-                + fillEmpty(exWall.minPt.X, 8, 3)
-                + fillEmpty(exWall.minPt.Y, 8, 3)
-                + fillEmpty(exWall.minPt.Z, 8, 3)
-                + fillEmpty(exWall.maxPt.X, 8, 3)
-                + fillEmpty(exWall.maxPt.Y, 8, 3)
-                + fillEmpty(exWall.maxPt.Z, 8, 3)
-                + fillEmpty(exWall.tiltAngle, 10, 3)
-                + fillEmpty(exWall.area, 12, 4)
+                dDat += Converter.FillEmpty("Ex-wall " + exWall.partId.ToString(), 13)
+                + Converter.FillEmpty(exWall.minPt.X, 8, 3)
+                + Converter.FillEmpty(exWall.minPt.Y, 8, 3)
+                + Converter.FillEmpty(exWall.minPt.Z, 8, 3)
+                + Converter.FillEmpty(exWall.maxPt.X, 8, 3)
+                + Converter.FillEmpty(exWall.maxPt.Y, 8, 3)
+                + Converter.FillEmpty(exWall.maxPt.Z, 8, 3)
+                + Converter.FillEmpty(exWall.tiltAngle, 10, 3)
+                + Converter.FillEmpty(exWall.area, 12, 4)
                 + "    0\r\n  structure No. "
-                + fillEmpty(exWall.constructionId, 5)
+                + Converter.FillEmpty(exWall.constructionId, 5)
                 + "  overhang No.     0      wing1 No.    0   wing2 No.    0 \r\n      window No. "
                 + OutputWindowIds(exWall)
                 //TODO:windowIdsの処理を入れ込む必要
@@ -161,17 +161,17 @@ namespace THERBgh
             //窓の情報を抽出
             windowList.ForEach(window =>
             {
-                dDat += fillEmpty("Window " + window.id.ToString(), 13)
-                + fillEmpty(window.minPt.X, 8, 3)
-                + fillEmpty(window.minPt.Y, 8, 3)
-                + fillEmpty(window.minPt.Z, 8, 3)
-                + fillEmpty(window.maxPt.X, 8, 3)
-                + fillEmpty(window.maxPt.Y, 8, 3)
-                + fillEmpty(window.maxPt.Z, 8, 3)
-                + fillEmpty(window.tiltAngle, 10, 3)
-                + fillEmpty(window.area, 12, 4)
+                dDat += Converter.FillEmpty("Window " + window.id.ToString(), 13)
+                + Converter.FillEmpty(window.minPt.X, 8, 3)
+                + Converter.FillEmpty(window.minPt.Y, 8, 3)
+                + Converter.FillEmpty(window.minPt.Z, 8, 3)
+                + Converter.FillEmpty(window.maxPt.X, 8, 3)
+                + Converter.FillEmpty(window.maxPt.Y, 8, 3)
+                + Converter.FillEmpty(window.maxPt.Z, 8, 3)
+                + Converter.FillEmpty(window.tiltAngle, 10, 3)
+                + Converter.FillEmpty(window.area, 12, 4)
                 + "    0\r\n  structure No. "
-                + fillEmpty(window.constructionId, 5)
+                + Converter.FillEmpty(window.constructionId, 5)
                 + "  overhang No.     0      wing1 No.    0   wing2 No.    0\r\n";
             });
 
@@ -179,64 +179,64 @@ namespace THERBgh
             //内壁の情報を抽出
             interiorWalls.ForEach(inWall =>
             {
-                dDat += fillEmpty("In-wall " + inWall.partId.ToString(), 13)
-                + fillEmpty(inWall.minPt.X, 8, 3)
-                + fillEmpty(inWall.minPt.Y, 8, 3)
-                + fillEmpty(inWall.minPt.Z, 8, 3)
-                + fillEmpty(inWall.maxPt.X, 8, 3)
-                + fillEmpty(inWall.maxPt.Y, 8, 3)
-                + fillEmpty(inWall.maxPt.Z, 8, 3)
-                + fillEmpty(inWall.tiltAngle, 10, 3)
-                + fillEmpty(inWall.area, 12, 4)
+                dDat += Converter.FillEmpty("In-wall " + inWall.partId.ToString(), 13)
+                + Converter.FillEmpty(inWall.minPt.X, 8, 3)
+                + Converter.FillEmpty(inWall.minPt.Y, 8, 3)
+                + Converter.FillEmpty(inWall.minPt.Z, 8, 3)
+                + Converter.FillEmpty(inWall.maxPt.X, 8, 3)
+                + Converter.FillEmpty(inWall.maxPt.Y, 8, 3)
+                + Converter.FillEmpty(inWall.maxPt.Z, 8, 3)
+                + Converter.FillEmpty(inWall.tiltAngle, 10, 3)
+                + Converter.FillEmpty(inWall.area, 12, 4)
                 + "    0\r\n  structure No. "
-                + fillEmpty(inWall.constructionId, 5)
+                + Converter.FillEmpty(inWall.constructionId, 5)
                 +" \r\n     in-door No. " + doorIds + " \r\n";
             });
 
             //床・天井の情報を抽出
             interiorRoofFloors.ForEach(inMat =>
             {
-                dDat += fillEmpty("flr&cling " + inMat.partId.ToString(), 13)
-                + fillEmpty(inMat.minPt.X, 8, 3)
-                + fillEmpty(inMat.minPt.Y, 8, 3)
-                + fillEmpty(inMat.minPt.Z, 8, 3)
-                + fillEmpty(inMat.maxPt.X, 8, 3)
-                + fillEmpty(inMat.maxPt.Y, 8, 3)
-                + fillEmpty(inMat.maxPt.Z, 8, 3)
-                + fillEmpty(inMat.tiltAngle, 10, 3)
-                + fillEmpty(inMat.area, 12, 4)
+                dDat += Converter.FillEmpty("flr&cling " + inMat.partId.ToString(), 13)
+                + Converter.FillEmpty(inMat.minPt.X, 8, 3)
+                + Converter.FillEmpty(inMat.minPt.Y, 8, 3)
+                + Converter.FillEmpty(inMat.minPt.Z, 8, 3)
+                + Converter.FillEmpty(inMat.maxPt.X, 8, 3)
+                + Converter.FillEmpty(inMat.maxPt.Y, 8, 3)
+                + Converter.FillEmpty(inMat.maxPt.Z, 8, 3)
+                + Converter.FillEmpty(inMat.tiltAngle, 10, 3)
+                + Converter.FillEmpty(inMat.area, 12, 4)
                 + "    0\r\n  structure No. "
-                + fillEmpty(inMat.constructionId, 5) + "\r\n";
+                + Converter.FillEmpty(inMat.constructionId, 5) + "\r\n";
             });
 
             exteriorRoofs.ForEach(roof =>
             {
-                dDat += fillEmpty("Roof " + roof.partId.ToString(), 13)
-                + fillEmpty(roof.minPt.X, 8, 3)
-                + fillEmpty(roof.minPt.Y, 8, 3)
-                + fillEmpty(roof.minPt.Z, 8, 3)
-                + fillEmpty(roof.maxPt.X, 8, 3)
-                + fillEmpty(roof.maxPt.Y, 8, 3)
-                + fillEmpty(roof.maxPt.Z, 8, 3)
-                + fillEmpty(roof.tiltAngle, 10, 3)
-                + fillEmpty(roof.area, 12, 4)
+                dDat += Converter.FillEmpty("Roof " + roof.partId.ToString(), 13)
+                + Converter.FillEmpty(roof.minPt.X, 8, 3)
+                + Converter.FillEmpty(roof.minPt.Y, 8, 3)
+                + Converter.FillEmpty(roof.minPt.Z, 8, 3)
+                + Converter.FillEmpty(roof.maxPt.X, 8, 3)
+                + Converter.FillEmpty(roof.maxPt.Y, 8, 3)
+                + Converter.FillEmpty(roof.maxPt.Z, 8, 3)
+                + Converter.FillEmpty(roof.tiltAngle, 10, 3)
+                + Converter.FillEmpty(roof.area, 12, 4)
                 + "    0\r\n  structure No. "
-                + fillEmpty(roof.constructionId, 5) + "\r\n";
+                + Converter.FillEmpty(roof.constructionId, 5) + "\r\n";
             });
 
             groundFloors.ForEach(floor =>
             {
-                dDat += fillEmpty("Ground " + floor.partId.ToString(), 13)
-                + fillEmpty(floor.minPt.X, 8, 3)
-                + fillEmpty(floor.minPt.Y, 8, 3)
-                + fillEmpty(floor.minPt.Z, 8, 3)
-                + fillEmpty(floor.maxPt.X, 8, 3)
-                + fillEmpty(floor.maxPt.Y, 8, 3)
-                + fillEmpty(floor.maxPt.Z, 8, 3)
-                + fillEmpty(floor.tiltAngle, 10, 3)
-                + fillEmpty(floor.area, 12, 4)
+                dDat += Converter.FillEmpty("Ground " + floor.partId.ToString(), 13)
+                + Converter.FillEmpty(floor.minPt.X, 8, 3)
+                + Converter.FillEmpty(floor.minPt.Y, 8, 3)
+                + Converter.FillEmpty(floor.minPt.Z, 8, 3)
+                + Converter.FillEmpty(floor.maxPt.X, 8, 3)
+                + Converter.FillEmpty(floor.maxPt.Y, 8, 3)
+                + Converter.FillEmpty(floor.maxPt.Z, 8, 3)
+                + Converter.FillEmpty(floor.tiltAngle, 10, 3)
+                + Converter.FillEmpty(floor.area, 12, 4)
                 + "    0\r\n  structure No. "
-                + fillEmpty(floor.constructionId, 5) + "\r\n";
+                + Converter.FillEmpty(floor.constructionId, 5) + "\r\n";
             });
 
 
@@ -257,38 +257,11 @@ namespace THERBgh
                 }
                 else
                 {
-                    windowIdStrs += fillEmpty("0", 4);
+                    windowIdStrs += Converter.FillEmpty("0", 4);
                 }
             }
             return windowIdStrs;
         }
-        private string fillEmpty(int input, int totalLength)
-        {
-            string inputStr = input.ToString();
-            int inputLength = inputStr.Length;
-            string emptyString = new string(' ', totalLength - inputLength);
-
-            return emptyString + inputStr;
-        }
-
-        private string fillEmpty(string input, int totalLength)
-        {
-            int inputLength = input.Length;
-            string emptyString = new string(' ', totalLength - inputLength);
-            //test
-            return emptyString + input;
-        }
-
-        private string fillEmpty(double input, int totalLength, int digit)
-        {
-            string zeros = new String('0', digit);
-            string format = "{0:0." + zeros + "}";
-            string inputValue = string.Format(format, input);
-            string emptyString = new string(' ', totalLength - inputValue.Length);
-
-            return emptyString + inputValue;
-        }
-
         /// <summary>
         /// Provides an Icon for every component that will be visible in the User Interface.
         /// Icons need to be 24x24 pixels.
