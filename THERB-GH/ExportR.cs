@@ -60,6 +60,7 @@ namespace THERBgh
 
             List<Room> roomList = therb.rooms;
             List<Face> faceList = therb.faces;
+            List<Window> windowList = therb.windows;
 
             string rDat = "";
 
@@ -100,6 +101,7 @@ namespace THERBgh
                 + fillEmpty(directions[6], 5) + " \r\n";
             });
 
+            int id = 1;
             //Faceデータに対する処理
             roomList.ForEach(room =>
             {
@@ -108,7 +110,7 @@ namespace THERBgh
                     if (room.id == face.parentId)
                     {
                         rDat += fillEmpty(room.id, 5)
-                        + fillEmpty(face.id, 5)
+                        + fillEmpty(id, 5)
                         + fillEmpty(directionDict[face.direction.ToString()], 5)
                         + fillEmpty(directionCount[face.direction.ToString()], 5)
                         + fillEmpty(face.constructionId, 5)
@@ -116,7 +118,24 @@ namespace THERBgh
                         + fillEmpty(face.adjacencyRoomId, 5) + " \r\n";
 
                         directionCount[face.direction.ToString()] += 1;
+                        id += 1;
+
+                        //TODO:窓に関する処理を追加
+                        face.windows.ForEach(window =>
+                        {
+                            rDat += fillEmpty(room.id, 5)
+                            + fillEmpty(id, 5)
+                            + fillEmpty(directionDict[face.direction.ToString()], 5)
+                            + fillEmpty(directionCount[face.direction.ToString()], 5)
+                            + fillEmpty(6, 5)
+                            + fillEmpty(window.partId, 5)
+                            + fillEmpty(face.adjacencyRoomId, 5) + " \r\n";
+
+                            id += 1;
+                        });
                     }
+
+
                 });
             });
             
