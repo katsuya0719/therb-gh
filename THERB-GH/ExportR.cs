@@ -91,14 +91,14 @@ namespace THERBgh
             {
                 List<int> directions = room.getDirectionList();
                 //idList.Add(room.id);
-                rDat += fillEmpty(room.id, 5)
-                + fillEmpty(directions[0], 5)
-                + fillEmpty(directions[1], 5)
-                + fillEmpty(directions[2], 5)
-                + fillEmpty(directions[3], 5)
-                + fillEmpty(directions[4], 5)
-                + fillEmpty(directions[5], 5)
-                + fillEmpty(directions[6], 5) + " \r\n";
+                rDat += Converter.FillEmpty(room.id, 5)
+                + Converter.FillEmpty(directions[0], 5)
+                + Converter.FillEmpty(directions[1], 5)
+                + Converter.FillEmpty(directions[2], 5)
+                + Converter.FillEmpty(directions[3], 5)
+                + Converter.FillEmpty(directions[4], 5)
+                + Converter.FillEmpty(directions[5], 5)
+                + Converter.FillEmpty(directions[6], 5) + " \r\n";
             });
 
             int id = 1;
@@ -109,13 +109,13 @@ namespace THERBgh
                 {
                     if (room.id == face.parentId)
                     {
-                        rDat += fillEmpty(room.id, 5)
-                        + fillEmpty(id, 5)
-                        + fillEmpty(directionDict[face.direction.ToString()], 5)
-                        + fillEmpty(directionCount[face.direction.ToString()], 5)
-                        + fillEmpty(face.constructionId, 5)
-                        + fillEmpty(face.partId, 5)
-                        + fillEmpty(face.adjacencyRoomId, 5) + " \r\n";
+                        rDat += Converter.FillEmpty(room.id, 5)
+                        + Converter.FillEmpty(face.id, 5)
+                        + Converter.FillEmpty(directionDict[face.direction.ToString()], 5)
+                        + Converter.FillEmpty(directionCount[face.direction.ToString()], 5)
+                        + Converter.FillEmpty(face.constructionId, 5)
+                        + Converter.FillEmpty(face.partId, 5)
+                        + Converter.FillEmpty(face.adjacencyRoomId, 5) + " \r\n";
 
                         directionCount[face.direction.ToString()] += 1;
                         id += 1;
@@ -123,13 +123,13 @@ namespace THERBgh
                         //TODO:窓に関する処理を追加
                         face.windows.ForEach(window =>
                         {
-                            rDat += fillEmpty(room.id, 5)
-                            + fillEmpty(id, 5)
-                            + fillEmpty(directionDict[face.direction.ToString()], 5)
-                            + fillEmpty(directionCount[face.direction.ToString()], 5)
-                            + fillEmpty(6, 5)
-                            + fillEmpty(window.partId, 5)
-                            + fillEmpty(face.adjacencyRoomId, 5) + " \r\n";
+                            rDat += Converter.FillEmpty(room.id, 5)
+                            + Converter.FillEmpty(id, 5)
+                            + Converter.FillEmpty(directionDict[face.direction.ToString()], 5)
+                            + Converter.FillEmpty(directionCount[face.direction.ToString()], 5)
+                            + Converter.FillEmpty(6, 5)
+                            + Converter.FillEmpty(window.partId, 5)
+                            + Converter.FillEmpty(face.adjacencyRoomId, 5) + " \r\n";
 
                             id += 1;
                         });
@@ -143,23 +143,6 @@ namespace THERBgh
         }
 
         //TODO:Utilsモジュールにうつす
-        private string fillEmpty(int input, int totalLength)
-        {
-            string inputStr = input.ToString();
-            int inputLength = inputStr.Length;
-            string emptyString = new string(' ', totalLength - inputLength);
-
-            return emptyString + inputStr;
-        }
-
-        private string fillEmpty(string input, int totalLength)
-        {
-            int inputLength = input.Length;
-            string emptyString = new string(' ', totalLength - inputLength);
-
-            return emptyString + input;
-        }
-
         /// <summary>
         /// Provides an Icon for every component that will be visible in the User Interface.
         /// Icons need to be 24x24 pixels.

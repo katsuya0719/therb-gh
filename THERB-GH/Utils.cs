@@ -16,13 +16,31 @@ namespace Utils
     public class Converter
     {
 
-        public string FillEmpty(int input, int totalLength)
+        public static string FillEmpty(int input, int totalLength)
         {
             string inputStr = input.ToString();
             int inputLength = inputStr.Length;
             string emptyString = new string(' ', totalLength - inputLength);
 
             return emptyString + inputStr;
+        }
+
+        public static string FillEmpty(string input, int totalLength)
+        {
+            int inputLength = input.Length;
+            string emptyString = new string(' ', totalLength - inputLength);
+
+            return emptyString + input;
+        }
+
+        public static string FillEmpty(double input, int totalLength, int digit)
+        {
+            string zeros = new String('0', digit);
+            string format = "{0:0." + zeros + "}";
+            string inputValue = string.Format(format, input);
+            string emptyString = new string(' ', totalLength - inputValue.Length);
+
+            return emptyString + inputValue;
         }
     }
     
