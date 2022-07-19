@@ -35,7 +35,7 @@ namespace THERBgh
         /// </summary>
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
         {
-            pManager.AddBrepParameter("geos", "geometries", "list of geometries", GH_ParamAccess.list);
+            pManager.AddBoxParameter("boxes", "boxes", "list of room boxes", GH_ParamAccess.list);
             pManager.AddSurfaceParameter("windows", "windows", "list of windows", GH_ParamAccess.list);
             pManager.AddSurfaceParameter("overhangs", "overhangs", "list of overhangs", GH_ParamAccess.list);
             pManager.AddNumberParameter("tol", "tolerance", "tolerance", GH_ParamAccess.item, 0.1);
@@ -60,7 +60,7 @@ namespace THERBgh
         protected override void SolveInstance(IGH_DataAccess DA)
         {
             //var geos = new Brep();
-            List<Brep> geos = new List<Brep>();
+            List<Box> boxes = new List<Box>();
             List<Surface> windows = new List<Surface>();
             List<Surface> overhangs = new List<Surface>();
 
@@ -75,40 +75,26 @@ namespace THERBgh
             //DA.GetData("geos", ref geos);
             //tolとwindowsは任意のパラメータとしたい
             double tol = 0.1;
-            DA.GetDataList(0, geos);
+            DA.GetDataList(0, boxes);
             DA.GetDataList(1, windows);
             DA.GetDataList(2, overhangs);
             DA.GetData(3, ref tol);
 
-            List<Brep> splitGeos;
-            splitGeos = SplitGeometry(geos, tol);
+            var exBoxes = ExBox.SplitGeometry(boxes, tol);
 
             //Roomに対する処理
-            foreach (Brep geo in splitGeos)
+            var splitSurfs = new List<Surface>();
+            foreach (var exBox in exBoxes)
             {
-                Room temp = new Room(geo);
+                Room temp = new Room(exBox.Box.ToBrep());
 
-                //var surfaceDetailedList = new List<object>();
+                splitSurfs.AddRange(exBox.BoxSurfaces);
                 //TODO: SurfaceとFaceの違い理解
-                //BrepSurfaceList srfs = geo.Surfaces;
-                BrepFaceList srfs = geo.Faces;
-                foreach (var brepface in srfs)
+                foreach (var brepface in exBox.BoxSurfaces)
                 {
-                    Brep brep = brepface.DuplicateFace(false);
-                    Surface srf;
-                    if (brep.IsSurface)
-                    {
-                        srf = brepface.ToNurbsSurface();
-                    }
-                    else
-                    {
-                        var edges = brep.Edges;
-                        if (edges.Count < 2) throw new Exception("Edgeの分割に失敗しました。");
-                        srf = Brep.CreateEdgeSurface(edges).Faces[0].ToNurbsSurface();
-                    }
-                    Vector3d normal = srf.NormalAt(0.5, 0.5);
-                    Vector3d tempNormal = reviseNormal(srf, temp);
-                    Face face = new Face(temp, srf, normal, tempNormal);
+                    Vector3d normal = brepface.NormalAt(0.5, 0.5);
+                    Vector3d tempNormal = reviseNormal(brepface, temp);
+                    Face face = new Face(temp, brepface, normal, tempNormal);
                     faceList.Add(face);
                     temp.addFace(face);
                 }
@@ -166,7 +152,7 @@ namespace THERBgh
             Therb therb = new Therb(roomList, faceListWindow, windowList, overhangList);
 
             DA.SetData("Therb", therb);
-            DA.SetDataList("test", splitGeos);
+            DA.SetDataList("test", splitSurfs);
         }
 
         private List<Brep> SplitGeometry(List<Brep> breps, double tol)
@@ -191,6 +177,7 @@ namespace THERBgh
             }
             return splitGeos;
         }
+
 
 
         private List<Window> windowOnFace(List<Face> faceList, List<Surface> windows)
@@ -400,6 +387,146 @@ namespace THERBgh
         public override Guid ComponentGuid
         {
             get { return new Guid("871d367b-8760-4573-b161-304cb7d17bf0"); }
+        }
+    }
+
+    public class ExBox
+    {
+        public Box Box { get; private set; }
+        public List<Surface> BoxSurfaces { get; private set; }
+        public const double STRIC_TOL = 1e-9;
+
+        public ExBox(Box box)
+        {
+            this.Box = box;
+            this.BoxSurfaces = new List<Surface>();
+            foreach(var bfl in box.ToBrep().Faces)
+            {
+                this.BoxSurfaces.Add(bfl.DuplicateSurface());
+            }
+        }
+
+        public static List<ExBox> SplitGeometry(List<Box> boxes, double tol)
+        {
+            if (boxes.Count == 1)
+            {
+                return new List<ExBox>() {new ExBox(boxes[0]) };
+            }
+            var exBoxes = new List<ExBox>();
+            foreach (var box in boxes)
+            {
+                if (!IsSamePlane(boxes[0], box)) throw new Exception("BoxのPlaneが合いませんでした。");
+                exBoxes.Add(new ExBox(box));
+            }
+            for(int i = 0;i < exBoxes.Count;i++)
+            {
+                var others = exBoxes.FindAll(exbox => exbox != exBoxes[i]);
+                if (others.Count == exBoxes.Count) throw new Exception();
+                foreach (var other in others)
+                {
+                    exBoxes[i].BoxSurfaces = SplitSurface(exBoxes[i].BoxSurfaces, other.BoxSurfaces);
+                }
+                
+            }
+            return exBoxes;
+        }
+
+        private static bool IsSamePlane(Box box1, Box box2)
+        {
+            var plane1 = box1.Plane;
+            var plane2 = box2.Plane;
+
+            if (IsParallel(plane1.XAxis, plane2.XAxis))
+            {
+                if (IsParallel(plane1.YAxis, plane2.YAxis)) return true;
+                if (IsParallel(plane1.YAxis, plane2.ZAxis)) return true;
+            }
+            if (IsParallel(plane1.XAxis, plane2.YAxis))
+            {
+                if (IsParallel(plane1.YAxis, plane2.XAxis)) return true;
+                if (IsParallel(plane1.YAxis, plane2.ZAxis)) return true;
+            }
+            if (IsParallel(plane1.XAxis, plane2.ZAxis))
+            {
+                if (IsParallel(plane1.YAxis, plane2.XAxis)) return true;
+                if (IsParallel(plane1.YAxis, plane2.YAxis)) return true;
+            }
+
+            return false;
+        }
+
+        private static bool IsOnPlane(Plane plane, Point3d point)
+        {
+            var closetPoint = plane.ClosestPoint(point);
+            return point.DistanceTo(closetPoint) < STRIC_TOL;
+        }
+
+        private static bool IsParallel(Vector3d vec1, Vector3d vec2)
+        {
+            return Vector3d.CrossProduct(vec1, vec2).IsZero;
+        }
+
+        private static List<Surface> SplitSurface(List<Surface> curSurfs, List<Surface> otherSurfs)
+        {
+            foreach (var otherSurf in otherSurfs)
+            {
+                Plane otherPlane;
+                otherSurf.TryGetPlane(out otherPlane);
+                for(int i = 0; i < curSurfs.Count; i++)
+                {
+                    var curSurf = curSurfs[i];
+                    Plane curPlane;
+                    curSurf.TryGetPlane(out curPlane);
+                    if (!IsOnPlane(curPlane, otherPlane.Origin)) continue;
+                    if (!IsParallel(curPlane.Normal, otherPlane.Normal)) continue;
+                    List<Surface> surfs;
+                    var otherMaxU = otherSurf.Domain(0).ParameterAt(1d);
+                    var otherMaxV = otherSurf.Domain(1).ParameterAt(1d);
+                    if (TrySplit(curSurf, otherSurf.PointAt(0, 0), out surfs))
+                    {
+                        curSurfs.RemoveAt(i--);
+                        curSurfs.AddRange(surfs);
+                        continue;
+                    }
+                    if (TrySplit(curSurf, otherSurf.PointAt(otherMaxU, 0), out surfs))
+                    {
+                        curSurfs.RemoveAt(i--);
+                        curSurfs.AddRange(surfs);
+                        continue;
+                    }
+                    if (TrySplit(curSurf, otherSurf.PointAt(otherMaxU, otherMaxV), out surfs))
+                    {
+                        curSurfs.RemoveAt(i--);
+                        curSurfs.AddRange(surfs);
+                        continue;
+                    }
+                    if (TrySplit(curSurf, otherSurf.PointAt(0, otherMaxV), out surfs))
+                    {
+                        curSurfs.RemoveAt(i--);
+                        curSurfs.AddRange(surfs);
+                        continue;
+                    }
+                }
+            }
+
+            return curSurfs;
+        }
+
+        private static bool TrySplit(Surface surface, Point3d point, out List<Surface> results)
+        {
+            results = new List<Surface>();
+            double u, v;
+            if (!surface.ClosestPoint(point, out u, out v)) return false;
+            var surfs = surface.Split(0, u);
+            if (surfs.Length == 0) surfs = new Surface[] { surface };
+            for (int i = 0; i < surfs.Length; i++)
+            {
+                var surfs2 = surfs[i].Split(1, v);
+                if (surfs2.Length == 0) results.Add(surfs[i]);
+                else results.AddRange(surfs2);
+            }
+            if (results.Count == 1) return false;
+            return true;
         }
     }
 }
