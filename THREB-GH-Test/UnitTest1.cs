@@ -10,7 +10,7 @@ namespace THREB_GH_Test
         [TestMethod]
         public void UtilsTest()
         {
-            Assert.AreEqual(' ' + 3, Converter.FillEmpty(3, 2));
+            Assert.AreEqual(" 3", Converter.FillEmpty(3, 2));
 
         }
     }
