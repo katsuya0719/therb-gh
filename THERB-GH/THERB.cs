@@ -89,7 +89,7 @@ namespace THERBgh
                 Room temp = new Room(exBox.Box.ToBrep());
 
                 splitSurfs.AddRange(exBox.BoxSurfaces);
-                //TODO: SurfaceとFaceの違い理解
+
                 foreach (var brepface in exBox.BoxSurfaces)
                 {
                     Vector3d normal = brepface.NormalAt(0.5, 0.5);
@@ -276,9 +276,13 @@ namespace THERBgh
                     //どのfaceに接しているのかをチェック
                     //testFace.centerPtから一番近いtargetSurfacesが隣接しているsurfaceだと判断する
                     Face adjacentFace = getClosestFaceFromFace(testFace, targetFaces);
+
+                    //内壁の重複を防ぐロジック
+                    //既にadjacentFace.adjacentFaceがtestFaceだったら以下の処理はとばして次のtestFaceの処理に移行
                     testFace.adjacencyRoomId = adjacentFace.parentId;
                     //testFace.adjacencyFaceId = adjacentFace.partId;
                     testFace.adjacencyFace = adjacentFace;
+
                 }
                 else
                 {

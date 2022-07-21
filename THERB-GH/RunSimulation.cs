@@ -119,6 +119,9 @@ namespace THERBgh
                 Directory.CreateDirectory(namePath);
             }
 
+            //TODO: 入力はtherbクラスとし、therbクラスからb.dat,r.datファイルを生成するロジックをこのコンポーネントの中で走らせる 
+
+
             //処理1. example/test/THERB_formatの中にあるデータをまるごとc://therb/{name}フォルダにコピー 
             string initDir = "";
             try
