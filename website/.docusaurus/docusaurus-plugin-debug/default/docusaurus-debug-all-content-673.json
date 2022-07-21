@@ -40,8 +40,8 @@
                 "permalink": "/therb-gh/docs/intro"
               },
               "next": {
-                "title": "Create THERB Model",
-                "permalink": "/therb-gh/docs/Usage/CreateTherbModel"
+                "title": "How to use New Hasp",
+                "permalink": "/therb-gh/docs/NewHasp/HowToUse"
               }
             },
             {
@@ -67,6 +67,32 @@
               }
             },
             {
+              "unversionedId": "NewHasp/HowToUse",
+              "id": "NewHasp/HowToUse",
+              "title": "How to use New Hasp",
+              "description": "THERB-GHではNew Haspという熱負荷計算ソフトへの連携もできます。",
+              "source": "@site/docs/NewHasp/HowToUse.md",
+              "sourceDirName": "NewHasp",
+              "slug": "/NewHasp/HowToUse",
+              "permalink": "/therb-gh/docs/NewHasp/HowToUse",
+              "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/NewHasp/HowToUse.md",
+              "tags": [],
+              "version": "current",
+              "frontMatter": {
+                "id": "HowToUse",
+                "title": "How to use New Hasp"
+              },
+              "sidebar": "tutorialSidebar",
+              "previous": {
+                "title": "Modelling",
+                "permalink": "/therb-gh/docs/Component/Modelling"
+              },
+              "next": {
+                "title": "Create THERB Model",
+                "permalink": "/therb-gh/docs/Usage/CreateTherbModel"
+              }
+            },
+            {
               "unversionedId": "Usage/CreateTherbModel",
               "id": "Usage/CreateTherbModel",
               "title": "Create THERB Model",
@@ -84,8 +110,8 @@
               },
               "sidebar": "tutorialSidebar",
               "previous": {
-                "title": "Modelling",
-                "permalink": "/therb-gh/docs/Component/Modelling"
+                "title": "How to use New Hasp",
+                "permalink": "/therb-gh/docs/NewHasp/HowToUse"
               },
               "next": {
                 "title": "How to install",
@@ -112,6 +138,32 @@
               "previous": {
                 "title": "Create THERB Model",
                 "permalink": "/therb-gh/docs/Usage/CreateTherbModel"
+              },
+              "next": {
+                "title": "Upload to server",
+                "permalink": "/therb-gh/docs/Usage/UploadToServer"
+              }
+            },
+            {
+              "unversionedId": "Usage/UploadToServer",
+              "id": "Usage/UploadToServer",
+              "title": "Upload to server",
+              "description": "RhinoモデルからTHERBのデータを抽出できたら、そのファイルをサーバーにuploadして計算、データ処理、ビジュアライゼーションを行います。",
+              "source": "@site/docs/Usage/UploadToServer.md",
+              "sourceDirName": "Usage",
+              "slug": "/Usage/UploadToServer",
+              "permalink": "/therb-gh/docs/Usage/UploadToServer",
+              "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/Usage/UploadToServer.md",
+              "tags": [],
+              "version": "current",
+              "frontMatter": {
+                "id": "UploadToServer",
+                "title": "Upload to server"
+              },
+              "sidebar": "tutorialSidebar",
+              "previous": {
+                "title": "How to install",
+                "permalink": "/therb-gh/docs/Usage/HowToInstall"
               }
             }
           ],
@@ -135,6 +187,18 @@
               },
               {
                 "type": "category",
+                "label": "NewHasp",
+                "collapsible": true,
+                "collapsed": true,
+                "items": [
+                  {
+                    "type": "doc",
+                    "id": "NewHasp/HowToUse"
+                  }
+                ]
+              },
+              {
+                "type": "category",
                 "label": "Usage",
                 "collapsible": true,
                 "collapsed": true,
@@ -146,6 +210,10 @@
                   {
                     "type": "doc",
                     "id": "Usage/HowToInstall"
+                  },
+                  {
+                    "type": "doc",
+                    "id": "Usage/UploadToServer"
                   }
                 ]
               }

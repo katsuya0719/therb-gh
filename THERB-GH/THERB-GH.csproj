@@ -14,6 +14,9 @@
     <FileAlignment>512</FileAlignment>
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <!-- <TargetExt>.gha</TargetExt> -->
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
@@ -33,9 +36,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
@@ -43,31 +43,37 @@
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
-    <Reference Include="RhinoCommon">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files\Rhino 7\System\RhinoCommon.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Grasshopper">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files\Rhino 7\Plug-ins\Grasshopper\Grasshopper.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="GH_IO">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files\Rhino 7\Plug-ins\Grasshopper\GH_IO.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ReadProperty.cs" />
-    <Compile Include="SolveBoundary.cs" />
-    <Compile Include="Model.cs" />
+    <Compile Include="ExportB.cs" />
+    <Compile Include="ExportA.cs" />
+    <Compile Include="Model\BaseGeo.cs" />
+    <Compile Include="Model\Therb.cs" />
+    <Compile Include="Model\Room.cs" />
+    <Compile Include="Model\BaseFace.cs" />
+    <Compile Include="Model\Face.cs" />
+    <Compile Include="Model\Window.cs" />
+    <Compile Include="Model\Overhang.cs" />
+    <Compile Include="ReadProperties.cs" />
+    <Compile Include="RunSimulation.cs" />
+    <Compile Include="UpdateProperty.cs" />
+    <Compile Include="SplitGeos.cs" />
+    <Compile Include="Utils.cs" />
+    <Compile Include="FilterFaceByProperty.cs" />
+    <Compile Include="ExportR.cs" />
     <Compile Include="THERB.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <PackageReference Include="Grasshopper">
+      <Version>7.20.22193.9001</Version>
+    </PackageReference>
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>13.0.1</Version>
+    </PackageReference>
+    <PackageReference Include="RhinoCommon">
+      <Version>7.20.22193.9001</Version>
+    </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -78,16 +84,18 @@
   </Target>
   -->
   <PropertyGroup>
-    <PostBuildEvent>Copy "$(TargetPath)" "$(TargetDir)$(ProjectName).gha"
-Erase "$(TargetPath)"</PostBuildEvent>
-  </PropertyGroup>
-  <PropertyGroup>
     <FallbackCulture>en-US</FallbackCulture>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+  <PropertyGroup Condition="$(Configuration) == 'Debug' AND $([MSBuild]::IsOSPlatform(Windows))">
     <StartProgram>C:\Program Files\Rhino 7\System\Rhino.exe</StartProgram>
-    <StartArguments>
-    </StartArguments>
+    <StartArguments>$(ProjectDir)\..\example\example.3dm</StartArguments>
     <StartAction>Program</StartAction>
   </PropertyGroup>
+  <Target Name="AfterClean">
+    <Delete Files="$(AppData)\Grasshopper\Libraries\THERB-GH.gha" />
+  </Target>
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="copy $(TargetPath) $(TargetDir)$(ProjectName).gha" />
+    <Exec Command="if exist $(AppData)\Grasshopper\Libraries copy $(ProjectDir)$(OutputPath)*.gha $(AppData)\Grasshopper\Libraries" />
+  </Target>
 </Project>

@@ -35,9 +35,12 @@ namespace THERBgh
         /// </summary>
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
         {
-            pManager.AddBrepParameter("geos", "geometries", "list of geometries", GH_ParamAccess.list);
+            pManager.AddBoxParameter("boxes", "boxes", "list of room boxes", GH_ParamAccess.list);
             pManager.AddSurfaceParameter("windows", "windows", "list of windows", GH_ParamAccess.list);
-            pManager.AddNumberParameter("tol", "tolerance", "tolerance", GH_ParamAccess.item);
+            pManager.AddSurfaceParameter("overhangs", "overhangs", "list of overhangs", GH_ParamAccess.list);
+            pManager.AddNumberParameter("tol", "tolerance", "tolerance", GH_ParamAccess.item, 0.1);
+            pManager[1].Optional = true;
+            pManager[2].Optional = true;
         }
 
         /// <summary>
@@ -45,11 +48,8 @@ namespace THERBgh
         /// </summary>
         protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
         {
-            //pManager.AddGenericParameter("Rooms", "Rooms", "Room class", GH_ParamAccess.item);
-            //pManager.AddGenericParameter("Faces", "Faces", "Face class", GH_ParamAccess.item);
-            //pManager.AddGenericParameter("Windows", "Windows", "Window class", GH_ParamAccess.item);
-            pManager.AddGenericParameter("Therb", "therb", "THERB class", GH_ParamAccess.item);
-            pManager.AddTextParameter("Baues", "Baues", "Baues", GH_ParamAccess.item);
+            pManager.AddGenericParameter("Therb", "Therb", "THERB class", GH_ParamAccess.item);
+            pManager.AddBrepParameter("test", "test", "test", GH_ParamAccess.list);
         }
 
         /// <summary>
@@ -60,42 +60,52 @@ namespace THERBgh
         protected override void SolveInstance(IGH_DataAccess DA)
         {
             //var geos = new Brep();
-            List<Brep> geos = new List<Brep>();
+            List<Box> boxes = new List<Box>();
             List<Surface> windows = new List<Surface>();
+            List<Surface> overhangs = new List<Surface>();
+
             List<Room> roomList = new List<Room>();
             List<Face> faceList = new List<Face>();
-            List<Zone> zoneList = new List<Zone>();
+
+            //TODO:GrasshopperのほうのInitTotalRoomをC#側に移植する
+            Room.InitTotalRoom();
+            Face.InitTotalFace();
+
 
             //DA.GetData("geos", ref geos);
             //tolとwindowsは任意のパラメータとしたい
             double tol = 0.1;
-            DA.GetDataList(0, geos);
+            DA.GetDataList(0, boxes);
             DA.GetDataList(1, windows);
-            DA.GetData(2, ref tol);
+            DA.GetDataList(2, overhangs);
+            DA.GetData(3, ref tol);
+
+            var exBoxes = ExBox.SplitGeometry(boxes, tol);
 
             //static memberを初期化する
             //new Room().initRoom()
 
             //Roomに対する処理
-            foreach (Brep geo in geos)
+            var splitSurfs = new List<Surface>();
+            foreach (var exBox in exBoxes)
             {
-                Room temp = new Room(geo);
-                BrepFaceList brepFaces = geo.Faces;
-                foreach(Surface srf in brepFaces)
+                Room temp = new Room(exBox.Box.ToBrep());
+
+                splitSurfs.AddRange(exBox.BoxSurfaces);
+                //TODO: SurfaceとFaceの違い理解
+                foreach (var brepface in exBox.BoxSurfaces)
                 {
-                    Vector3d normal = srf.NormalAt(0.5, 0.5);
-                    Vector3d reverseNormal = reviseNormal(srf, temp);
-                    Face face = new Face(temp, srf, normal, reverseNormal);
+                    Vector3d normal = brepface.NormalAt(0.5, 0.5);
+                    Vector3d tempNormal = reviseNormal(brepface, temp);
+                    Face face = new Face(temp, brepface, normal, tempNormal);
                     faceList.Add(face);
                     temp.addFace(face);
                 }
                 roomList.Add(temp);
-                Zone zone = new Zone(temp);
-                zoneList.Add(zone);
             }
 
             //FaceのboundaryConditionを計算する処理
-            List<Face> faceListBC = solveBoundary(faceList, tol,ref zoneList);
+            List<Face> faceListBC = solveBoundary(faceList, tol);
 
             //Roomに属するfaceの属性(wall,ceiling,roof)を集計するロジック
             foreach (Room room in roomList)
@@ -107,13 +117,13 @@ namespace THERBgh
                 }
             }
             //windowがどのwallの上にあるかどうかを判断するロジック
-            //FenestrationDetailedも書き出す
 
-            List<Window> windowList = windowOnFace(faceListBC, windows,ref zoneList);
+            List<Window> windowList = windowOnFace(faceListBC, windows);
+            Window.InitTotalWindow();
 
             //window情報をfaceにaddする
             //refパラメータとか使ってwindowOnFaceに付加するのがいいかも
-            
+
             List<Face> faceListWindow = new List<Face>();
             foreach (Face face in faceListBC)
             {
@@ -126,31 +136,60 @@ namespace THERBgh
                 }
                 faceListWindow.Add(face);
             }
-            
+            //overhangがどのwallの上にあるかどうかを判断するロジック
+            List<Overhang> overhangList = overhangOnWindow(windowList,overhangs);
 
-            //BAUESの情報をjsonに書き出し
-            //var bauesJson=JsonConvert.SerializeObject(zoneList);
+            //overhang情報をfaceにaddする
+            List<Face> faceListOverhang = new List<Face>();
+            foreach(Window window in windowList)
+            {
+                foreach(Overhang overhang in overhangList)
+                {
+                    if(overhang.parentWindowId == window.id)
+                    {
+                        window.addOverhangs(overhang);
+                    }
+                }
+            }
 
-            Therb therb = new Therb(roomList, faceListWindow, windowList);
-            Baues baues = new Baues(zoneList);
+            Therb therb = new Therb(roomList, faceListWindow, windowList, overhangList);
 
-            //DA.SetData("Rooms", roomList);
-            //DA.SetData("Faces", faceListWindow);
-            //DA.SetData("Windows", windowList);
             DA.SetData("Therb", therb);
-            DA.SetData("Baues", baues);
-            //DA.SetData("Baues", bauesJson);
+            DA.SetDataList("test", splitSurfs);
+        }
+
+        private List<Brep> SplitGeometry(List<Brep> breps, double tol)
+        {
+            if (breps.Count == 1)
+            {
+                //if (!breps[0].IsSolid) throw new Exception("開かれたBrepが入れられました");
+                return breps;
+            }
+            List<Brep> splitGeos = new List<Brep>();
+            for (int i = 0; i < breps.Count; i = i + 1)
+            {
+                //if (!breps[i].IsSolid) throw new Exception("開かれたBrepが入れられました");
+
+                List<Brep> cutterBreps = breps.FindAll(geo => geo != breps[i]);
+                Brep[] splitGeo = breps[i].Split(cutterBreps, tol);
+                Brep jointedBrep = Brep.JoinBreps(splitGeo, tol)[0];
+
+                if (!jointedBrep.IsSolid) throw new Exception("BrepのJointが失敗しました。");
+
+                splitGeos.Add(jointedBrep);
+            }
+            return splitGeos;
         }
 
 
-        private List<Window> windowOnFace(List<Face> faceList, List<Surface> windows, ref List<Zone> zoneList)
+
+        private List<Window> windowOnFace(List<Face> faceList, List<Surface> windows)
         {
-            List<Face> externalFaces = faceList.FindAll(face => face.bc == "outdoor");
+            //TODO:内壁に窓を配置するケースもあるっぽい
+            List<Face> externalFaces = faceList.FindAll(face => face.bc == BoundaryCondition.exterior);
 
             List<Window> windowList = new List<Window>();
             foreach(Surface windowGeo in windows) {
-                //int parentId = 0;
-                //double tiltAngle = 0;
                 Face parent = externalFaces[0];
                 double closestDistance = 10000;
                 Window window = new Window(windowGeo);
@@ -159,8 +198,6 @@ namespace THERBgh
                     double distance = window.centerPt.DistanceTo(exFace.centerPt);
                     if (distance < closestDistance)
                     {
-                        //parentId = exFace.id;
-                        //tiltAngle = exFace.tiltAngle;
                         parent = exFace;
                         closestDistance = distance;
                     }
@@ -168,8 +205,6 @@ namespace THERBgh
 
                 if (closestDistance < 10000)
                 {
-                    //window.parentId = parentId;
-                    //window.tiltAngle = tiltAngle;
                     window.addParent(parent);
                 }
                 else
@@ -177,14 +212,46 @@ namespace THERBgh
                     //エラー処理を加える
                 }
                 windowList.Add(window);
-                FenestrationDetailed fenDetailed = new FenestrationDetailed(window);
-                zoneList[faceList[parent.id].parentId - 1].surfaces[parent.partId-1].addFenestration(fenDetailed);
 
             }
             return windowList;
         }
 
-        private List<Face> solveBoundary(List<Face> faceList, double tol,ref List<Zone> zoneList)
+        //TODO: refactorしてwindowOnFaceと一緒の関数にする
+        private List<Overhang> overhangOnWindow(List<Window> windowList, List<Surface> overhangs)
+        {
+            List<Overhang> overhangList = new List<Overhang>();
+            foreach (Surface overhangGeo in overhangs)
+            {
+                Window parent = windowList[0];
+                double closestDistance = 10000;
+                Overhang overhang = new Overhang(overhangGeo);
+                foreach (Window window in windowList)
+                {
+                    double distance = overhang.centerPt.DistanceTo(window.centerPt);
+                    if (distance < closestDistance)
+                    {
+                        parent = window;
+                        closestDistance = distance;
+                    }
+                }
+
+                if (closestDistance < 10000)
+                {
+                    overhang.addParentWindow(parent);
+                    overhang.addParentFace(parent.parent);
+                }
+                else
+                {
+                    //エラー処理を加える
+                }
+                overhangList.Add(overhang);
+
+            }
+            return overhangList;
+        }
+
+        private List<Face> solveBoundary(List<Face> faceList, double tol)
         {
             List<Face> faceListBC = new List<Face>();
             for (int i=0;i<faceList.Count; i++)
@@ -208,8 +275,7 @@ namespace THERBgh
 
                 if (shootIt(testRay, targetSurfaces, tol, 2))
                 {
-                    testFace.bc = "interior";
-                    testFace.bauesBC = BoundaryCondition.Surface;
+                    testFace.bc = BoundaryCondition.interior;
                     //どのfaceに接しているのかをチェック
                     //testFace.centerPtから一番近いtargetSurfacesが隣接しているsurfaceだと判断する
                     Face adjacentFace = getClosestFaceFromFace(testFace, targetFaces);
@@ -222,22 +288,17 @@ namespace THERBgh
                     //z座標<=0であれば、bc=groundとする
                     if(testFace.centerPt.Z <= tol)
                     {
-                        testFace.bc = "ground";
-                        testFace.bauesBC = BoundaryCondition.Ground;
+                        testFace.bc = BoundaryCondition.ground;
                     }
                     else
                     {
-                        testFace.bc = "outdoor";
-                        testFace.bauesBC = BoundaryCondition.Outdoors;
+                        testFace.bc = BoundaryCondition.exterior;
                     }
                     testFace.adjacencyRoomId = 0;
                 }
                 testFace.setElementType();
                 testFace.setConstructionId();
                 faceListBC.Add(testFace);
-
-                SurfaceDetailed srfDetail = new SurfaceDetailed(testFace);
-                zoneList[testFace.parent.id - 1].addSurface(srfDetail);
             }
             return faceListBC;
         }
@@ -329,6 +390,146 @@ namespace THERBgh
         public override Guid ComponentGuid
         {
             get { return new Guid("871d367b-8760-4573-b161-304cb7d17bf0"); }
+        }
+    }
+
+    public class ExBox
+    {
+        public Box Box { get; private set; }
+        public List<Surface> BoxSurfaces { get; private set; }
+        public const double STRIC_TOL = 1e-9;
+
+        public ExBox(Box box)
+        {
+            this.Box = box;
+            this.BoxSurfaces = new List<Surface>();
+            foreach(var bfl in box.ToBrep().Faces)
+            {
+                this.BoxSurfaces.Add(bfl.DuplicateSurface());
+            }
+        }
+
+        public static List<ExBox> SplitGeometry(List<Box> boxes, double tol)
+        {
+            if (boxes.Count == 1)
+            {
+                return new List<ExBox>() {new ExBox(boxes[0]) };
+            }
+            var exBoxes = new List<ExBox>();
+            foreach (var box in boxes)
+            {
+                if (!IsSamePlane(boxes[0], box)) throw new Exception("BoxのPlaneが合いませんでした。");
+                exBoxes.Add(new ExBox(box));
+            }
+            for(int i = 0;i < exBoxes.Count;i++)
+            {
+                var others = exBoxes.FindAll(exbox => exbox != exBoxes[i]);
+                if (others.Count == exBoxes.Count) throw new Exception();
+                foreach (var other in others)
+                {
+                    exBoxes[i].BoxSurfaces = SplitSurface(exBoxes[i].BoxSurfaces, other.BoxSurfaces);
+                }
+                
+            }
+            return exBoxes;
+        }
+
+        private static bool IsSamePlane(Box box1, Box box2)
+        {
+            var plane1 = box1.Plane;
+            var plane2 = box2.Plane;
+
+            if (IsParallel(plane1.XAxis, plane2.XAxis))
+            {
+                if (IsParallel(plane1.YAxis, plane2.YAxis)) return true;
+                if (IsParallel(plane1.YAxis, plane2.ZAxis)) return true;
+            }
+            if (IsParallel(plane1.XAxis, plane2.YAxis))
+            {
+                if (IsParallel(plane1.YAxis, plane2.XAxis)) return true;
+                if (IsParallel(plane1.YAxis, plane2.ZAxis)) return true;
+            }
+            if (IsParallel(plane1.XAxis, plane2.ZAxis))
+            {
+                if (IsParallel(plane1.YAxis, plane2.XAxis)) return true;
+                if (IsParallel(plane1.YAxis, plane2.YAxis)) return true;
+            }
+
+            return false;
+        }
+
+        private static bool IsOnPlane(Plane plane, Point3d point)
+        {
+            var closetPoint = plane.ClosestPoint(point);
+            return point.DistanceTo(closetPoint) < STRIC_TOL;
+        }
+
+        private static bool IsParallel(Vector3d vec1, Vector3d vec2)
+        {
+            return Vector3d.CrossProduct(vec1, vec2).IsZero;
+        }
+
+        private static List<Surface> SplitSurface(List<Surface> curSurfs, List<Surface> otherSurfs)
+        {
+            foreach (var otherSurf in otherSurfs)
+            {
+                Plane otherPlane;
+                otherSurf.TryGetPlane(out otherPlane);
+                for(int i = 0; i < curSurfs.Count; i++)
+                {
+                    var curSurf = curSurfs[i];
+                    Plane curPlane;
+                    curSurf.TryGetPlane(out curPlane);
+                    if (!IsOnPlane(curPlane, otherPlane.Origin)) continue;
+                    if (!IsParallel(curPlane.Normal, otherPlane.Normal)) continue;
+                    List<Surface> surfs;
+                    var otherMaxU = otherSurf.Domain(0).ParameterAt(1d);
+                    var otherMaxV = otherSurf.Domain(1).ParameterAt(1d);
+                    if (TrySplit(curSurf, otherSurf.PointAt(0, 0), out surfs))
+                    {
+                        curSurfs.RemoveAt(i--);
+                        curSurfs.AddRange(surfs);
+                        continue;
+                    }
+                    if (TrySplit(curSurf, otherSurf.PointAt(otherMaxU, 0), out surfs))
+                    {
+                        curSurfs.RemoveAt(i--);
+                        curSurfs.AddRange(surfs);
+                        continue;
+                    }
+                    if (TrySplit(curSurf, otherSurf.PointAt(otherMaxU, otherMaxV), out surfs))
+                    {
+                        curSurfs.RemoveAt(i--);
+                        curSurfs.AddRange(surfs);
+                        continue;
+                    }
+                    if (TrySplit(curSurf, otherSurf.PointAt(0, otherMaxV), out surfs))
+                    {
+                        curSurfs.RemoveAt(i--);
+                        curSurfs.AddRange(surfs);
+                        continue;
+                    }
+                }
+            }
+
+            return curSurfs;
+        }
+
+        private static bool TrySplit(Surface surface, Point3d point, out List<Surface> results)
+        {
+            results = new List<Surface>();
+            double u, v;
+            if (!surface.ClosestPoint(point, out u, out v)) return false;
+            var surfs = surface.Split(0, u);
+            if (surfs.Length == 0) surfs = new Surface[] { surface };
+            for (int i = 0; i < surfs.Length; i++)
+            {
+                var surfs2 = surfs[i].Split(1, v);
+                if (surfs2.Length == 0) results.Add(surfs[i]);
+                else results.AddRange(surfs2);
+            }
+            if (results.Count == 1) return false;
+            return true;
         }
     }
 }

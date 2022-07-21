@@ -5,6 +5,8 @@ VisualStudioVersion = 16.0.32106.194
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "THERB-GH", "THERB-GH\THERB-GH.csproj", "{E17E6C51-8875-4A7F-AB80-635D1AF28391}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "THREB-GH-Test", "THREB-GH-Test\THREB-GH-Test.csproj", "{4F386B62-5266-4227-9C14-D708725D27C0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{E17E6C51-8875-4A7F-AB80-635D1AF28391}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E17E6C51-8875-4A7F-AB80-635D1AF28391}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E17E6C51-8875-4A7F-AB80-635D1AF28391}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F386B62-5266-4227-9C14-D708725D27C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F386B62-5266-4227-9C14-D708725D27C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F386B62-5266-4227-9C14-D708725D27C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F386B62-5266-4227-9C14-D708725D27C0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
