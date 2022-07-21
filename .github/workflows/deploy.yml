@@ -3,11 +3,8 @@ name: Deploy
 on:
   push:
     branches: [ develop ]
-<<<<<<< HEAD
-=======
   pull_request:
     branches: [ master, develop]
->>>>>>> 5062e72d74991fdd999e66d6d9a0d4de289a4ace
 
 jobs:
   build:

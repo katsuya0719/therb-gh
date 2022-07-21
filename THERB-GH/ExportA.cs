@@ -25,15 +25,9 @@ namespace THERBgh
         /// Subcategory the panel. If you use non-existing tab or panel names, 
         /// new tabs/panels will automatically be created.
         /// </summary>
-<<<<<<< HEAD:THERB-GH/ReadProperty.cs
-        public ReadProperty()
-          : base("ReadProperty", "ReadProperty",
-              "Description",
-=======
         public ExportA()
           : base("exportA", "exportA",
               "export a.dat",
->>>>>>> 5062e72d74991fdd999e66d6d9a0d4de289a4ace:THERB-GH/ExportA.cs
               "THERB-GH", "Modelling")
         {
         }
