@@ -86,7 +86,7 @@ namespace THERBgh
 
 
 
-            //TODO: 齋藤君に修正願い
+            
             roomList.ForEach(room =>
             {
                 List<int> directions = room.getDirectionList();
@@ -101,10 +101,11 @@ namespace THERBgh
                 + Converter.FillEmpty(directions[6], 5) + " \r\n";
             });
 
-            int id = 1;
+            
             //Faceデータに対する処理
             roomList.ForEach(room =>
             {
+                //int id = 1;
                 faceList.ForEach(face =>
                 {
                     if (room.id == face.parentId)
@@ -118,9 +119,10 @@ namespace THERBgh
                         + Converter.FillEmpty(face.adjacencyRoomId, 5) + " \r\n";
 
                         directionCount[face.direction.ToString()] += 1;
-                        id += 1;
+                        //id += 1;
 
                         //TODO:窓に関する処理を追加
+                        /*
                         face.windows.ForEach(window =>
                         {
                             rDat += Converter.FillEmpty(room.id, 5)
@@ -133,6 +135,7 @@ namespace THERBgh
 
                             id += 1;
                         });
+                        */
                     }
 
 
