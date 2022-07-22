@@ -45,6 +45,7 @@
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Compose.cs" />
     <Compile Include="ExportB.cs" />
     <Compile Include="ExportA.cs" />
     <Compile Include="Model\BaseGeo.cs" />
@@ -56,6 +57,7 @@
     <Compile Include="Model\Overhang.cs" />
     <Compile Include="ReadProperties.cs" />
     <Compile Include="RunSimulation.cs" />
+    <Compile Include="Decompose.cs" />
     <Compile Include="UpdateProperty.cs" />
     <Compile Include="SplitGeos.cs" />
     <Compile Include="Utils.cs" />

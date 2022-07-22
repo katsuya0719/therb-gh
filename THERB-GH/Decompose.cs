@@ -2,12 +2,10 @@
 using Rhino.Geometry;
 using Rhino.Geometry.Collections;
 using System;
-using System.Linq;
 using System.Collections.Generic;
 using Rhino.Geometry.Intersect;
 using Newtonsoft.Json;
 using Model;
-using Utils;
 
 // In order to load the result of this wizard, you will also need to
 // add the output bin/ folder of this project to the list of loaded
@@ -16,7 +14,7 @@ using Utils;
 
 namespace THERBgh
 {
-    public class ExportA : GH_Component
+    public class Decompose : GH_Component
     {
         /// <summary>
         /// Each implementation of GH_Component must provide a public 
@@ -25,10 +23,10 @@ namespace THERBgh
         /// Subcategory the panel. If you use non-existing tab or panel names, 
         /// new tabs/panels will automatically be created.
         /// </summary>
-        public ExportA()
-          : base("exportA", "exportA",
-              "export a.dat",
-              "THERB-GH", "Simulation")
+        public Decompose()
+          : base("Decompose", "Decompose",
+              "decompose therb class into rooms, faces, windows and overhangs",
+              "THERB-GH", "Modelling")
         {
         }
 
@@ -37,7 +35,7 @@ namespace THERBgh
         /// </summary>
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
         {
-            pManager.AddGenericParameter("Therb", "therb", "THERB class", GH_ParamAccess.item);
+            pManager.AddGenericParameter("Therb", "Therb", "Therb class", GH_ParamAccess.item);
         }
 
         /// <summary>
@@ -45,7 +43,10 @@ namespace THERBgh
         /// </summary>
         protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
         {
-            pManager.AddTextParameter("a_dat", "a_dat", "a.dat file", GH_ParamAccess.item);
+            pManager.AddGenericParameter("Rooms", "Rooms", "Room classes", GH_ParamAccess.list);
+            pManager.AddGenericParameter("Faces", "Faces", "Face classes", GH_ParamAccess.list);
+            pManager.AddGenericParameter("Windows", "Windows", "Window classes", GH_ParamAccess.list);
+            pManager.AddGenericParameter("Overhangs", "Overhangs", "Overhang classes", GH_ParamAccess.list);
         }
 
         /// <summary>
@@ -55,31 +56,19 @@ namespace THERBgh
         /// to store data in output parameters.</param>
         protected override void SolveInstance(IGH_DataAccess DA)
         {
-            Therb therb = null;
-            DA.GetData(0, ref therb);
+            Therb Therb = null;
+            DA.GetData(0, ref Therb);
 
-            if (therb == null) return;
+            List<Room> rooms = Therb.rooms;
+            List<Face> faces = Therb.faces;
+            List<Window> windows = Therb.windows;
+            List<Overhang> overhangs = Therb.overhangs;
 
-            List<Room> roomList = therb.rooms;
-            string aDat = "*hourly data od forced room air ventilation \r\n";
-
-            roomList.ForEach(room =>
-            {
-                aDat += "into room" + Converter.FillEmpty(room.id, 3) + "from " + Converter.FillEmpty(0, 3)
-                    + "=>  \r\n"
-                    + Converter.FillEmpty("from outdoor=0", 25)
-                    + Converter.FillEmpty("- ", 6)
-                    + string.Join("", Enumerable.Repeat(Converter.FillEmpty(room.volume / 2, 7, 1), 12)) + "\r\n" //12回繰り返して呼ぶようにしたい
-                    + Converter.FillEmpty("quantity (m3/h)", 25)
-                    + Converter.FillEmpty("- ", 6) + "\r\n"
-                    + Converter.FillEmpty("(-1.:natural vent.)", 25)
-                    + string.Join("", Enumerable.Repeat(Converter.FillEmpty(room.volume / 2, 7, 1), 12)) + "\r\n"; //12回繰り返して呼ぶようにしたい
-            });
-
-            DA.SetData("a_dat", aDat);
+            DA.SetDataList("Rooms",rooms);
+            DA.SetDataList("Faces",faces);
+            DA.SetDataList("Windows", windows);
+            DA.SetDataList("Overhangs", overhangs);
         }
-
-        //TODO:Utilsモジュールにうつす
 
         /// <summary>
         /// Provides an Icon for every component that will be visible in the User Interface.
@@ -102,7 +91,7 @@ namespace THERBgh
         /// </summary>
         public override Guid ComponentGuid
         {
-            get { return new Guid("4d940719-485a-4f3f-96ba-58a40632dbd4"); }
+            get { return new Guid("4cefc996-1fe3-443b-9499-adc932aea520"); }
         }
     }
 }

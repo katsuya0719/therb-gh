@@ -34,7 +34,8 @@ namespace THERBgh
         /// </summary>
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
         {
-            pManager.AddGenericParameter("Therb", "Therb", "Therb data", GH_ParamAccess.item);
+            //pManager.AddGenericParameter("Therb", "Therb", "Therb data", GH_ParamAccess.item);
+            pManager.AddGenericParameter("Faces", "Faces", "Face data", GH_ParamAccess.list);
             pManager.AddIntegerParameter("bc", "bc", "boundary condition to filter", GH_ParamAccess.item, -1);
             pManager.AddIntegerParameter("surfT", "surfT", "surface type to filter", GH_ParamAccess.item, -1);
             pManager.AddIntegerParameter("direction", "direction", "direction to filter", GH_ParamAccess.item, -1);
@@ -78,12 +79,12 @@ namespace THERBgh
         /// to store data in output parameters.</param>
         protected override void SolveInstance(IGH_DataAccess DA)
         {
-            //List<Face> faceList = new List<Face>();       
-            //DA.GetDataList(0, faceList);
-            Therb Therb = null;
-            DA.GetData(0, ref Therb);
+            List<Face> faceList = new List<Face>();       
+            DA.GetDataList(0, faceList);
+            //Therb Therb = null;
+            //DA.GetData(0, ref Therb);
 
-            List<Face> faceList = Therb.faces;
+            //List<Face> faceList = Therb.faces;
 
             int bc = -1, surfT = -1, direction = -1;
             DA.GetData(1, ref bc);
@@ -103,7 +104,6 @@ namespace THERBgh
             {
                 throw new Exception("directionに範囲外の数字が入れられました。");
             }
-
 
             List<Face> trueFaceList = new List<Face>();
             List<Face> falseFaceList = new List<Face>();

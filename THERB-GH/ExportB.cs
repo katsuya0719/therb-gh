@@ -28,7 +28,7 @@ namespace THERBgh
         public ExportB()
           : base("exportB", "exportB",
               "export b.dat",
-              "THERB-GH", "Modelling")
+              "THERB-GH", "Simulation")
         {
         }
 
