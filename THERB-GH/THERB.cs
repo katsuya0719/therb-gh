@@ -257,13 +257,15 @@ namespace THERBgh
                 Face testFace = faceList[i];
 
                 //違うparentを持つfaceを選択する
-                List<Face> targetFaces = faceList.FindAll(face => face.parent != testFace.parent);
+                //List<Face> targetFaces = faceList.FindAll(face => face.parent != testFace.parent);
+                var targetFaces = new List<Face>();
 
                 List<Surface> targetSurfaces = new List<Surface>();
 
-                foreach (Face face in targetFaces)
+                for (int j = i + 1; j < faceList.Count; j++)
                 {
-                    targetSurfaces.Add(face.geometry);
+                    targetFaces.Add(faceList[j]);
+                    targetSurfaces.Add(faceList[j].geometry);
                 };
 
                 Point3d testPt = new Point3d(testFace.centerPt);
