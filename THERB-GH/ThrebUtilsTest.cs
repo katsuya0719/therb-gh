@@ -38,7 +38,7 @@ namespace THERBgh
                 xSize: new Interval(4000, 8000),
                 ySize: new Interval(4000, 8000),
                 zSize: new Interval(3000, 6000)));
-            //var boxTest = boxes[0].ToBrep();
+            var boxTest = boxes[0].ToBrep();
             //var exBoxes = ExBox.SplitGeometry(boxes, 0.1);
             /*foreach (var exBox in exBoxes)
             {
