@@ -53,9 +53,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Grasshopper">
-      <Version>7.20.22193.9001</Version>
-    </PackageReference>
     <PackageReference Include="MSTest.TestAdapter">
       <Version>2.2.10</Version>
     </PackageReference>
@@ -64,9 +61,6 @@
     </PackageReference>
     <PackageReference Include="Newtonsoft.Json">
       <Version>13.0.1</Version>
-    </PackageReference>
-    <PackageReference Include="RhinoCommon">
-      <Version>7.20.22193.9001</Version>
     </PackageReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />

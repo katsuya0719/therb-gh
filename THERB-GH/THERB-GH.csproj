@@ -58,6 +58,7 @@
     <Compile Include="ReadProperties.cs" />
     <Compile Include="RunSimulation.cs" />
     <Compile Include="Decompose.cs" />
+    <Compile Include="ThrebUtilsTest.cs" />
     <Compile Include="UpdateProperty.cs" />
     <Compile Include="SplitGeos.cs" />
     <Compile Include="Utils.cs" />
