@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Compose.cs" />
+    <Compile Include="CreateDatFile.cs" />
     <Compile Include="ExportB.cs" />
     <Compile Include="ExportA.cs" />
     <Compile Include="Model\BaseGeo.cs" />

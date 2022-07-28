@@ -58,94 +58,9 @@ namespace THERBgh
             Therb therb = null;
             DA.GetData(0, ref therb);
 
-            List<Room> roomList = therb.rooms;
-            List<Face> faceList = therb.faces;
-            List<Window> windowList = therb.windows;
-
-            string rDat = "";
-
-            if (roomList == null) return;
-
-            var directionDict = new Dictionary<string, int>(){
-                {"S",1},
-                {"W",2},
-                {"N",3},
-                {"E",4},
-                {"F",5},
-                {"CR",6},
-            };
-
-            var directionCount = new Dictionary<string, int>(){
-                {"S",1},
-                {"W",1},
-                {"N",1},
-                {"E",1},
-                {"F",1},
-                {"CR",1},
-            };
-
-
-
-            
-            roomList.ForEach(room =>
-            {
-                List<int> directions = room.getDirectionList();
-                //idList.Add(room.id);
-                rDat += Converter.FillEmpty(room.id, 5)
-                + Converter.FillEmpty(directions[0], 5)
-                + Converter.FillEmpty(directions[1], 5)
-                + Converter.FillEmpty(directions[2], 5)
-                + Converter.FillEmpty(directions[3], 5)
-                + Converter.FillEmpty(directions[4], 5)
-                + Converter.FillEmpty(directions[5], 5)
-                + Converter.FillEmpty(directions[6], 5) + " \r\n";
-            });
-
-            
-            //Faceデータに対する処理
-            roomList.ForEach(room =>
-            {
-                //int id = 1;
-                faceList.ForEach(face =>
-                {
-                    if (room.id == face.parentId)
-                    {
-                        rDat += Converter.FillEmpty(room.id, 5)
-                        + Converter.FillEmpty(face.id, 5)
-                        + Converter.FillEmpty(directionDict[face.direction.ToString()], 5)
-                        + Converter.FillEmpty(directionCount[face.direction.ToString()], 5)
-                        + Converter.FillEmpty(face.constructionId, 5)
-                        + Converter.FillEmpty(face.partId, 5)
-                        + Converter.FillEmpty(face.adjacencyRoomId, 5) + " \r\n";
-
-                        directionCount[face.direction.ToString()] += 1;
-                        //id += 1;
-
-                        //TODO:窓に関する処理を追加
-                        /*
-                        face.windows.ForEach(window =>
-                        {
-                            rDat += Converter.FillEmpty(room.id, 5)
-                            + Converter.FillEmpty(id, 5)
-                            + Converter.FillEmpty(directionDict[face.direction.ToString()], 5)
-                            + Converter.FillEmpty(directionCount[face.direction.ToString()], 5)
-                            + Converter.FillEmpty(6, 5)
-                            + Converter.FillEmpty(window.partId, 5)
-                            + Converter.FillEmpty(face.adjacencyRoomId, 5) + " \r\n";
-
-                            id += 1;
-                        });
-                        */
-                    }
-
-
-                });
-            });
-            
-            DA.SetData("r_dat", rDat);
+            DA.SetData("r_dat", CreateDatFile.CreateRDat(therb));
         }
-
-        //TODO:Utilsモジュールにうつす
+        
         /// <summary>
         /// Provides an Icon for every component that will be visible in the User Interface.
         /// Icons need to be 24x24 pixels.
