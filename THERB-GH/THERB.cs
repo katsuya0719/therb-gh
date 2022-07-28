@@ -93,7 +93,7 @@ namespace THERBgh
                 foreach (var brepface in exBox.BoxSurfaces)
                 {
                     Vector3d normal = brepface.NormalAt(0.5, 0.5);
-                    Vector3d tempNormal = reviseNormal(brepface, temp);
+                    Vector3d tempNormal = ReviseNormal(brepface, temp);
                     Face face = new Face(temp, brepface, normal, tempNormal);
                     faceList.Add(face);
                     temp.addFace(face);
@@ -102,7 +102,7 @@ namespace THERBgh
             }
 
             //FaceのboundaryConditionを計算する処理
-            List<Face> faceListBC = solveBoundary(faceList, tol);
+            List<Face> faceListBC = SolveBoundary(faceList, tol);
 
             //Roomに属するfaceの属性(wall,ceiling,roof)を集計するロジック
             foreach (Room room in roomList)
@@ -115,7 +115,7 @@ namespace THERBgh
             }
             //windowがどのwallの上にあるかどうかを判断するロジック
 
-            List<Window> windowList = windowOnFace(faceListBC, windows);
+            List<Window> windowList = WindowOnFace(faceListBC, windows);
             Window.InitTotalWindow();
 
             //window情報をfaceにaddする
@@ -134,15 +134,15 @@ namespace THERBgh
                 faceListWindow.Add(face);
             }
             //overhangがどのwallの上にあるかどうかを判断するロジック
-            List<Overhang> overhangList = overhangOnWindow(windowList,overhangs);
+            List<Overhang> overhangList = OverhangOnWindow(windowList, overhangs);
 
             //overhang情報をfaceにaddする
             List<Face> faceListOverhang = new List<Face>();
-            foreach(Window window in windowList)
+            foreach (Window window in windowList)
             {
-                foreach(Overhang overhang in overhangList)
+                foreach (Overhang overhang in overhangList)
                 {
-                    if(overhang.parentWindowId == window.id)
+                    if (overhang.parentWindowId == window.id)
                     {
                         window.addOverhangs(overhang);
                     }
@@ -155,6 +155,7 @@ namespace THERBgh
             DA.SetDataList("test", splitSurfs);
         }
 
+        [Obsolete]
         private List<Brep> SplitGeometry(List<Brep> breps, double tol)
         {
             if (breps.Count == 1)
@@ -180,17 +181,18 @@ namespace THERBgh
 
 
 
-        private List<Window> windowOnFace(List<Face> faceList, List<Surface> windows)
+        private List<Window> WindowOnFace(List<Face> faceList, List<Surface> windows)
         {
             //TODO:内壁に窓を配置するケースもあるっぽい
             List<Face> externalFaces = faceList.FindAll(face => face.bc == BoundaryCondition.exterior);
 
             List<Window> windowList = new List<Window>();
-            foreach(Surface windowGeo in windows) {
+            foreach (Surface windowGeo in windows)
+            {
                 Face parent = externalFaces[0];
                 double closestDistance = 10000;
                 Window window = new Window(windowGeo);
-                foreach(Face exFace in externalFaces)
+                foreach (Face exFace in externalFaces)
                 {
                     double distance = window.centerPt.DistanceTo(exFace.centerPt);
                     if (distance < closestDistance)
@@ -215,7 +217,7 @@ namespace THERBgh
         }
 
         //TODO: refactorしてwindowOnFaceと一緒の関数にする
-        private List<Overhang> overhangOnWindow(List<Window> windowList, List<Surface> overhangs)
+        private List<Overhang> OverhangOnWindow(List<Window> windowList, List<Surface> overhangs)
         {
             List<Overhang> overhangList = new List<Overhang>();
             foreach (Surface overhangGeo in overhangs)
@@ -248,10 +250,10 @@ namespace THERBgh
             return overhangList;
         }
 
-        private List<Face> solveBoundary(List<Face> faceList, double tol)
+        private List<Face> SolveBoundary(List<Face> faceList, double tol)
         {
             List<Face> faceListBC = new List<Face>();
-            for (int i=0;i<faceList.Count; i++)
+            for (int i = 0; i < faceList.Count; i++)
             {
                 //テストするsurfaceを選択する
                 Face testFace = faceList[i];
@@ -272,12 +274,12 @@ namespace THERBgh
                 testPt += testFace.normal * -tol / 2;
                 Ray3d testRay = new Ray3d(testPt, testFace.normal);
 
-                if (shootIt(testRay, targetSurfaces, tol, 2))
+                if (ShootIt(testRay, targetSurfaces, tol, 2))
                 {
                     testFace.bc = BoundaryCondition.interior;
                     //どのfaceに接しているのかをチェック
                     //testFace.centerPtから一番近いtargetSurfacesが隣接しているsurfaceだと判断する
-                    Face adjacentFace = getClosestFaceFromFace(testFace, targetFaces);
+                    Face adjacentFace = GetClosestFaceFromFace(testFace, targetFaces);
 
                     //内壁の重複を防ぐロジック
                     //既にadjacentFace.adjacentFaceがtestFaceだったら以下の処理はとばして次のtestFaceの処理に移行
@@ -289,7 +291,7 @@ namespace THERBgh
                 else
                 {
                     //z座標<=0であれば、bc=groundとする
-                    if(testFace.centerPt.Z <= tol)
+                    if (testFace.centerPt.Z <= tol)
                     {
                         testFace.bc = BoundaryCondition.ground;
                     }
@@ -306,7 +308,7 @@ namespace THERBgh
             return faceListBC;
         }
 
-        private bool shootIt(Ray3d ray, List<Surface> srfs, double tol, int bounce)
+        private bool ShootIt(Ray3d ray, List<Surface> srfs, double tol, int bounce)
         {
             Point3d[] intersectPts = Intersection.RayShoot(ray, srfs, 1);
             if (intersectPts.Length > 0)
@@ -326,18 +328,20 @@ namespace THERBgh
             }
         }
 
-        private Face getClosestFaceFromFace(Face originFace, List<Face> faces)
+        private Face GetClosestFaceFromFace(Face originFace, List<Face> faces)
         {
             Face closestFace = null;
             double closestDistance = 10000;
-            foreach(Face face in faces)
+            foreach (Face face in faces)
             {
                 double distance = 10000;
                 //faceがwallであればwallのみでテストする
                 if (originFace.face == "wall" && face.face == "wall")
                 {
                     distance = originFace.centerPt.DistanceTo(face.centerPt);
-                }else if(originFace.face != "wall" && face.face != "wall"){
+                }
+                else if (originFace.face != "wall" && face.face != "wall")
+                {
                     distance = originFace.centerPt.DistanceTo(face.centerPt);
                 }
                 if (distance < closestDistance)
@@ -349,7 +353,7 @@ namespace THERBgh
             return closestFace;
         }
 
-        private Vector3d reviseNormal(Surface srf, Room parent)
+        private Vector3d ReviseNormal(Surface srf, Room parent)
         {
             //モデルによってはsurfaceのvectorの方向が意図と逆に向いている場合があるのでそれを修正
             Point3d centroid = parent.centroid;
@@ -406,7 +410,7 @@ namespace THERBgh
         {
             this.Box = box;
             this.BoxSurfaces = new List<Surface>();
-            foreach(var bfl in box.ToBrep().Faces)
+            foreach (var bfl in box.ToBrep().Faces)
             {
                 this.BoxSurfaces.Add(bfl.DuplicateSurface());
             }
@@ -416,7 +420,7 @@ namespace THERBgh
         {
             if (boxes.Count == 1)
             {
-                return new List<ExBox>() {new ExBox(boxes[0]) };
+                return new List<ExBox>() { new ExBox(boxes[0]) };
             }
             var exBoxes = new List<ExBox>();
             foreach (var box in boxes)
@@ -424,7 +428,7 @@ namespace THERBgh
                 if (!IsSamePlane(boxes[0], box)) throw new Exception("BoxのPlaneが合いませんでした。");
                 exBoxes.Add(new ExBox(box));
             }
-            for(int i = 0;i < exBoxes.Count;i++)
+            for (int i = 0; i < exBoxes.Count; i++)
             {
                 var others = exBoxes.FindAll(exbox => exbox != exBoxes[i]);
                 if (others.Count == exBoxes.Count) throw new Exception();
@@ -432,7 +436,7 @@ namespace THERBgh
                 {
                     exBoxes[i].BoxSurfaces = SplitSurface(exBoxes[i].BoxSurfaces, other.BoxSurfaces);
                 }
-                
+
             }
             return exBoxes;
         }
@@ -478,7 +482,7 @@ namespace THERBgh
             {
                 Plane otherPlane;
                 otherSurf.TryGetPlane(out otherPlane);
-                for(int i = 0; i < curSurfs.Count; i++)
+                for (int i = 0; i < curSurfs.Count; i++)
                 {
                     var curSurf = curSurfs[i];
                     Plane curPlane;
