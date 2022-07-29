@@ -278,10 +278,16 @@ namespace THERBgh
                     Face adjacentFace = getClosestFaceFromFace(testFace, targetFaces);
 
                     //内壁の重複を防ぐロジック
-                    //既にadjacentFace.adjacentFaceがtestFaceだったら以下の処理はとばして次のtestFaceの処理に移行
+                    
                     testFace.adjacencyRoomId = adjacentFace.parentId;
                     //testFace.adjacencyFaceId = adjacentFace.partId;
                     testFace.adjacencyFace = adjacentFace;
+
+                    //既にadjacentFace.adjacentFaceがtestFaceだったらduplicateフラグ
+                    if (adjacentFace.adjacencyFace == testFace)
+                    {
+                        testFace.unique = true;
+                    }
 
                 }
                 else

@@ -89,7 +89,7 @@ namespace THERBgh
                 if (face.elementType == "exteriorwall")
                 {
                     exteriorWalls.Add(face);
-                } else if (face.elementType == "interiorwall")
+                } else if (face.elementType == "interiorwall" && face.unique)
                 {
                     interiorWalls.Add(face);
                 } else if (face.elementType == "exteriorroof")

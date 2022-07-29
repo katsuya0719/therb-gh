@@ -53,6 +53,7 @@ namespace Model
         public Direction direction;
         public SurfaceType surfaceType;
         public int adjacencyRoomId; //隣接しているRoomのId 外気に接している場合には0
+        public bool unique;
         public List<Window> windows { get; private set; }
         public List<int> windowIds;
         public static int _totalFaces;
@@ -96,6 +97,7 @@ namespace Model
             direction = defineDirection(tempNormal);
 
             this.normal = tempNormal;
+            this.unique = true;
 
             //TODO: this logic has to be elaborated
             if (face == "wall")
