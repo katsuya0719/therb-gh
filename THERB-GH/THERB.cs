@@ -286,7 +286,7 @@ namespace THERBgh
                     //既にadjacentFace.adjacentFaceがtestFaceだったらduplicateフラグ
                     if (adjacentFace.adjacencyFace == testFace)
                     {
-                        testFace.unique = true;
+                        testFace.unique = false;
                     }
 
                 }
