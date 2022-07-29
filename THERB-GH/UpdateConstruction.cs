@@ -15,7 +15,7 @@ using System.Reflection;
 
 namespace THERBgh
 {
-    public class UpdateProperty : GH_Component
+    public class UpdateConstruction : GH_Component
     {
         /// <summary>
         /// Each implementation of GH_Component must provide a public 
@@ -24,9 +24,9 @@ namespace THERBgh
         /// Subcategory the panel. If you use non-existing tab or panel names, 
         /// new tabs/panels will automatically be created.
         /// </summary>
-        public UpdateProperty()
-          : base("UpdateProperty", "UpdateProperty",
-              "update properties",
+        public UpdateConstruction()
+          : base("UpdateConstruction", "UpdateConstruction",
+              "update construction data",
               "THERB-GH", "Modelling")
         {
         }

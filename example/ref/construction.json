@@ -1,4 +1,14 @@
-{
-  "concrete_exteriorWall":1,
-  "concrete_exteriorFloor":2
-}
+[
+    {
+        "categories": "interiorWall",
+        "description": "plywood",
+        "id": 1,
+        "name": "plywood interior wall",
+    },
+    {
+        "categories": "exteriorWall",
+        "description": "plywood",
+        "id": 2,
+        "name": "RC eterior wall",
+    },
+]
