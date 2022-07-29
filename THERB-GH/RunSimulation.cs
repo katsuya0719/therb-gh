@@ -64,8 +64,7 @@ namespace THERBgh
         /// </summary>
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
         {
-            pManager.AddTextParameter("bDat", "bDat", "b.dat data", GH_ParamAccess.item);
-            pManager.AddTextParameter("rDat", "rDat", "r.dat data", GH_ParamAccess.item);
+            pManager.AddGenericParameter("Therb", "therb", "THERB class", GH_ParamAccess.item);
             pManager.AddTextParameter("name", "name", "simulation case name", GH_ParamAccess.item);
             pManager.AddBooleanParameter("run", "run", "run THERB simulation", GH_ParamAccess.item);
         }
@@ -84,15 +83,21 @@ namespace THERBgh
         /// to store data in output parameters.</param>
         protected override void SolveInstance(IGH_DataAccess DA)
         {
-            string bDat = "", rDat = "", namePath = "";
+            string namePath = "";
+
             bool done = false;
-            DA.GetData("bDat", ref bDat);
-            DA.GetData("rDat", ref rDat);
+            Therb therb = null;
+            DA.GetData(0, ref therb);
+
+            if (therb == null) return;
+
             DA.GetData("name", ref namePath);
             DA.GetData("run", ref done);
             if (!done) return;
-            if (string.IsNullOrEmpty(bDat)) throw new Exception("bDatが読み取れませんでした。");
-            if (string.IsNullOrEmpty(rDat)) throw new Exception("rDatが読み取れませんでした。");
+
+            var bDat = CreateDatFile.CreateBDat(therb);
+            var rDat = CreateDatFile.CreateRDat(therb);
+
             if (string.IsNullOrEmpty(namePath)) throw new Exception("nameが読み取れませんでした。");
             //if (!File.Exists(THERB_FILE_PATH)) throw new Exception("therb.exeが見つかりませんでした。");
 
