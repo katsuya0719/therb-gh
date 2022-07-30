@@ -318,6 +318,126 @@ namespace THERBgh
             return rDat;
         }
 
+        public static string CreateWDat()
+        {
+            //TODO: this mock should be dynamic
+            string mock =
+                @"{
+                ""data"": [
+                    {
+                        ""categories"": ""interiorWall"",
+                        ""description"": ""plywood"",
+                        ""id"": 1,
+                        ""materials"": [
+                            {
+                                ""conductivity"": 0.111,
+                                ""density"": 550.0,
+                                ""description"": ""from Therb"",
+                                ""id"": 1,
+                                ""name"": ""plywood"",
+                                ""specificHeat"": 1880.0
+                            }
+                        ],
+                        ""thickness"": [50],
+                        ""name"": ""plywood interior wall"",
+                    }
+                ],
+            }";
+
+            //読み込んだAPIのresponseをパースする
+            Mock source = JsonConvert.DeserializeObject<Mock>(mock);
+
+            List<Construction> constructions = source.data;
+
+            //w.datデータを構成していく  
+            string wDat = "";
+
+            var elementIdDict = new Dictionary<string, int>(){
+                {"exteriorWall",1},
+                {"interiorWall",2},
+                {"floorCeiling",3},
+                {"roof",4},
+                {"groundFloor",5},
+                {"window",6},
+            };
+
+            var classificationDict = new Dictionary<string, int>(){
+                {"exteriorWall",1},
+                {"interiorWall",1},
+                {"floorCeiling",1},
+                {"roof",1},
+                {"groundFloor",1},
+                {"window",6},
+            };
+
+            constructions.ForEach(construction =>
+            {
+                wDat += Converter.FillEmpty(construction.id, 3)
+                + Converter.FillEmpty(elementIdDict[construction.categories], 3)
+                + " 0.70 0.90 0.70 0.90 0.000e-09 0.000e-10"
+                + Converter.FillEmpty(construction.materials.Count, 3) + " \r\n";
+
+                //2行目入力 classification
+                construction.materials.ForEach(material =>
+                {
+                    wDat += Converter.FillEmpty(classificationDict[construction.categories], 10);
+                });
+                wDat += " \r\n";
+
+                //3行目入力 分割数
+                //TODO: 厚みとかによってdynamicに分割数が変わるロジック
+                construction.materials.ForEach(material =>
+                {
+                    wDat += Converter.FillEmpty(1, 10);
+                });
+                wDat += " \r\n";
+
+                //4行目入力 厚み
+                construction.thickness.ForEach(thickness =>
+                {
+                    wDat += Converter.FillEmpty(thickness, 10, 3);
+                });
+                wDat += " \r\n";
+
+                //5行目　熱伝導率
+                construction.materials.ForEach(material =>
+                {
+                    wDat += Converter.FillEmpty(material.conductivity, 10,3);
+                });
+                wDat += " \r\n";
+
+                //6行目　比熱
+                construction.materials.ForEach(material =>
+                {
+                    wDat += Converter.FillEmpty(material.specificHeat, 10, 1);
+                });
+                wDat += " \r\n";
+
+                //7行目　密度
+                construction.materials.ForEach(material =>
+                {
+                    wDat += Converter.FillEmpty(material.density, 10, 1);
+                });
+                wDat += " \r\n";
+
+                //8行目　水分伝導率
+                construction.materials.ForEach(material =>
+                {
+                    wDat += Converter.FillEmpty(0, 10);
+                });
+                wDat += " \r\n";
+
+                //9行目　水分容量
+                construction.materials.ForEach(material =>
+                {
+                    wDat += Converter.FillEmpty(0, 10);
+                });
+                wDat += " \r\n";
+
+            });
+
+            return wDat;
+        }
 
         private static string OutputWindowIds(Face face)
         {
@@ -338,4 +458,28 @@ namespace THERBgh
             return windowIdStrs;
         }
     }
+    public class Mock
+    {
+        public List<Construction> data;
+    }
+
+    public class Construction
+    {
+        public int id;
+        public string categories;
+        public List<Material> materials;
+        public List<Double> thickness;
+        
+    }
+
+    public class Material
+    {
+        public int id;
+        public string name;
+        public double conductivity;
+        public double density;
+        public double specificHeat;
+    }
 }
+
+
