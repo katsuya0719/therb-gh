@@ -60,6 +60,7 @@
     <Compile Include="RunSimulation.cs" />
     <Compile Include="Decompose.cs" />
     <Compile Include="ThrebUtilsTest.cs" />
+    <Compile Include="ReadConstruction.cs" />
     <Compile Include="UpdateConstruction.cs" />
     <Compile Include="SplitGeos.cs" />
     <Compile Include="Utils.cs" />

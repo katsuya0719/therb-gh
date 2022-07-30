@@ -83,7 +83,7 @@ namespace THERBgh
         /// </summary>
         public override Guid ComponentGuid
         {
-            get { return new Guid("41C9E254-FA7B-4750-A1C9-094938D1DAF2"); }
+            get { return new Guid("0454e523-af16-472e-a9df-b9a546e68c04"); }
         }
     }
 }
