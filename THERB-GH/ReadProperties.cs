@@ -53,6 +53,8 @@ namespace THERBgh
             pManager.AddNumberParameter("normal", "normal", "normal direction", GH_ParamAccess.list);
             pManager.AddTextParameter("direction", "direction", "direction", GH_ParamAccess.list);
             pManager.AddIntegerParameter("AdjacencyRoomId", "AdjacencyRoomId", "adjacency room id", GH_ParamAccess.list);
+            pManager.AddGenericParameter("Windows", "Windows", "list of Window", GH_ParamAccess.list);
+            pManager.AddIntegerParameter("WindowIds", "WindowIds", "list of WindowIds", GH_ParamAccess.list);
         }
 
         /// <summary>
@@ -74,6 +76,8 @@ namespace THERBgh
             List<Vector3d> normalList = new List<Vector3d>();
             List<string> directionList = new List<string>();
             List<int> adjacencyRoomIdList = new List<int>();
+            List<List<Window>> windowList = new List<List<Window>>();
+            List<int> windowIdList = new List<int>();
 
             faceList.ForEach(face =>
             {
@@ -83,6 +87,8 @@ namespace THERBgh
                 normalList.Add(face.tempNormal);
                 directionList.Add(face.direction.ToString());
                 adjacencyRoomIdList.Add(face.adjacencyRoomId);
+                windowList.Add(face.windows);
+                windowIdList.AddRange(face.windowIds);
             });
 
             DA.SetDataList("partId", partIdList);
@@ -91,6 +97,8 @@ namespace THERBgh
             DA.SetDataList("normal", normalList);
             DA.SetDataList("direction", directionList);
             DA.SetDataList("AdjacencyRoomId", adjacencyRoomIdList);
+            DA.SetDataList("Windows", windowList);
+            DA.SetDataList("WindowIds", windowIdList);
         }
 
         /// <summary>

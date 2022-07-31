@@ -278,13 +278,13 @@ namespace THERBgh
             //Faceデータに対する処理
             roomList.ForEach(room =>
             {
-                //int id = 1;
+                int id = 1;
                 faceList.ForEach(face =>
                 {
                     if (room.id == face.parentId)
                     {
                         rDat += Converter.FillEmpty(room.id, 5)
-                        + Converter.FillEmpty(face.id, 5)
+                        + Converter.FillEmpty(id, 5)
                         + Converter.FillEmpty(directionDict[face.direction.ToString()], 5)
                         + Converter.FillEmpty(directionCount[face.direction.ToString()], 5)
                         + Converter.FillEmpty(face.constructionId, 5)
@@ -292,10 +292,10 @@ namespace THERBgh
                         + Converter.FillEmpty(face.adjacencyRoomId, 5) + " \r\n";
 
                         directionCount[face.direction.ToString()] += 1;
-                        //id += 1;
+                        id += 1;
 
                         //TODO:窓に関する処理を追加
-                        /*
+                        
                         face.windows.ForEach(window =>
                         {
                             rDat += Converter.FillEmpty(room.id, 5)
@@ -303,12 +303,11 @@ namespace THERBgh
                             + Converter.FillEmpty(directionDict[face.direction.ToString()], 5)
                             + Converter.FillEmpty(directionCount[face.direction.ToString()], 5)
                             + Converter.FillEmpty(6, 5)
-                            + Converter.FillEmpty(window.partId, 5)
+                            + Converter.FillEmpty(window.id, 5)
                             + Converter.FillEmpty(face.adjacencyRoomId, 5) + " \r\n";
 
                             id += 1;
                         });
-                        */
                     }
 
 

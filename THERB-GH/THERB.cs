@@ -206,7 +206,7 @@ namespace THERBgh
                 }
                 else
                 {
-                    //エラー処理を加える
+                    //TODO:エラー処理を加える
                 }
                 windowList.Add(window);
 

@@ -35,7 +35,8 @@ namespace Model
         public void addParent(Face parent)
         {
             this.parent = parent;
-            parentId = parent.partId;//注意)part idを使っている
+            //parentId = parent.partId;//注意)part idを使っている
+            parentId = parent.id;
             tiltAngle = parent.tiltAngle;
         }
     }
