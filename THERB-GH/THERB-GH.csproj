@@ -57,7 +57,8 @@
     <Compile Include="Model\Face.cs" />
     <Compile Include="Model\Window.cs" />
     <Compile Include="Model\Overhang.cs" />
-    <Compile Include="ReadProperties.cs" />
+    <Compile Include="ReadRoomProperties.cs" />
+    <Compile Include="ReadFaceProperties.cs" />
     <Compile Include="RunSimulation.cs" />
     <Compile Include="Decompose.cs" />
     <Compile Include="ThrebUtilsTest.cs" />

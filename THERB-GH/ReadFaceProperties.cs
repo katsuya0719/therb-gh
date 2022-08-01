@@ -11,7 +11,7 @@ using Model;
 
 namespace THERBgh
 {
-    public class ReadProperty : GH_Component
+    public class ReadFaceProperty : GH_Component
     {
         /// <summary>
         /// Each implementation of GH_Component must provide a public 
@@ -20,10 +20,10 @@ namespace THERBgh
         /// Subcategory the panel. If you use non-existing tab or panel names, 
         /// new tabs/panels will automatically be created.
         /// </summary>
-        public ReadProperty()
-          : base("ReadProperty", "ReadProperty",
-              "Read properties from class",
-              "THERB-GH", "Modelling")
+        public ReadFaceProperty()
+          : base("ReadFaceProperty", "ReadFaceProperty",
+              "Read face properties from class",
+              "THERB-GH", "Utility")
         {
         }
 
@@ -47,6 +47,7 @@ namespace THERBgh
         {
             //TODO: RegisterOutputParamsをdynamicにしたい
             //pManager.AddSurfaceParameter("surface", "surface", "extracted surface", GH_ParamAccess.list);
+            pManager.AddIntegerParameter("roomId", "roomId", "room id", GH_ParamAccess.list);
             pManager.AddIntegerParameter("partId", "partId", "id", GH_ParamAccess.list);
             pManager.AddSurfaceParameter("surface", "surface", "extracted surface", GH_ParamAccess.list);
             pManager.AddTextParameter("elementType", "element type", "element type", GH_ParamAccess.list);
@@ -71,6 +72,7 @@ namespace THERBgh
             DA.GetDataList(0, faceList);
             //faceList.AddRange(therb.faces);
             //List<Face> faceList = therb.faces;
+            List<int> roomIdList = new List<int>();
             List<int> partIdList = new List<int>();
             List<Surface> surfaceList = new List<Surface>();
             List<string> elementTypeList = new List<string>();
@@ -83,6 +85,7 @@ namespace THERBgh
 
             faceList.ForEach(face =>
             {
+                roomIdList.Add(face.parentId);
                 partIdList.Add(face.partId);
                 surfaceList.Add(face.geometry);
                 elementTypeList.Add(face.elementType);
@@ -94,6 +97,7 @@ namespace THERBgh
                 windowIdList.AddRange(face.windowIds);
             });
 
+            DA.SetDataList("roomId", roomIdList);
             DA.SetDataList("partId", partIdList);
             DA.SetDataList("surface", surfaceList);
             DA.SetDataList("elementType", elementTypeList);
