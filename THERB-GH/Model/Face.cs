@@ -237,46 +237,57 @@ namespace Model
             windowIds.Add(window.id);
         }
 
+        public void setPartId()
+        {
+            if (unique)
+            {
+                switch (elementType)
+                {
+                    case "exteriorwall":
+                        partId = _totalExWalls;
+                        break;
+                    case "interiorwall":
+                        partId = _totalInWalls;
+                        break;
+                    case "interiorroof":
+                        partId = _totalFlrCeilings;
+                        break;
+                    case "interiorfloor":
+                        partId = _totalFlrCeilings;
+                        break;
+                    case "exteriorroof":
+                        partId = _totalRoofs;
+                        break;
+                    case "groundfloor":
+                        partId = _totalGrounds;
+                        break;
+                }
+            }
+        }
+
         public void setElementType()
         {
-            /*
-            string firstPhrase = "";
-            if (bc == "outdoor")
-            {
-                firstPhrase = "exterior";
-            }
-            else
-            {
-                firstPhrase = bc;
-            }
-            */
             elementType = bc.ToString() + face;
             //partIdをアサインする
             switch (elementType)
             {
                 case "exteriorwall":
                     _totalExWalls += 1;
-                    partId = _totalExWalls;
                     break;
                 case "interiorwall":
                     _totalInWalls += 1;
-                    partId = _totalInWalls;
                     break;
                 case "interiorroof":
                     _totalFlrCeilings += 1;
-                    partId = _totalFlrCeilings;
                     break;
                 case "interiorfloor":
                     _totalFlrCeilings += 1;
-                    partId = _totalFlrCeilings;
                     break;
                 case "exteriorroof":
                     _totalRoofs += 1;
-                    partId = _totalRoofs;
                     break;
                 case "groundfloor":
                     _totalGrounds += 1;
-                    partId = _totalGrounds;
                     break;
             }
         }

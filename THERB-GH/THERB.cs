@@ -287,6 +287,7 @@ namespace THERBgh
                     if (adjacentFace.adjacencyFace == testFace)
                     {
                         testFace.unique = false;
+                        testFace.partId = adjacentFace.partId;
                     }
 
                 }
@@ -304,6 +305,7 @@ namespace THERBgh
                     testFace.adjacencyRoomId = 0;
                 }
                 testFace.setElementType();
+                testFace.setPartId();
                 testFace.setConstructionId();
                 faceListBC.Add(testFace);
             }
