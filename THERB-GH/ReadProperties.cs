@@ -51,6 +51,7 @@ namespace THERBgh
             pManager.AddSurfaceParameter("surface", "surface", "extracted surface", GH_ParamAccess.list);
             pManager.AddTextParameter("elementType", "element type", "element type", GH_ParamAccess.list);
             pManager.AddNumberParameter("normal", "normal", "normal direction", GH_ParamAccess.list);
+            pManager.AddPointParameter("centerPt","centerPt","center point", GH_ParamAccess.list);
             pManager.AddTextParameter("direction", "direction", "direction", GH_ParamAccess.list);
             pManager.AddIntegerParameter("AdjacencyRoomId", "AdjacencyRoomId", "adjacency room id", GH_ParamAccess.list);
             pManager.AddGenericParameter("Windows", "Windows", "list of Window", GH_ParamAccess.list);
@@ -74,6 +75,7 @@ namespace THERBgh
             List<Surface> surfaceList = new List<Surface>();
             List<string> elementTypeList = new List<string>();
             List<Vector3d> normalList = new List<Vector3d>();
+            List<Point3d> centerPtList = new List<Point3d>();
             List<string> directionList = new List<string>();
             List<int> adjacencyRoomIdList = new List<int>();
             List<List<Window>> windowList = new List<List<Window>>();
@@ -85,6 +87,7 @@ namespace THERBgh
                 surfaceList.Add(face.geometry);
                 elementTypeList.Add(face.elementType);
                 normalList.Add(face.tempNormal);
+                centerPtList.Add(face.centerPt);
                 directionList.Add(face.direction.ToString());
                 adjacencyRoomIdList.Add(face.adjacencyRoomId);
                 windowList.Add(face.windows);
@@ -95,6 +98,7 @@ namespace THERBgh
             DA.SetDataList("surface", surfaceList);
             DA.SetDataList("elementType", elementTypeList);
             DA.SetDataList("normal", normalList);
+            DA.SetDataList("centerPt", centerPtList);
             DA.SetDataList("direction", directionList);
             DA.SetDataList("AdjacencyRoomId", adjacencyRoomIdList);
             DA.SetDataList("Windows", windowList);
