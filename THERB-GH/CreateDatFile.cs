@@ -371,16 +371,20 @@ namespace THERBgh
 
             constructions.ForEach(construction =>
             {
+                int numMaterials = construction.materials.Count;
+
                 wDat += Converter.FillEmpty(construction.id, 3)
-                + Converter.FillEmpty(elementIdDict[construction.categories], 3)
+                + Converter.FillEmpty(elementIdDict[construction.categories], 2)
                 + " 0.70 0.90 0.70 0.90 0.000e-09 0.000e-10"
-                + Converter.FillEmpty(construction.materials.Count, 3) + " \r\n";
+                + Converter.FillEmpty(numMaterials, 3) + " \r\n";
 
                 //2行目入力 classification
+                
                 construction.materials.ForEach(material =>
                 {
                     wDat += Converter.FillEmpty(classificationDict[construction.categories], 10);
                 });
+                wDat += FillMultipleZeros(13-numMaterials,10,0);
                 wDat += " \r\n";
 
                 //3行目入力 分割数
@@ -389,6 +393,7 @@ namespace THERBgh
                 {
                     wDat += Converter.FillEmpty(1, 10);
                 });
+                wDat += FillMultipleZeros(13 - numMaterials, 10,0);
                 wDat += " \r\n";
 
                 //4行目入力 厚み
@@ -396,6 +401,7 @@ namespace THERBgh
                 {
                     wDat += Converter.FillEmpty(thickness, 10, 3);
                 });
+                wDat += FillMultipleZeros(13 - numMaterials, 10,3);
                 wDat += " \r\n";
 
                 //5行目　熱伝導率
@@ -403,6 +409,7 @@ namespace THERBgh
                 {
                     wDat += Converter.FillEmpty(material.conductivity, 10,3);
                 });
+                wDat += FillMultipleZeros(13 - numMaterials, 10, 3);
                 wDat += " \r\n";
 
                 //6行目　比熱
@@ -410,6 +417,7 @@ namespace THERBgh
                 {
                     wDat += Converter.FillEmpty(material.specificHeat, 10, 1);
                 });
+                wDat += FillMultipleZeros(13 - numMaterials, 10, 1);
                 wDat += " \r\n";
 
                 //7行目　密度
@@ -417,6 +425,7 @@ namespace THERBgh
                 {
                     wDat += Converter.FillEmpty(material.density, 10, 1);
                 });
+                wDat += FillMultipleZeros(13 - numMaterials, 10, 1);
                 wDat += " \r\n";
 
                 //8行目　水分伝導率
@@ -436,6 +445,16 @@ namespace THERBgh
             });
 
             return wDat;
+        }
+
+        private static string FillMultipleZeros(int repeatNum,int totalLength,int digit)
+        {
+            string result = "";
+            for (int i = 0; i < repeatNum; i++)
+            {
+                result += Converter.FillEmpty(0, totalLength,digit);
+            }
+            return result;
         }
 
         private static string OutputWindowIds(Face face)

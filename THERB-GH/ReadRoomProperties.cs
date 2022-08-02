@@ -44,7 +44,7 @@ namespace THERBgh
             //pManager.AddSurfaceParameter("surface", "surface", "extracted surface", GH_ParamAccess.list);
             pManager.AddIntegerParameter("id", "id", "id", GH_ParamAccess.list);
             pManager.AddBrepParameter("geometry","geometry","geometry", GH_ParamAccess.list);
-            pManager.AddPointParameter("centroid", "centroid", "centroid", GH_ParamAccess.list);
+            //pManager.AddPointParameter("centroid", "centroid", "centroid", GH_ParamAccess.list);
             pManager.AddNumberParameter("volume", "volume", "volume", GH_ParamAccess.list);
         }
 
@@ -63,20 +63,20 @@ namespace THERBgh
             //List<Face> faceList = therb.faces;
             List<int> idList = new List<int>();
             List<Brep> geometryList = new List<Brep>();
-            List<Point3d> centroidList = new List<Point3d>();
+            //List<Point3d> centroidList = new List<Point3d>();
             List<double> volumeList = new List<double>();
 
             roomList.ForEach(room =>
             {
                 idList.Add(room.id);
                 geometryList.Add(room.geometry);
-                centroidList.Add(room.centroid);
+                //centroidList.Add(room.centroid);
                 volumeList.Add(room.volume);
             });
 
             DA.SetDataList("id", idList);
             DA.SetDataList("geometry", geometryList);
-            DA.SetDataList("centroid", centroidList);
+            //DA.SetDataList("centroid", centroidList);
             DA.SetDataList("volume", volumeList);
         }
 
