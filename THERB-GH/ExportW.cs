@@ -56,7 +56,7 @@ namespace THERBgh
         protected override void SolveInstance(IGH_DataAccess DA)
         {
 
-            DA.SetData("w_dat", CreateDatFile.CreateWDat());
+            DA.SetData("w_dat", CreateDatData.CreateWDat());
         }
 
         /// <summary>

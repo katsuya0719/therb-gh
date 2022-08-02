@@ -11,7 +11,7 @@ using Utils;
 
 namespace THERBgh
 {
-    public class CreateDatFile
+    public class CreateDatData
     {
         public static string CreateADat(Therb therb)
         {
