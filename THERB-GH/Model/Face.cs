@@ -267,8 +267,10 @@ namespace Model
 
         public void setElementType()
         {
+            if (!unique) return;
+
             elementType = bc.ToString() + face;
-            //partIdをアサインする
+
             switch (elementType)
             {
                 case "exteriorwall":
