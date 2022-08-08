@@ -11,6 +11,7 @@ using System.Diagnostics;
 using Newtonsoft.Json;
 using THERBgh;
 using Model;
+using System.Net;
 
 namespace THREB_GH_Test
 {
@@ -30,6 +31,17 @@ namespace THREB_GH_Test
             //var rhino = new Rhino.Geometry.Box();
             ThrebUtilsTest.ExBoxTest();
             Assert.AreEqual(0, 0);
+        }
+        [TestMethod]
+        public void GetDataFromWebTest()
+        {
+            var wc = new WebClient();
+            string text = wc.DownloadString("https://stingray-app-vgak2.ondigitalocean.app/constructions");
+
+            Mock source = JsonConvert.DeserializeObject<Mock>(text);
+
+            //System.Console.WriteLine(text);
+
         }
     }
 }
