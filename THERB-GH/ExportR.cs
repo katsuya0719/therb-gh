@@ -58,7 +58,7 @@ namespace THERBgh
             Therb therb = null;
             DA.GetData(0, ref therb);
 
-            DA.SetData("r_dat", CreateDatFile.CreateRDat(therb));
+            DA.SetData("r_dat", CreateDatData.CreateRDat(therb));
         }
         
         /// <summary>

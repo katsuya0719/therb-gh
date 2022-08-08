@@ -95,8 +95,8 @@ namespace THERBgh
             DA.GetData("run", ref done);
             if (!done) return;
 
-            var bDat = CreateDatFile.CreateBDat(therb);
-            var rDat = CreateDatFile.CreateRDat(therb);
+            var bDat = CreateDatData.CreateBDat(therb);
+            var rDat = CreateDatData.CreateRDat(therb);
 
             if (string.IsNullOrEmpty(namePath)) throw new Exception("nameが読み取れませんでした。");
             //if (!File.Exists(THERB_FILE_PATH)) throw new Exception("therb.exeが見つかりませんでした。");

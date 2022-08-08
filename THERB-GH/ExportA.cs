@@ -60,7 +60,7 @@ namespace THERBgh
 
             if (therb == null) return;
 
-            DA.SetData("a_dat", CreateDatFile.CreateADat(therb));
+            DA.SetData("a_dat", CreateDatData.CreateADat(therb));
         }
 
         /// <summary>
