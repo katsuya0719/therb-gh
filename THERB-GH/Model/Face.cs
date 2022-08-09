@@ -6,6 +6,7 @@ using Rhino.Geometry.Collections;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System.Collections.ObjectModel;
+using THERBgh;
 
 namespace Model
 {
@@ -322,5 +323,10 @@ namespace Model
                     break;
             }
         }
+        public void OverrideConstruction(Construction construction)
+        {
+            this.constructionId = construction.id;
+        }
+
     }
 }
