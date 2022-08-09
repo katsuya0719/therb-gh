@@ -487,7 +487,16 @@ namespace THERBgh
         public string categories;
         public List<Material> materials;
         public List<Double> thickness;
-        
+
+        public override string ToString()
+        {
+            string preview = base.ToString() + Environment.NewLine;
+            preview += " Id         :" + id + Environment.NewLine;
+            preview += " Categories :" + categories + Environment.NewLine;
+            preview += " Materials  :" + string.Join(", ", Material.GetNames(materials)) + Environment.NewLine;
+            preview += " Thickness  :" + string.Join(", ", thickness);
+            return preview;
+        }
     }
 
     public class Material
@@ -497,6 +506,14 @@ namespace THERBgh
         public double conductivity;
         public double density;
         public double specificHeat;
+
+        public static List<string> GetNames(List<Material> materials)
+        {
+            var names = new List<string>();
+            foreach (var material in materials)
+                names.Add(material.name);
+            return names;
+        }
     }
 }
 
