@@ -54,6 +54,8 @@ namespace THERBgh
             pManager.AddNumberParameter("normal", "normal", "normal direction", GH_ParamAccess.list);
             pManager.AddPointParameter("centerPt","centerPt","center point", GH_ParamAccess.list);
             pManager.AddTextParameter("direction", "direction", "direction", GH_ParamAccess.list);
+            pManager.AddIntegerParameter("constructionId", "constructionId", "construction id", GH_ParamAccess.list);
+            pManager.AddIntegerParameter("structureId", "structureId", "structure id", GH_ParamAccess.list);
             pManager.AddIntegerParameter("AdjacencyRoomId", "AdjacencyRoomId", "adjacency room id", GH_ParamAccess.list);
             pManager.AddGenericParameter("Windows", "Windows", "list of Window", GH_ParamAccess.list);
             pManager.AddIntegerParameter("WindowIds", "WindowIds", "list of WindowIds", GH_ParamAccess.list);
@@ -79,6 +81,8 @@ namespace THERBgh
             List<Vector3d> normalList = new List<Vector3d>();
             List<Point3d> centerPtList = new List<Point3d>();
             List<string> directionList = new List<string>();
+            List<int> constructionIdList = new List<int>();
+            List<int> structureIdList = new List<int>();
             List<int> adjacencyRoomIdList = new List<int>();
             List<List<Window>> windowList = new List<List<Window>>();
             List<int> windowIdList = new List<int>();
@@ -92,6 +96,8 @@ namespace THERBgh
                 normalList.Add(face.tempNormal);
                 centerPtList.Add(face.centerPt);
                 directionList.Add(face.direction.ToString());
+                constructionIdList.Add(face.constructionId);
+                structureIdList.Add(face.structureId);
                 adjacencyRoomIdList.Add(face.adjacencyRoomId);
                 windowList.Add(face.windows);
                 windowIdList.AddRange(face.windowIds);
@@ -104,6 +110,8 @@ namespace THERBgh
             DA.SetDataList("normal", normalList);
             DA.SetDataList("centerPt", centerPtList);
             DA.SetDataList("direction", directionList);
+            DA.SetDataList("constructionId", constructionIdList);
+            DA.SetDataList("structureId", structureIdList);
             DA.SetDataList("AdjacencyRoomId", adjacencyRoomIdList);
             DA.SetDataList("Windows", windowList);
             DA.SetDataList("WindowIds", windowIdList);

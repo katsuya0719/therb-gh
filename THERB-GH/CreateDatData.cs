@@ -317,7 +317,7 @@ namespace THERBgh
             return rDat;
         }
 
-        public static string CreateWDat()
+        public static string CreateWDat(List<Construction> constructions)
         {
             //TODO: this mock should be dynamic
             string mock =
@@ -344,9 +344,9 @@ namespace THERBgh
             }";
 
             //読み込んだAPIのresponseをパースする
-            Mock source = JsonConvert.DeserializeObject<Mock>(mock);
+            //Mock source = JsonConvert.DeserializeObject<Mock>(mock);
 
-            List<Construction> constructions = source.data;
+            //List<Construction> constructions = source.data;
 
             //w.datデータを構成していく  
             string wDat = "";
@@ -355,7 +355,8 @@ namespace THERBgh
                 {"exteriorWall",1},
                 {"interiorWall",2},
                 {"floorCeiling",3},
-                {"roof",4},
+                {"interiorFloor",3},
+                {"exteriorRoof",4},
                 {"groundFloor",5},
                 {"window",6},
             };
@@ -364,7 +365,8 @@ namespace THERBgh
                 {"exteriorWall",1},
                 {"interiorWall",1},
                 {"floorCeiling",1},
-                {"roof",1},
+                {"interiorFloor",1},
+                {"exteriorRoof",1},
                 {"groundFloor",1},
                 {"window",6},
             };
@@ -399,7 +401,7 @@ namespace THERBgh
                 //4行目入力 厚み
                 construction.thickness.ForEach(thickness =>
                 {
-                    wDat += Converter.FillEmpty(thickness, 10, 3);
+                    wDat += Converter.FillEmpty(thickness/1000, 10, 3);
                 });
                 wDat += FillMultipleZeros(13 - numMaterials, 10,3);
                 wDat += " \r\n";

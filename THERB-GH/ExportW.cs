@@ -37,7 +37,7 @@ namespace THERBgh
         /// </summary>
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
         {
-            //pManager.AddGenericParameter("Construction", "Construction", "Construction data", GH_ParamAccess.item);
+            pManager.AddGenericParameter("Construction", "Construction", "Construction data", GH_ParamAccess.list);
         }
 
         /// <summary>
@@ -55,8 +55,10 @@ namespace THERBgh
         /// to store data in output parameters.</param>
         protected override void SolveInstance(IGH_DataAccess DA)
         {
-
-            DA.SetData("w_dat", CreateDatData.CreateWDat());
+            List<Construction> constructionList = new List<Construction>();
+            DA.GetDataList(0, constructionList);
+            
+            DA.SetData("w_dat", CreateDatData.CreateWDat(constructionList));
         }
 
         /// <summary>

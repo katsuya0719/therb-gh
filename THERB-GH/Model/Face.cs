@@ -302,30 +302,37 @@ namespace Model
             {
                 case "exteriorwall":
                     constructionId = 1;
+                    structureId = 1;
                     break;
                 case "interiorwall":
                     constructionId = 2;
+                    structureId = 2;
                     break;
                 case "interiorroof":
                     constructionId = 3;
+                    structureId = 3;
                     break;
                 case "interiorfloor":
                     constructionId = 3;
+                    structureId = 3;
                     break;
                 case "exteriorroof":
                     constructionId = 4;
+                    structureId = 4;
                     break;
                 case "groundroof":
                     constructionId = 5;
+                    structureId = 5;
                     break;
                 case "groundfloor":
                     constructionId = 5;
+                    structureId = 5;
                     break;
             }
         }
         public void OverrideConstruction(Construction construction)
         {
-            this.constructionId = construction.id;
+            this.structureId = construction.id;
         }
 
     }
