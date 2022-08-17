@@ -15,7 +15,7 @@ THERBモデルはRoom,Face,Window,Overhangのモデルで構成されていま�
 
 ### 外壁構成を上書きする  
 1. ReadConstructionコンポーネントを配置し、サーバーから外壁構成データを取得する  
-3. UpdateConstructionコンポーネントに外壁構成を変更したいFaceを接続し、constructionデータを選択することでFaceのconstructionデータが上書きされます。  
+2. UpdateConstructionコンポーネントに外壁構成を変更したいFaceを接続し、constructionデータを選択することでFaceのconstructionデータが上書きされます。  
 
 ### THERBモデルを再構築する  
 編集するために分解したRoom,Face,Window,Overhangモデルをcomposeコンポーネントに接続し、THERBモデルを再構築します。  
