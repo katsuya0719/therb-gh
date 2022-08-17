@@ -568,11 +568,16 @@ namespace THERBgh
 
         public override string ToString()
         {
-            string preview = base.ToString() + Environment.NewLine;
-            preview += " Id         :" + id + Environment.NewLine;
-            preview += " Categories :" + categories + Environment.NewLine;
-            preview += " Materials  :" + string.Join(", ", Material.GetNames(materials)) + Environment.NewLine;
-            preview += " Thickness  :" + string.Join(", ", thickness);
+            string preview = base.ToString();
+            try
+            {
+                preview += Environment.NewLine;
+                preview += " Id         :" + id + Environment.NewLine;
+                preview += " Categories :" + categories + Environment.NewLine;
+                preview += " Materials  :" + string.Join(", ", Material.GetNames(materials)) + Environment.NewLine;
+                preview += " Thickness  :" + string.Join(", ", thickness);
+            }
+            catch { }
             return preview;
         }
 

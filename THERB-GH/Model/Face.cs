@@ -345,5 +345,35 @@ namespace Model
             this.structureId = construction.id;
         }
 
+        public override string ToString()
+        {
+            string preview = base.ToString();
+            try
+            {
+                preview += Environment.NewLine;
+                preview += " id                :" + id + Environment.NewLine;
+                preview += " FaceType          :" + face + Environment.NewLine;
+                preview += " BoundaryCondition :" + bc + Environment.NewLine;
+                preview += " elementType       :" + elementType + Environment.NewLine;
+                preview += " parentId          :" + parent.id + Environment.NewLine;
+                preview += " tempNormal        :" + tempNormal + Environment.NewLine;
+                preview += " direction         :" + direction + Environment.NewLine;
+                preview += " surfaceType       :" + surfaceType + Environment.NewLine;
+                preview += " adjacencyRoomId   :" + adjacencyRoomId + Environment.NewLine;
+                preview += " unique            :" + unique + Environment.NewLine;
+                preview += " windowIds         :" + string.Join(", ", windowIds) + Environment.NewLine;
+                preview += " adjacencyFaceId   :" + adjacencyFace.id;
+            }
+            catch { }
+            return preview;
+        }
+
+        public static List<int> GetFaceIds(List<Face> faces)
+        {
+            var ids = new List<int>();
+            foreach (var face in faces)
+                ids.Add(face.id);
+            return ids;
+        }
     }
 }
