@@ -50,6 +50,7 @@
     <Compile Include="ExportW.cs" />
     <Compile Include="ExportB.cs" />
     <Compile Include="ExportA.cs" />
+    <Compile Include="FilterConstruction.cs" />
     <Compile Include="Model\BaseGeo.cs" />
     <Compile Include="Model\Therb.cs" />
     <Compile Include="Model\Room.cs" />

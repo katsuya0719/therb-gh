@@ -26,6 +26,16 @@ namespace Model
         Floor
     }
 
+    public enum ElementType
+    {
+        exteriorWall,
+        interiorWall,
+        interiorFloor,
+        exteriorRoof,
+        groundFloor,
+        window
+    }
+
     public enum FaceKeys
     {
         bc,

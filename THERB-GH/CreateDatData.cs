@@ -137,7 +137,7 @@ namespace THERBgh
                 + Converter.FillEmpty(exWall.tiltAngle, 10, 3)
                 + Converter.FillEmpty(exWall.area, 12, 4)
                 + "    0\r\n  structure No. "
-                + Converter.FillEmpty(exWall.constructionId, 5)
+                + Converter.FillEmpty(exWall.structureId, 5)
                 + "  overhang No.     0      wing1 No.    0   wing2 No.    0 \r\n      window No. "
                 + OutputWindowIds(exWall)
                 //TODO:windowIdsの処理を入れ込む必要
@@ -157,7 +157,7 @@ namespace THERBgh
                 + Converter.FillEmpty(window.tiltAngle, 10, 3)
                 + Converter.FillEmpty(window.area, 12, 4)
                 + "    0\r\n  structure No. "
-                + Converter.FillEmpty(window.constructionId, 5)
+                + Converter.FillEmpty(window.structureId, 5)
                 + "  overhang No.     0      wing1 No.    0   wing2 No.    0\r\n";
             });
 
@@ -175,7 +175,7 @@ namespace THERBgh
                 + Converter.FillEmpty(inWall.tiltAngle, 10, 3)
                 + Converter.FillEmpty(inWall.area, 12, 4)
                 + "    0\r\n  structure No. "
-                + Converter.FillEmpty(inWall.constructionId, 5)
+                + Converter.FillEmpty(inWall.structureId, 5)
                 + " \r\n     in-door No. " + doorIds + " \r\n";
             });
 
@@ -192,7 +192,7 @@ namespace THERBgh
                 + Converter.FillEmpty(inMat.tiltAngle, 10, 3)
                 + Converter.FillEmpty(inMat.area, 12, 4)
                 + "    0\r\n  structure No. "
-                + Converter.FillEmpty(inMat.constructionId, 5) + "\r\n";
+                + Converter.FillEmpty(inMat.structureId, 5) + "\r\n";
             });
 
             exteriorRoofs.ForEach(roof =>
@@ -207,7 +207,7 @@ namespace THERBgh
                 + Converter.FillEmpty(roof.tiltAngle, 10, 3)
                 + Converter.FillEmpty(roof.area, 12, 4)
                 + "    0\r\n  structure No. "
-                + Converter.FillEmpty(roof.constructionId, 5) + "\r\n";
+                + Converter.FillEmpty(roof.structureId, 5) + "\r\n";
             });
 
             groundFloors.ForEach(floor =>
@@ -222,7 +222,7 @@ namespace THERBgh
                 + Converter.FillEmpty(floor.tiltAngle, 10, 3)
                 + Converter.FillEmpty(floor.area, 12, 4)
                 + "    0\r\n  structure No. "
-                + Converter.FillEmpty(floor.constructionId, 5) + "\r\n";
+                + Converter.FillEmpty(floor.structureId, 5) + "\r\n";
             });
 
             return bDat;
@@ -351,24 +351,22 @@ namespace THERBgh
             //w.datデータを構成していく  
             string wDat = "";
 
-            var elementIdDict = new Dictionary<string, int>(){
-                {"exteriorWall",1},
-                {"interiorWall",2},
-                {"floorCeiling",3},
-                {"interiorFloor",3},
-                {"exteriorRoof",4},
-                {"groundFloor",5},
-                {"window",6},
+            var elementIdDict = new Dictionary<ElementType, int>(){
+                {ElementType.exteriorWall,1},
+                {ElementType.interiorWall,2},
+                {ElementType.interiorFloor,3},
+                {ElementType.exteriorRoof,4},
+                {ElementType.groundFloor,5},
+                {ElementType.window,6},
             };
 
-            var classificationDict = new Dictionary<string, int>(){
-                {"exteriorWall",1},
-                {"interiorWall",1},
-                {"floorCeiling",1},
-                {"interiorFloor",1},
-                {"exteriorRoof",1},
-                {"groundFloor",1},
-                {"window",6},
+            var classificationDict = new Dictionary<ElementType, int>(){
+                {ElementType.exteriorWall,1},
+                {ElementType.interiorWall,2},
+                {ElementType.interiorFloor,3},
+                {ElementType.exteriorRoof,4},
+                {ElementType.groundFloor,5},
+                {ElementType.window,6},
             };
 
             constructions.ForEach(construction =>
@@ -486,7 +484,7 @@ namespace THERBgh
     public class Construction
     {
         public int id;
-        public string categories;
+        public ElementType categories;
         public List<Material> materials;
         public List<Double> thickness;
 
@@ -498,6 +496,18 @@ namespace THERBgh
             preview += " Materials  :" + string.Join(", ", Material.GetNames(materials)) + Environment.NewLine;
             preview += " Thickness  :" + string.Join(", ", thickness);
             return preview;
+        }
+
+        public bool filterByCategory(ElementType category)
+        {
+            if (this.categories == category)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 
