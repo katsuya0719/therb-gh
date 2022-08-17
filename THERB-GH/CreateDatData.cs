@@ -140,7 +140,6 @@ namespace THERBgh
                 + Converter.FillEmpty(exWall.structureId, 5)
                 + "  overhang No.     0      wing1 No.    0   wing2 No.    0 \r\n      window No. "
                 + OutputWindowIds(exWall)
-                //TODO:windowIdsの処理を入れ込む必要
                 + "\r\n";
             });
 
@@ -158,7 +157,8 @@ namespace THERBgh
                 + Converter.FillEmpty(window.area, 12, 4)
                 + "    0\r\n  structure No. "
                 + Converter.FillEmpty(window.structureId, 5)
-                + "  overhang No.     0      wing1 No.    0   wing2 No.    0\r\n";
+                + "  overhang No.     "+window.overhangId.ToString()
+                +"      wing1 No.    0   wing2 No.    0\r\n";
             });
 
             string doorIds = "   0   0   0   0   0   0   0   0   0   0   0";
@@ -475,6 +475,7 @@ namespace THERBgh
             }
             return windowIdStrs;
         }
+
     }
     public class Mock
     {

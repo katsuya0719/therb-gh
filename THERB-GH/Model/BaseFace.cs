@@ -38,6 +38,8 @@ namespace Model
             minPt = getMinCoord(vertices);
             maxPt = getMaxCoord(vertices);
 
+            overhangId = 0;
+
         }
         public void addOverhangs(Overhang overhang)
         {
