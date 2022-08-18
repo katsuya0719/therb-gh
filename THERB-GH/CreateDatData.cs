@@ -140,6 +140,7 @@ namespace THERBgh
                 + Converter.FillEmpty(exWall.structureId, 5)
                 + "  overhang No.     0      wing1 No.    0   wing2 No.    0 \r\n      window No. "
                 + OutputWindowIds(exWall)
+                //TODO:windowIdsの処理を入れ込む必要
                 + "\r\n";
             });
 
@@ -157,8 +158,7 @@ namespace THERBgh
                 + Converter.FillEmpty(window.area, 12, 4)
                 + "    0\r\n  structure No. "
                 + Converter.FillEmpty(window.structureId, 5)
-                + "  overhang No.     "+window.overhangId.ToString()
-                +"      wing1 No.    0   wing2 No.    0\r\n";
+                + "  overhang No.     0      wing1 No.    0   wing2 No.    0\r\n";
             });
 
             string doorIds = "   0   0   0   0   0   0   0   0   0   0   0";
@@ -225,6 +225,24 @@ namespace THERBgh
                 + Converter.FillEmpty(floor.structureId, 5) + "\r\n";
             });
 
+            //庇情報を書き出す
+            overhangList.ForEach(overhang =>
+            {
+                //FIXME:今のところ、庇の出はx,yの差分の小さいほうとしている
+                double length = Math.Min(Math.Abs(overhang.maxPt.X - overhang.minPt.X), Math.Abs(overhang.maxPt.Y - overhang.minPt.Y));
+                bDat += Converter.FillEmpty("Overhang " + overhang.id.ToString(), 13)
+                + Converter.FillEmpty(overhang.minPt.X, 8, 3)
+                + Converter.FillEmpty(overhang.minPt.Y, 8, 3)
+                + Converter.FillEmpty(overhang.minPt.Z, 8, 3)
+                + Converter.FillEmpty(overhang.minPt.X, 8, 3)
+                + Converter.FillEmpty(overhang.maxPt.Y, 8, 3)
+                //庇の出はparentFaceのnormal directionによって決まる
+                + Converter.FillEmpty(length, 8, 3)
+                + Converter.FillEmpty(overhang.parentWindow.tiltAngle, 10, 3)
+                + Converter.FillEmpty(overhang.area, 12, 4)
+                + "    0\r\n";
+            });
+
             return bDat;
         }
 
@@ -256,9 +274,6 @@ namespace THERBgh
                 {"F",1},
                 {"CR",1},
             };
-
-
-
 
             roomList.ForEach(room =>
             {
@@ -319,35 +334,6 @@ namespace THERBgh
 
         public static string CreateWDat(List<Construction> constructions)
         {
-            //TODO: this mock should be dynamic
-            string mock =
-                @"{
-                ""data"": [
-                    {
-                        ""categories"": ""interiorWall"",
-                        ""description"": ""plywood"",
-                        ""id"": 1,
-                        ""materials"": [
-                            {
-                                ""conductivity"": 0.111,
-                                ""density"": 550.0,
-                                ""description"": ""from Therb"",
-                                ""id"": 1,
-                                ""name"": ""plywood"",
-                                ""specificHeat"": 1880.0
-                            }
-                        ],
-                        ""thickness"": [50],
-                        ""name"": ""plywood interior wall"",
-                    }
-                ],
-            }";
-
-            //読み込んだAPIのresponseをパースする
-            //Mock source = JsonConvert.DeserializeObject<Mock>(mock);
-
-            //List<Construction> constructions = source.data;
-
             //w.datデータを構成していく  
             string wDat = "";
 
@@ -372,6 +358,7 @@ namespace THERBgh
             constructions.ForEach(construction =>
             {
                 int numMaterials = construction.materials.Count;
+                int cavityLayer = 0;
 
                 wDat += Converter.FillEmpty(construction.id, 3)
                 + Converter.FillEmpty(elementIdDict[construction.categories], 2)
@@ -379,10 +366,16 @@ namespace THERBgh
                 + Converter.FillEmpty(numMaterials, 3) + " \r\n";
 
                 //2行目入力 classification
-                
+                int i = 0;
                 construction.materials.ForEach(material =>
                 {
-                    wDat += Converter.FillEmpty(classificationDict[construction.categories], 10);
+                    i += 1;
+                    wDat += Converter.FillEmpty(material.classification, 10);
+                    if (material.classification == 3 || material.classification == 4|| material.classification == 5)
+                    {
+                        cavityLayer = i;
+                    }
+                    
                 });
                 wDat += FillMultipleZeros(13-numMaterials,10,0);
                 wDat += " \r\n";
@@ -391,7 +384,15 @@ namespace THERBgh
                 //TODO: 厚みとかによってdynamicに分割数が変わるロジック
                 construction.materials.ForEach(material =>
                 {
-                    wDat += Converter.FillEmpty(1, 10);
+                    if (material.classification == 3 || material.classification == 4 || material.classification == 5)
+                    {
+                        wDat += Converter.FillEmpty(2, 10);
+                    }
+                    else
+                    {
+                        wDat += Converter.FillEmpty(1, 10);
+                    }
+                    
                 });
                 wDat += FillMultipleZeros(13 - numMaterials, 10,0);
                 wDat += " \r\n";
@@ -442,11 +443,69 @@ namespace THERBgh
                 });
                 wDat += " \r\n";
 
+                //TODO: this logic has to be fixed
+                if (cavityLayer>0)
+                {
+                    wDat += CavityLayers(numMaterials, cavityLayer, 0.9) + "\r\n"
+                    + CavityLayers(numMaterials, cavityLayer, 0.9) + "\r\n"
+                    + CavityLayers(numMaterials, cavityLayer, 2) + "\r\n"
+                    + CavityLayers(numMaterials, cavityLayer, 2) + "\r\n"
+                    + CavityLayers(numMaterials, cavityLayer, 0) + "\r\n"
+                    + CavityLayers(numMaterials, cavityLayer, 0, 0) + "\r\n";
+                }
+                wDat += " \r\n";
+
             });
 
             return wDat;
         }
 
+        public static string CreateTDat(int startMonth,int EndMonth,Vector3f northDirection)
+        {
+            int calcDays = EndMonth * 30;
+            //ベクトルから建物方位角への変換
+
+
+            string tDat = "*** THERB 起動用データ *** \r\n"
+                + "------------------ ----------------- （入出力データ）\r\n"
+                + "出  力  データ     -o.dat \r\n"
+                + "気  象  データ     -Fukuoka.dat \r\n"
+                + "壁  体  データ     -w.dat \r\n"
+                + "建  物  データ     -b.dat \r\n"
+                + "  室    データ     -r.dat \r\n"
+                + "室換気  データ     -a.dat \r\n"
+                + "ｽｹｼﾞｭｰﾙ データ     -s.dat \r\n"
+                + "------------------ ------- i（計算日） \r\n"
+                + "計算年             -      2019 \r\n"
+                + "計算開始月         -         " + startMonth.ToString() + " \r\n"
+                + "計算開始日         -         1 \r\n"
+                + "計算日数           -       " + calcDays.ToString() + " \r\n"
+                + "予備計算日数       -         5 \r\n"
+                + "------------------ ------- i（0：無し，1：簡易（吸放湿無し）2：詳細（吸放湿有り） \r\n"
+                + "湿度計算の有無     -         0 \r\n"
+                + "------------------ ---.--- （計算地域等の基本データ） \r\n"
+                + "緯度      (°)     -  33.60 \r\n"
+                + "経度      (°)     - 130.22 \r\n"
+                + "建物方位角(°)     -   0.0 \r\n"
+                + "地表面日射吸収率   -   0.8 \r\n"
+                + "地表面長波放射率   -   0.9 \r\n"
+                + "------------------ -----.- （計算時間間隔） \r\n"
+                + "計算時間間隔(secs) -  3600. \r\n"
+                + "------------------ ---.--- （0：毎時計算，W/m2K） \r\n"
+                + "対流熱伝達率inside -   4.0 \r\n"
+                + "            outside-  19.0 \r\n"
+                + "放射熱伝達率inside -   5.0 \r\n"
+                + "            outside-   5.0 \r\n"
+                + "--------------------1--2--3--4--5--6--7--8--9-10 \r\n"
+                + "温湿度出力データ№ - 186 187 188 189 190 191 192 193 194 195 \r\n"
+                + "（30点）           - 196 187 198 199 200 201  92  94  96  97 \r\n"
+                + "                   -  88  90  87  98 201 201 201 201 201 201 \r\n"
+                + "--------------------------------------------------------------- \r\n"
+                + "熱負荷出力室№     -   2 \r\n";
+
+            return tDat;
+
+        }
         private static string FillMultipleZeros(int repeatNum,int totalLength,int digit)
         {
             string result = "";
@@ -476,6 +535,23 @@ namespace THERBgh
             return windowIdStrs;
         }
 
+        private static string CavityLayers(int numMaterials, int cavityLayer,double number,int digit=3)
+        {
+
+            string windowIdStrs = "";
+            for (int windowIdIndex = 1; windowIdIndex < numMaterials+1; windowIdIndex++)
+            {
+                if (windowIdIndex == cavityLayer)
+                {
+                    windowIdStrs += Converter.FillEmpty(number,10,digit);
+                }
+                else
+                {
+                    windowIdStrs += Converter.FillEmpty(0, 10, digit);
+                }
+            }
+            return windowIdStrs;
+        }
     }
     public class Mock
     {
@@ -519,6 +595,7 @@ namespace THERBgh
         public double conductivity;
         public double density;
         public double specificHeat;
+        public int classification;
 
         public static List<string> GetNames(List<Material> materials)
         {

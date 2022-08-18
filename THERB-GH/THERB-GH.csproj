@@ -47,6 +47,7 @@
   <ItemGroup>
     <Compile Include="Compose.cs" />
     <Compile Include="CreateDatData.cs" />
+    <Compile Include="ExportT.cs" />
     <Compile Include="ExportW.cs" />
     <Compile Include="ExportB.cs" />
     <Compile Include="ExportA.cs" />
