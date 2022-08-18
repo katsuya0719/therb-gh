@@ -225,6 +225,24 @@ namespace THERBgh
                 + Converter.FillEmpty(floor.structureId, 5) + "\r\n";
             });
 
+            //庇情報を書き出す
+            overhangList.ForEach(overhang =>
+            {
+                //FIXME:今のところ、庇の出はx,yの差分の小さいほうとしている
+                double length = Math.Min(Math.Abs(overhang.maxPt.X - overhang.minPt.X), Math.Abs(overhang.maxPt.Y - overhang.minPt.Y));
+                bDat += Converter.FillEmpty("Overhang " + overhang.id.ToString(), 13)
+                + Converter.FillEmpty(overhang.minPt.X, 8, 3)
+                + Converter.FillEmpty(overhang.minPt.Y, 8, 3)
+                + Converter.FillEmpty(overhang.minPt.Z, 8, 3)
+                + Converter.FillEmpty(overhang.minPt.X, 8, 3)
+                + Converter.FillEmpty(overhang.maxPt.Y, 8, 3)
+                //庇の出はparentFaceのnormal directionによって決まる
+                + Converter.FillEmpty(length, 8, 3)
+                + Converter.FillEmpty(overhang.parentWindow.tiltAngle, 10, 3)
+                + Converter.FillEmpty(overhang.area, 12, 4)
+                + "    0\r\n";
+            });
+
             return bDat;
         }
 
