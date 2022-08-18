@@ -30,6 +30,7 @@ namespace Model
             _totalWindows += 1;
             id = _totalWindows;
             this.constructionId = 6;
+            this.structureId = 6;
         }
 
         public void addParent(Face parent)
