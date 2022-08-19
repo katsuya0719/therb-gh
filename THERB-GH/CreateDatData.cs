@@ -230,6 +230,7 @@ namespace THERBgh
             {
                 //FIXME:今のところ、庇の出はx,yの差分の小さいほうとしている
                 double length = Math.Min(Math.Abs(overhang.maxPt.X - overhang.minPt.X), Math.Abs(overhang.maxPt.Y - overhang.minPt.Y));
+
                 bDat += Converter.FillEmpty("Overhang " + overhang.id.ToString(), 13)
                 + Converter.FillEmpty(overhang.minPt.X, 8, 3)
                 + Converter.FillEmpty(overhang.minPt.Y, 8, 3)

@@ -49,7 +49,6 @@ namespace THERBgh
         protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
         {
             pManager.AddGenericParameter("Therb", "Therb", "THERB class", GH_ParamAccess.item);
-            pManager.AddBrepParameter("test", "test", "test", GH_ParamAccess.list);
         }
 
         /// <summary>
