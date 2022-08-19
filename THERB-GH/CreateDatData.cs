@@ -25,11 +25,12 @@ namespace THERBgh
                     + "=>  \r\n"
                     + Converter.FillEmpty("from outdoor=0", 25)
                     + Converter.FillEmpty("- ", 6)
-                    + string.Join("", Enumerable.Repeat(Converter.FillEmpty(room.volume / 2, 7, 1), 12)) + "\r\n" //12回繰り返して呼ぶようにしたい
+                    + string.Join("", Enumerable.Repeat(Converter.FillEmpty(room.volume / 2, 7, 1), 12)) + "\r\n" 
                     + Converter.FillEmpty("quantity (m3/h)", 25)
                     + Converter.FillEmpty("- ", 6) + "\r\n"
                     + Converter.FillEmpty("(-1.:natural vent.)", 25)
-                    + string.Join("", Enumerable.Repeat(Converter.FillEmpty(room.volume / 2, 7, 1), 12)) + "\r\n"; //12回繰り返して呼ぶようにしたい
+                    + Converter.FillEmpty("- ", 6) 
+                    + string.Join("", Enumerable.Repeat(Converter.FillEmpty(room.volume / 2, 7, 1), 12)) + "\r\n" + "\r\n"; 
             });
 
             return aDat;
