@@ -562,6 +562,7 @@ namespace THERBgh
     public class Construction
     {
         public int id;
+        [JsonProperty(PropertyName = "category")]
         public ElementType categories;
         public List<Material> materials;
         public List<Double> thickness;

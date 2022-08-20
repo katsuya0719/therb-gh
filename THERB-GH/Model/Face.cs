@@ -25,7 +25,7 @@ namespace Model
         Ceiling,
         Floor
     }
-
+    [JsonConverter(typeof(StringEnumConverter))]
     public enum ElementType
     {
         exteriorWall,
