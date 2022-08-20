@@ -56,13 +56,12 @@ namespace Model
     {
         //public int partId;
         //public faceType face{get; private set;}
-        public string face { get; private set; }
+        public SurfaceType surfaceType { get; private set; }
         public BoundaryCondition bc { get; set; }
         public string elementType { get; set; }
         public Room parent;
         public Vector3d tempNormal;
         public Direction direction;
-        public SurfaceType surfaceType;
         public int adjacencyRoomId; //隣接しているRoomのId 外気に接している場合には0
         public bool unique;
         public List<Window> windows { get; private set; }
@@ -104,14 +103,14 @@ namespace Model
             this.parent = parent;
             parentId = parent.id;
             //方角、床、天井を判別するためにはtempNormalを使う
-            face = getFaceType(tempNormal);
+            this.surfaceType = getFaceType(tempNormal);
             direction = defineDirection(tempNormal);
 
             this.normal = tempNormal;
             this.unique = true;
 
             //TODO: this logic has to be elaborated
-            if (face == "wall")
+            if (surfaceType == SurfaceType.Wall)
             {
                 tiltAngle = 90;
             }
@@ -174,11 +173,11 @@ namespace Model
 
         private Direction defineDirection(Vector3d normal)
         {
-            if (face == "floor")
+            if (surfaceType == SurfaceType.Floor)
             {
                 return Direction.F;
             }
-            else if (face == "roof")
+            else if (surfaceType == SurfaceType.Roof)
             {
                 return Direction.CR;
             }
@@ -217,7 +216,7 @@ namespace Model
             }
         }
 
-        public string getFaceType(Vector3d normal)
+        public SurfaceType getFaceType(Vector3d normal)
         {
 
             //better to add filter logic for internal wall
@@ -225,20 +224,17 @@ namespace Model
             int roofAngle = 10;
             if (Z > Math.Cos((Math.PI / 180) * roofAngle))
             {
-                //return faceType.roof;
-                return "roof";
+                return SurfaceType.Roof;
             }
             else if (Z < -Math.Cos((Math.PI / 180) * 85))
             {
-                //return faceType.floor;
-                return "floor";
+                return SurfaceType.Floor;
             }
             else
             {
                 //string direction = defineDirection(normal);
                 //Print("{0}:{1}", normal, direction);
-                //return faceType.wall;
-                return "wall";
+                return SurfaceType.Wall;
             }
         }
 
@@ -280,26 +276,26 @@ namespace Model
         {
             if (!unique) return;
 
-            elementType = bc.ToString() + face;
+            elementType = bc.ToString() + surfaceType.ToString();
 
             switch (elementType)
             {
-                case "exteriorwall":
+                case "exteriorWall":
                     _totalExWalls += 1;
                     break;
-                case "interiorwall":
+                case "interiorWall":
                     _totalInWalls += 1;
                     break;
-                case "interiorroof":
+                case "interiorRoof":
                     _totalFlrCeilings += 1;
                     break;
-                case "interiorfloor":
+                case "interiorFloor":
                     _totalFlrCeilings += 1;
                     break;
-                case "exteriorroof":
+                case "exteriorRoof":
                     _totalRoofs += 1;
                     break;
-                case "groundfloor":
+                case "groundFloor":
                     _totalGrounds += 1;
                     break;
             }
@@ -351,14 +347,13 @@ namespace Model
             try
             {
                 preview += Environment.NewLine;
+                preview += " surfaceType       :" + surfaceType + Environment.NewLine;
                 preview += " id                :" + id + Environment.NewLine;
-                preview += " FaceType          :" + face + Environment.NewLine;
                 preview += " BoundaryCondition :" + bc + Environment.NewLine;
                 preview += " elementType       :" + elementType + Environment.NewLine;
                 preview += " parentId          :" + parent.id + Environment.NewLine;
                 preview += " tempNormal        :" + tempNormal + Environment.NewLine;
                 preview += " direction         :" + direction + Environment.NewLine;
-                preview += " surfaceType       :" + surfaceType + Environment.NewLine;
                 preview += " adjacencyRoomId   :" + adjacencyRoomId + Environment.NewLine;
                 preview += " unique            :" + unique + Environment.NewLine;
                 preview += " windowIds         :" + string.Join(", ", windowIds) + Environment.NewLine;

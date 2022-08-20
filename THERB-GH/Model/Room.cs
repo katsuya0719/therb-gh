@@ -64,7 +64,7 @@ namespace Model
 
         public void groupChildFaces(Face face)
         {
-            if (face.face == "wall")
+            if (face.surfaceType == SurfaceType.Wall)
             {
                 switch (face.direction)
                 {
@@ -82,11 +82,11 @@ namespace Model
                         break;
                 }
             }
-            else if (face.face == "roof")
+            else if (face.surfaceType == SurfaceType.Roof)
             {
                 roofs.Add(face);
             }
-            else if (face.face == "floor")
+            else if (face.surfaceType == SurfaceType.Floor)
             {
                 floors.Add(face);
             }

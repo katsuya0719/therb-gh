@@ -339,10 +339,11 @@ namespace THERBgh
             {
                 double distance = 10000;
                 //faceがwallであればwallのみでテストする
-                if (originFace.face == "wall" && face.face == "wall")
+                if (originFace.surfaceType ==  SurfaceType.Wall && face.surfaceType == SurfaceType.Wall)
                 {
                     distance = originFace.centerPt.DistanceTo(face.centerPt);
-                }else if(originFace.face != "wall" && face.face != "wall"){
+                }else if(originFace.surfaceType != SurfaceType.Wall && face.surfaceType != SurfaceType.Wall)
+                {
                     distance = originFace.centerPt.DistanceTo(face.centerPt);
                 }
                 if (distance < closestDistance)
