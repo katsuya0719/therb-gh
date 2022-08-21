@@ -30,13 +30,27 @@ namespace Model
             _totalWindows += 1;
             id = _totalWindows;
             this.constructionId = 6;
+            this.structureId = 6;
         }
 
         public void addParent(Face parent)
         {
             this.parent = parent;
-            parentId = parent.partId;//注意)part idを使っている
+            //parentId = parent.partId;//注意)part idを使っている
+            parentId = parent.id;
             tiltAngle = parent.tiltAngle;
+        }
+        public override string ToString()
+        {
+            string preview = base.ToString();
+            try
+            {
+                preview += Environment.NewLine;
+                preview += " id       :" + id + Environment.NewLine;
+                preview += " parentId :" + parent.id;
+            }
+            catch { }
+            return preview;
         }
     }
 }

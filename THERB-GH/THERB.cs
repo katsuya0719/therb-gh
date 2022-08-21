@@ -49,7 +49,6 @@ namespace THERBgh
         protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
         {
             pManager.AddGenericParameter("Therb", "Therb", "THERB class", GH_ParamAccess.item);
-            pManager.AddBrepParameter("test", "test", "test", GH_ParamAccess.list);
         }
 
         /// <summary>
@@ -92,7 +91,7 @@ namespace THERBgh
                 Room temp = new Room(exBox.Box.ToBrep());
 
                 splitSurfs.AddRange(exBox.BoxSurfaces);
-                //TODO: SurfaceとFaceの違い理解
+
                 foreach (var brepface in exBox.BoxSurfaces)
                 {
                     Vector3d normal = brepface.NormalAt(0.5, 0.5);
@@ -209,7 +208,7 @@ namespace THERBgh
                 }
                 else
                 {
-                    //エラー処理を加える
+                    //TODO:エラー処理を加える
                 }
                 windowList.Add(window);
 
@@ -279,9 +278,20 @@ namespace THERBgh
                     //どのfaceに接しているのかをチェック
                     //testFace.centerPtから一番近いtargetSurfacesが隣接しているsurfaceだと判断する
                     Face adjacentFace = getClosestFaceFromFace(testFace, targetFaces);
+
+                    //内壁の重複を防ぐロジック
+                    
                     testFace.adjacencyRoomId = adjacentFace.parentId;
                     //testFace.adjacencyFaceId = adjacentFace.partId;
                     testFace.adjacencyFace = adjacentFace;
+
+                    //既にadjacentFace.adjacentFaceがtestFaceだったらduplicateフラグ
+                    if (adjacentFace.adjacencyFace == testFace)
+                    {
+                        testFace.unique = false;
+                        testFace.partId = adjacentFace.partId;
+                    }
+
                 }
                 else
                 {
@@ -297,6 +307,7 @@ namespace THERBgh
                     testFace.adjacencyRoomId = 0;
                 }
                 testFace.setElementType();
+                testFace.setPartId();
                 testFace.setConstructionId();
                 faceListBC.Add(testFace);
             }
@@ -331,10 +342,11 @@ namespace THERBgh
             {
                 double distance = 10000;
                 //faceがwallであればwallのみでテストする
-                if (originFace.face == "wall" && face.face == "wall")
+                if (originFace.surfaceType ==  SurfaceType.Wall && face.surfaceType == SurfaceType.Wall)
                 {
                     distance = originFace.centerPt.DistanceTo(face.centerPt);
-                }else if(originFace.face != "wall" && face.face != "wall"){
+                }else if(originFace.surfaceType != SurfaceType.Wall && face.surfaceType != SurfaceType.Wall)
+                {
                     distance = originFace.centerPt.DistanceTo(face.centerPt);
                 }
                 if (distance < closestDistance)

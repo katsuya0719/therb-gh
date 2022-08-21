@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using Rhino.Geometry.Intersect;
 using Newtonsoft.Json;
 using Model;
-using Utils;
 
 // In order to load the result of this wizard, you will also need to
 // add the output bin/ folder of this project to the list of loaded
@@ -15,7 +14,7 @@ using Utils;
 
 namespace THERBgh
 {
-    public class ExportR : GH_Component
+    public class Compose : GH_Component
     {
         /// <summary>
         /// Each implementation of GH_Component must provide a public 
@@ -24,10 +23,10 @@ namespace THERBgh
         /// Subcategory the panel. If you use non-existing tab or panel names, 
         /// new tabs/panels will automatically be created.
         /// </summary>
-        public ExportR()
-          : base("exportR", "exportR",
-              "export r.dat",
-              "THERB-GH", "Simulation")
+        public Compose()
+          : base("Compose", "Compose",
+              "compose therb class from rooms, faces, windows and overhangs",
+              "THERB-GH", "Modelling")
         {
         }
 
@@ -36,7 +35,10 @@ namespace THERBgh
         /// </summary>
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
         {
-            pManager.AddGenericParameter("Therb", "therb", "THERB class", GH_ParamAccess.item);
+            pManager.AddGenericParameter("Rooms", "Rooms", "Room classes", GH_ParamAccess.list);
+            pManager.AddGenericParameter("Faces", "Faces", "Face classes", GH_ParamAccess.list);
+            pManager.AddGenericParameter("Windows", "Windows", "Window classes", GH_ParamAccess.list);
+            pManager.AddGenericParameter("Overhangs", "Overhangs", "Overhang classes", GH_ParamAccess.list);
         }
 
         /// <summary>
@@ -44,7 +46,7 @@ namespace THERBgh
         /// </summary>
         protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
         {
-            pManager.AddTextParameter("r_dat", "r_dat", "r.dat file", GH_ParamAccess.item);
+            pManager.AddGenericParameter("Therb", "Therb", "Therb class", GH_ParamAccess.item);
         }
 
         /// <summary>
@@ -54,13 +56,20 @@ namespace THERBgh
         /// to store data in output parameters.</param>
         protected override void SolveInstance(IGH_DataAccess DA)
         {
+            List<Room> roomList = new List<Room>();
+            DA.GetDataList(0, roomList);
+            List<Face> faceList = new List<Face>();
+            DA.GetDataList(1, faceList);
+            List<Window> windowList = new List<Window>();
+            DA.GetDataList(2, windowList);
+            List<Overhang> overhangList = new List<Overhang>();
+            DA.GetDataList(3, overhangList);
 
-            Therb therb = null;
-            DA.GetData(0, ref therb);
+            Therb therb = new Therb(roomList, faceList, windowList, overhangList);
 
-            DA.SetData("r_dat", CreateDatData.CreateRDat(therb));
+            DA.SetData("Therb",therb);
         }
-        
+
         /// <summary>
         /// Provides an Icon for every component that will be visible in the User Interface.
         /// Icons need to be 24x24 pixels.
@@ -82,7 +91,7 @@ namespace THERBgh
         /// </summary>
         public override Guid ComponentGuid
         {
-            get { return new Guid("ac7ba740-49bd-45a4-8c84-8d9a69081c38"); }
+            get { return new Guid("b32956ef-fed0-4bb1-9492-191b2aa040a0"); }
         }
     }
 }

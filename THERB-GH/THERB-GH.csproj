@@ -45,8 +45,13 @@
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Compose.cs" />
+    <Compile Include="CreateDatData.cs" />
+    <Compile Include="ExportT.cs" />
+    <Compile Include="ExportW.cs" />
     <Compile Include="ExportB.cs" />
     <Compile Include="ExportA.cs" />
+    <Compile Include="FilterConstruction.cs" />
     <Compile Include="Model\BaseGeo.cs" />
     <Compile Include="Model\Therb.cs" />
     <Compile Include="Model\Room.cs" />
@@ -54,10 +59,13 @@
     <Compile Include="Model\Face.cs" />
     <Compile Include="Model\Window.cs" />
     <Compile Include="Model\Overhang.cs" />
-    <Compile Include="ReadProperties.cs" />
+    <Compile Include="ReadRoomProperties.cs" />
+    <Compile Include="ReadFaceProperties.cs" />
     <Compile Include="RunSimulation.cs" />
-    <Compile Include="UpdateProperty.cs" />
-    <Compile Include="SplitGeos.cs" />
+    <Compile Include="Decompose.cs" />
+    <Compile Include="ThrebUtilsTest.cs" />
+    <Compile Include="ReadConstruction.cs" />
+    <Compile Include="UpdateConstruction.cs" />
     <Compile Include="Utils.cs" />
     <Compile Include="FilterFaceByProperty.cs" />
     <Compile Include="ExportR.cs" />

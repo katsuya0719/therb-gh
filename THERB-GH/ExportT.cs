@@ -2,6 +2,7 @@
 using Rhino.Geometry;
 using Rhino.Geometry.Collections;
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using Rhino.Geometry.Intersect;
 using Newtonsoft.Json;
@@ -15,7 +16,7 @@ using Utils;
 
 namespace THERBgh
 {
-    public class ExportR : GH_Component
+    public class ExportT : GH_Component
     {
         /// <summary>
         /// Each implementation of GH_Component must provide a public 
@@ -24,9 +25,9 @@ namespace THERBgh
         /// Subcategory the panel. If you use non-existing tab or panel names, 
         /// new tabs/panels will automatically be created.
         /// </summary>
-        public ExportR()
-          : base("exportR", "exportR",
-              "export r.dat",
+        public ExportT()
+          : base("exportT", "exportT",
+              "export t.dat",
               "THERB-GH", "Simulation")
         {
         }
@@ -36,7 +37,10 @@ namespace THERBgh
         /// </summary>
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
         {
-            pManager.AddGenericParameter("Therb", "therb", "THERB class", GH_ParamAccess.item);
+            //pManager.AddVectorParameter("north_direction", "north_direction", "north direction", GH_ParamAccess.item);
+            pManager.AddIntegerParameter("start_month", "start_month", "start month for simulation", GH_ParamAccess.item);
+            pManager.AddIntegerParameter("end_month", "end_month", "end month for simulation", GH_ParamAccess.item);
+            
         }
 
         /// <summary>
@@ -44,7 +48,7 @@ namespace THERBgh
         /// </summary>
         protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
         {
-            pManager.AddTextParameter("r_dat", "r_dat", "r.dat file", GH_ParamAccess.item);
+            pManager.AddTextParameter("t_dat", "t_dat", "t.dat file", GH_ParamAccess.item);
         }
 
         /// <summary>
@@ -54,13 +58,17 @@ namespace THERBgh
         /// to store data in output parameters.</param>
         protected override void SolveInstance(IGH_DataAccess DA)
         {
+            int startMonth = 1;
+            int endMonth = 12;
+            Vector3f northDirection = new Vector3f(0,0,0);
 
-            Therb therb = null;
-            DA.GetData(0, ref therb);
+            //DA.GetData("north_direction", ref northDirection);
+            DA.GetData("start_month", ref startMonth);
+            DA.GetData("end_month", ref endMonth);
 
-            DA.SetData("r_dat", CreateDatData.CreateRDat(therb));
+            DA.SetData("t_dat", CreateDatData.CreateTDat(startMonth,endMonth,northDirection));
         }
-        
+
         /// <summary>
         /// Provides an Icon for every component that will be visible in the User Interface.
         /// Icons need to be 24x24 pixels.
@@ -82,7 +90,7 @@ namespace THERBgh
         /// </summary>
         public override Guid ComponentGuid
         {
-            get { return new Guid("ac7ba740-49bd-45a4-8c84-8d9a69081c38"); }
+            get { return new Guid("8e95f6de-93b9-448a-8212-d77b3895eb89"); }
         }
     }
 }

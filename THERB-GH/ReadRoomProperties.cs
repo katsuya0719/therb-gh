@@ -11,7 +11,7 @@ using Model;
 
 namespace THERBgh
 {
-    public class ReadProperty : GH_Component
+    public class ReadRoomProperty : GH_Component
     {
         /// <summary>
         /// Each implementation of GH_Component must provide a public 
@@ -20,10 +20,10 @@ namespace THERBgh
         /// Subcategory the panel. If you use non-existing tab or panel names, 
         /// new tabs/panels will automatically be created.
         /// </summary>
-        public ReadProperty()
-          : base("ReadProperty", "ReadProperty",
-              "Read properties from class",
-              "THERB-GH", "Modelling")
+        public ReadRoomProperty()
+          : base("ReadRoomProperty", "ReadRoomProperty",
+              "Read room properties from class",
+              "THERB-GH", "Utility")
         {
         }
 
@@ -32,12 +32,7 @@ namespace THERBgh
         /// </summary>
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
         {
-            //pManager.AddGenericParameter("Therb", "Therb", "Therb data", GH_ParamAccess.item);
-            pManager.AddGenericParameter("Faces", "Faces", "list of Face", GH_ParamAccess.list);
-            pManager[0].Optional = true;
-            //pManager[1].Optional = true;
-            //pManager.AddTextParameter("property", "property", "property to extract", GH_ParamAccess.item);
-            //pManager.AddTextParameter("class", "class", "room or face or window", GH_ParamAccess.item);
+            pManager.AddGenericParameter("Rooms", "Rooms", "list of Room", GH_ParamAccess.list);
         }
 
         /// <summary>
@@ -47,12 +42,10 @@ namespace THERBgh
         {
             //TODO: RegisterOutputParamsをdynamicにしたい
             //pManager.AddSurfaceParameter("surface", "surface", "extracted surface", GH_ParamAccess.list);
-            pManager.AddIntegerParameter("partId", "partId", "id", GH_ParamAccess.list);
-            pManager.AddSurfaceParameter("surface", "surface", "extracted surface", GH_ParamAccess.list);
-            pManager.AddTextParameter("elementType", "element type", "element type", GH_ParamAccess.list);
-            pManager.AddNumberParameter("normal", "normal", "normal direction", GH_ParamAccess.list);
-            pManager.AddTextParameter("direction", "direction", "direction", GH_ParamAccess.list);
-            pManager.AddIntegerParameter("AdjacencyRoomId", "AdjacencyRoomId", "adjacency room id", GH_ParamAccess.list);
+            pManager.AddIntegerParameter("id", "id", "id", GH_ParamAccess.list);
+            pManager.AddBrepParameter("geometry","geometry","geometry", GH_ParamAccess.list);
+            //pManager.AddPointParameter("centroid", "centroid", "centroid", GH_ParamAccess.list);
+            pManager.AddNumberParameter("volume", "volume", "volume", GH_ParamAccess.list);
         }
 
         /// <summary>
@@ -63,34 +56,28 @@ namespace THERBgh
         protected override void SolveInstance(IGH_DataAccess DA)
         {
             //Therb therb = null;
-            List<Face> faceList = new List<Face>();
+            List<Room> roomList = new List<Room>();
             //DA.GetData(0, ref therb);
-            DA.GetDataList(0, faceList);
+            DA.GetDataList(0, roomList);
             //faceList.AddRange(therb.faces);
             //List<Face> faceList = therb.faces;
-            List<int> partIdList = new List<int>();
-            List<Surface> surfaceList = new List<Surface>();
-            List<string> elementTypeList = new List<string>();
-            List<Vector3d> normalList = new List<Vector3d>();
-            List<string> directionList = new List<string>();
-            List<int> adjacencyRoomIdList = new List<int>();
+            List<int> idList = new List<int>();
+            List<Brep> geometryList = new List<Brep>();
+            //List<Point3d> centroidList = new List<Point3d>();
+            List<double> volumeList = new List<double>();
 
-            faceList.ForEach(face =>
+            roomList.ForEach(room =>
             {
-                partIdList.Add(face.partId);
-                surfaceList.Add(face.geometry);
-                elementTypeList.Add(face.elementType);
-                normalList.Add(face.tempNormal);
-                directionList.Add(face.direction.ToString());
-                adjacencyRoomIdList.Add(face.adjacencyRoomId);
+                idList.Add(room.id);
+                geometryList.Add(room.geometry);
+                //centroidList.Add(room.centroid);
+                volumeList.Add(room.volume);
             });
 
-            DA.SetDataList("partId", partIdList);
-            DA.SetDataList("surface", surfaceList);
-            DA.SetDataList("elementType", elementTypeList);
-            DA.SetDataList("normal", normalList);
-            DA.SetDataList("direction", directionList);
-            DA.SetDataList("AdjacencyRoomId", adjacencyRoomIdList);
+            DA.SetDataList("id", idList);
+            DA.SetDataList("geometry", geometryList);
+            //DA.SetDataList("centroid", centroidList);
+            DA.SetDataList("volume", volumeList);
         }
 
         /// <summary>
@@ -114,7 +101,7 @@ namespace THERBgh
         /// </summary>
         public override Guid ComponentGuid
         {
-            get { return new Guid("01bf9c59-9cce-48b5-b00b-0c0ecb858f63"); }
+            get { return new Guid("d663f604-c8d0-42cc-8281-22e7b5a54f5e"); }
         }
     }
 }

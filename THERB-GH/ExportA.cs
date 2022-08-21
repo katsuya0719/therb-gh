@@ -28,7 +28,7 @@ namespace THERBgh
         public ExportA()
           : base("exportA", "exportA",
               "export a.dat",
-              "THERB-GH", "Modelling")
+              "THERB-GH", "Simulation")
         {
         }
 
@@ -60,26 +60,8 @@ namespace THERBgh
 
             if (therb == null) return;
 
-            List<Room> roomList = therb.rooms;
-            string aDat = "*hourly data od forced room air ventilation \r\n";
-
-            roomList.ForEach(room =>
-            {
-                aDat += "into room" + Converter.FillEmpty(room.id, 3) + "from " + Converter.FillEmpty(0, 3)
-                    + "=>  \r\n"
-                    + Converter.FillEmpty("from outdoor=0", 25)
-                    + Converter.FillEmpty("- ", 6)
-                    + string.Join("", Enumerable.Repeat(Converter.FillEmpty(room.volume / 2, 7, 1), 12)) + "\r\n" //12回繰り返して呼ぶようにしたい
-                    + Converter.FillEmpty("quantity (m3/h)", 25)
-                    + Converter.FillEmpty("- ", 6) + "\r\n"
-                    + Converter.FillEmpty("(-1.:natural vent.)", 25)
-                    + string.Join("", Enumerable.Repeat(Converter.FillEmpty(room.volume / 2, 7, 1), 12)) + "\r\n"; //12回繰り返して呼ぶようにしたい
-            });
-
-            DA.SetData("a_dat", aDat);
+            DA.SetData("a_dat", CreateDatData.CreateADat(therb));
         }
-
-        //TODO:Utilsモジュールにうつす
 
         /// <summary>
         /// Provides an Icon for every component that will be visible in the User Interface.

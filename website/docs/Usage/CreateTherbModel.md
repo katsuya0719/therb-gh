@@ -3,22 +3,31 @@ id: CreateTherbModel
 title: Create THERB Model
 ---
 
-RhinoにモデリングしたジオメトリデータをTHERBデータに変換し、サーバーにuploadするまでの一通りの流れを説明します。  
+Rhinoにジオメトリをモデリングし、THERBモデルへ変換する手順を示します。   
 
 (守田君と楊さんに詳細を書いてもらう)
-## Rhinoモデルの作成  
-### 室データの作成  
+## THERBコンポーネントへの入力   
+THERBコンポーネントをGrasshopperのキャンバス上に配置し、以下のジオメトリを準備、入力します。  
+### 室データ(boxes)の作成  
 1. 室ごとにpolysurface、もしくはextrusionをモデリングします  
-1. 作成したジオメトリを全選択し、「explode」コマンドを打ちます  
-1. 2.で作成したジオメトリをbrepコンポーネントに格納し、assignClassコンポーネントのgeosにつなぎます  
+2. Brepコンポーネントに格納し、THERBコンポーネントのboxesにつなぎます  
 
-### 窓データの作成  
-1. surfaceとしてモデリングします  
-1. 1.で作成したジオメトリをsurfaceコンポーネントに格納し、assignClassコンポーネントのwindowsにつなぎます  
+### 窓データ(windows)の作成  
+1. surfaceとしてモデリングします   
+2. Surfaceコンポーネントに格納し、THERBコンポーネントのwindowsにつなぎます  
 
-### 庇データの作成  
-(現在準備中です)  
+### 庇データ(overhangs)の作成  
+1. surfaceとしてモデリングします   
+2. Surfaceコンポーネントに格納し、THERBコンポーネントのoverhangsにつなぎます  
 
-以上のデータを入力すると、THERBの計算に必要なb.datファイルとr.datファイルが自動的に生成されます  
+:::note
+窓と庇データの入力は任意です。
+:::
 
 (YouTubeの動画を埋め込む)  
+
+
+(トラブルシューティングも盛り込むべき)
+以上を行うと、Therbモデルが生成されます。
+
+これで、THERBの計算を行う準備が整ったので、[シミュレーションの実行](./RunSimulation.md)に進みます。  

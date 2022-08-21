@@ -2,6 +2,7 @@
 using Rhino.Geometry;
 using Rhino.Geometry.Collections;
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using Rhino.Geometry.Intersect;
 using Newtonsoft.Json;
@@ -15,7 +16,7 @@ using Utils;
 
 namespace THERBgh
 {
-    public class ExportR : GH_Component
+    public class ExportW : GH_Component
     {
         /// <summary>
         /// Each implementation of GH_Component must provide a public 
@@ -24,9 +25,9 @@ namespace THERBgh
         /// Subcategory the panel. If you use non-existing tab or panel names, 
         /// new tabs/panels will automatically be created.
         /// </summary>
-        public ExportR()
-          : base("exportR", "exportR",
-              "export r.dat",
+        public ExportW()
+          : base("exportW", "exportW",
+              "export w.dat",
               "THERB-GH", "Simulation")
         {
         }
@@ -36,7 +37,7 @@ namespace THERBgh
         /// </summary>
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
         {
-            pManager.AddGenericParameter("Therb", "therb", "THERB class", GH_ParamAccess.item);
+            pManager.AddGenericParameter("Construction", "Construction", "Construction data", GH_ParamAccess.list);
         }
 
         /// <summary>
@@ -44,7 +45,7 @@ namespace THERBgh
         /// </summary>
         protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
         {
-            pManager.AddTextParameter("r_dat", "r_dat", "r.dat file", GH_ParamAccess.item);
+            pManager.AddTextParameter("w_dat", "w_dat", "w.dat file", GH_ParamAccess.item);
         }
 
         /// <summary>
@@ -54,13 +55,12 @@ namespace THERBgh
         /// to store data in output parameters.</param>
         protected override void SolveInstance(IGH_DataAccess DA)
         {
-
-            Therb therb = null;
-            DA.GetData(0, ref therb);
-
-            DA.SetData("r_dat", CreateDatData.CreateRDat(therb));
+            List<Construction> constructionList = new List<Construction>();
+            DA.GetDataList(0, constructionList);
+            
+            DA.SetData("w_dat", CreateDatData.CreateWDat(constructionList));
         }
-        
+
         /// <summary>
         /// Provides an Icon for every component that will be visible in the User Interface.
         /// Icons need to be 24x24 pixels.
@@ -82,7 +82,7 @@ namespace THERBgh
         /// </summary>
         public override Guid ComponentGuid
         {
-            get { return new Guid("ac7ba740-49bd-45a4-8c84-8d9a69081c38"); }
+            get { return new Guid("4cb328fd-ae4d-4fdd-b4f9-fb01aeda2570"); }
         }
     }
 }

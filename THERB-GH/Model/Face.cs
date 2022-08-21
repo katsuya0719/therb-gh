@@ -6,6 +6,7 @@ using Rhino.Geometry.Collections;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System.Collections.ObjectModel;
+using THERBgh;
 
 namespace Model
 {
@@ -23,6 +24,16 @@ namespace Model
         Roof,
         Ceiling,
         Floor
+    }
+    [JsonConverter(typeof(StringEnumConverter))]
+    public enum ElementType
+    {
+        exteriorWall,
+        interiorWall,
+        interiorFloor,
+        exteriorRoof,
+        groundFloor,
+        window
     }
 
     public enum FaceKeys
@@ -45,14 +56,14 @@ namespace Model
     {
         //public int partId;
         //public faceType face{get; private set;}
-        public string face { get; private set; }
+        public SurfaceType surfaceType { get; private set; }
         public BoundaryCondition bc { get; set; }
         public string elementType { get; set; }
         public Room parent;
         public Vector3d tempNormal;
         public Direction direction;
-        public SurfaceType surfaceType;
         public int adjacencyRoomId; //隣接しているRoomのId 外気に接している場合には0
+        public bool unique;
         public List<Window> windows { get; private set; }
         public List<int> windowIds;
         public static int _totalFaces;
@@ -92,13 +103,14 @@ namespace Model
             this.parent = parent;
             parentId = parent.id;
             //方角、床、天井を判別するためにはtempNormalを使う
-            face = getFaceType(tempNormal);
+            this.surfaceType = getFaceType(tempNormal);
             direction = defineDirection(tempNormal);
 
             this.normal = tempNormal;
+            this.unique = true;
 
             //TODO: this logic has to be elaborated
-            if (face == "wall")
+            if (surfaceType == SurfaceType.Wall)
             {
                 tiltAngle = 90;
             }
@@ -161,11 +173,11 @@ namespace Model
 
         private Direction defineDirection(Vector3d normal)
         {
-            if (face == "floor")
+            if (surfaceType == SurfaceType.Floor)
             {
                 return Direction.F;
             }
-            else if (face == "roof")
+            else if (surfaceType == SurfaceType.Roof)
             {
                 return Direction.CR;
             }
@@ -204,7 +216,7 @@ namespace Model
             }
         }
 
-        public string getFaceType(Vector3d normal)
+        public SurfaceType getFaceType(Vector3d normal)
         {
 
             //better to add filter logic for internal wall
@@ -212,20 +224,17 @@ namespace Model
             int roofAngle = 10;
             if (Z > Math.Cos((Math.PI / 180) * roofAngle))
             {
-                //return faceType.roof;
-                return "roof";
+                return SurfaceType.Roof;
             }
             else if (Z < -Math.Cos((Math.PI / 180) * 85))
             {
-                //return faceType.floor;
-                return "floor";
+                return SurfaceType.Floor;
             }
             else
             {
                 //string direction = defineDirection(normal);
                 //Print("{0}:{1}", normal, direction);
-                //return faceType.wall;
-                return "wall";
+                return SurfaceType.Wall;
             }
         }
 
@@ -235,46 +244,59 @@ namespace Model
             windowIds.Add(window.id);
         }
 
+        public void setPartId()
+        {
+            if (unique)
+            {
+                switch (elementType)
+                {
+                    case "exteriorwall":
+                        partId = _totalExWalls;
+                        break;
+                    case "interiorwall":
+                        partId = _totalInWalls;
+                        break;
+                    case "interiorroof":
+                        partId = _totalFlrCeilings;
+                        break;
+                    case "interiorfloor":
+                        partId = _totalFlrCeilings;
+                        break;
+                    case "exteriorroof":
+                        partId = _totalRoofs;
+                        break;
+                    case "groundfloor":
+                        partId = _totalGrounds;
+                        break;
+                }
+            }
+        }
+
         public void setElementType()
         {
-            /*
-            string firstPhrase = "";
-            if (bc == "outdoor")
-            {
-                firstPhrase = "exterior";
-            }
-            else
-            {
-                firstPhrase = bc;
-            }
-            */
-            elementType = bc.ToString() + face;
-            //partIdをアサインする
+            if (!unique) return;
+
+            elementType = bc.ToString() + surfaceType.ToString();
+
             switch (elementType)
             {
-                case "exteriorwall":
+                case "exteriorWall":
                     _totalExWalls += 1;
-                    partId = _totalExWalls;
                     break;
-                case "interiorwall":
+                case "interiorWall":
                     _totalInWalls += 1;
-                    partId = _totalInWalls;
                     break;
-                case "interiorroof":
+                case "interiorRoof":
                     _totalFlrCeilings += 1;
-                    partId = _totalFlrCeilings;
                     break;
-                case "interiorfloor":
+                case "interiorFloor":
                     _totalFlrCeilings += 1;
-                    partId = _totalFlrCeilings;
                     break;
-                case "exteriorroof":
+                case "exteriorRoof":
                     _totalRoofs += 1;
-                    partId = _totalRoofs;
                     break;
-                case "groundfloor":
+                case "groundFloor":
                     _totalGrounds += 1;
-                    partId = _totalGrounds;
                     break;
             }
         }
@@ -286,26 +308,75 @@ namespace Model
             {
                 case "exteriorwall":
                     constructionId = 1;
+                    structureId = 1;
                     break;
                 case "interiorwall":
                     constructionId = 2;
+                    structureId = 2;
                     break;
                 case "interiorroof":
                     constructionId = 3;
+                    structureId = 3;
                     break;
                 case "interiorfloor":
                     constructionId = 3;
+                    structureId = 3;
                     break;
                 case "exteriorroof":
                     constructionId = 4;
+                    structureId = 4;
                     break;
                 case "groundroof":
                     constructionId = 5;
+                    structureId = 5;
                     break;
                 case "groundfloor":
                     constructionId = 5;
+                    structureId = 5;
                     break;
             }
+        }
+        public void OverrideConstruction(Construction construction)
+        {
+            this.structureId = construction.id;
+        }
+
+        public override string ToString()
+        {
+            string preview = base.ToString();
+            try
+            {
+                preview += Environment.NewLine;
+                preview += " surfaceType       :" + surfaceType + Environment.NewLine;
+                preview += " id                :" + id + Environment.NewLine;
+                preview += " BoundaryCondition :" + bc + Environment.NewLine;
+                preview += " elementType       :" + elementType + Environment.NewLine;
+                preview += " parentId          :" + parent.id + Environment.NewLine;
+                preview += " tempNormal        :" + tempNormal + Environment.NewLine;
+                preview += " direction         :" + direction + Environment.NewLine;
+                preview += " adjacencyRoomId   :" + adjacencyRoomId + Environment.NewLine;
+                preview += " unique            :" + unique + Environment.NewLine;
+                preview += " windowIds         :" + string.Join(", ", windowIds) + Environment.NewLine;
+                if (adjacencyFace is null)
+                {
+                    preview += " adjacencyFaceId   :null";
+                }
+                else
+                {
+                    preview += " adjacencyFaceId"+adjacencyFace.id;
+                }
+                
+            }
+            catch { }
+            return preview;
+        }
+
+        public static List<int> GetFaceIds(List<Face> faces)
+        {
+            var ids = new List<int>();
+            foreach (var face in faces)
+                ids.Add(face.id);
+            return ids;
         }
     }
 }

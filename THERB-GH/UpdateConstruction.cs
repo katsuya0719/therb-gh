@@ -15,11 +15,7 @@ using System.Reflection;
 
 namespace THERBgh
 {
-<<<<<<< HEAD:THERB-GH/SolveBoundary.cs
-    public class UploadBauesAnalysis : GH_Component
-=======
-    public class UpdateProperty : GH_Component
->>>>>>> 5062e72d74991fdd999e66d6d9a0d4de289a4ace:THERB-GH/UpdateProperty.cs
+    public class UpdateConstruction : GH_Component
     {
         /// <summary>
         /// Each implementation of GH_Component must provide a public 
@@ -28,15 +24,9 @@ namespace THERBgh
         /// Subcategory the panel. If you use non-existing tab or panel names, 
         /// new tabs/panels will automatically be created.
         /// </summary>
-<<<<<<< HEAD:THERB-GH/SolveBoundary.cs
-        public UploadBauesAnalysis()
-          : base("SolveBoundary", "SolveBoundary",
-              "Description",
-=======
-        public UpdateProperty()
-          : base("UpdateProperty", "UpdateProperty",
-              "update properties",
->>>>>>> 5062e72d74991fdd999e66d6d9a0d4de289a4ace:THERB-GH/UpdateProperty.cs
+        public UpdateConstruction()
+          : base("UpdateConstruction", "UpdateConstruction",
+              "update construction data",
               "THERB-GH", "Modelling")
         {
         }
@@ -47,16 +37,7 @@ namespace THERBgh
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
         {
             pManager.AddGenericParameter("Face", "Face", "Face list", GH_ParamAccess.list);
-            pManager.AddIntegerParameter("property", "property", "property to update", GH_ParamAccess.item);
-            var propertyInput = (Param_Integer)pManager[1];
-            propertyInput.AddNamedValue("concrete_exteriorWall", (int)BoundaryCondition.exterior);
-            propertyInput.AddNamedValue("concrete_exteriorFloor", (int)BoundaryCondition.interior);
-            propertyInput.AddNamedValue("None", -1);
-            pManager.AddIntegerParameter("value", "value", "value for assigning to property ", GH_ParamAccess.item);
-            var valueInput = (Param_Integer)pManager[2];
-            valueInput.AddNamedValue("1", 1);
-            valueInput.AddNamedValue("2", 2);
-            valueInput.AddNamedValue("None", -1);
+            pManager.AddGenericParameter("Construction", "Construction", "construction", GH_ParamAccess.item);
         }
 
         /// <summary>
@@ -76,26 +57,14 @@ namespace THERBgh
         protected override void SolveInstance(IGH_DataAccess DA)
         {
             List<Face> faceList = new List<Face>();
-            int propertyInt = -1;
-            int value = -1;
+            Construction construction = null;
 
             DA.GetDataList(0, faceList);
-            DA.GetData(1, ref propertyInt);
-            DA.GetData(2, ref value);
-            if (propertyInt < -1 | 2 < propertyInt)
-            {
-                throw new Exception("propertyに範囲外の数字が入れられました。");
-            }
-            if (value < -1 | 2 < value)
-            {
-                throw new Exception("valueに範囲外の数字が入れられました。");
-            }
+            DA.GetData(1, ref construction);
 
-            if (value == -1) return;
-            
             foreach (var face in faceList)
             {
-                face.constructionId = value;
+                face.OverrideConstruction(construction);
             }
 
             DA.SetDataList("Face", faceList);
