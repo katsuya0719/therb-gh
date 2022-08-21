@@ -357,7 +357,15 @@ namespace Model
                 preview += " adjacencyRoomId   :" + adjacencyRoomId + Environment.NewLine;
                 preview += " unique            :" + unique + Environment.NewLine;
                 preview += " windowIds         :" + string.Join(", ", windowIds) + Environment.NewLine;
-                preview += " adjacencyFaceId   :" + adjacencyFace.id;
+                if (adjacencyFace is null)
+                {
+                    preview += " adjacencyFaceId   :null";
+                }
+                else
+                {
+                    preview += " adjacencyFaceId"+adjacencyFace.id;
+                }
+                
             }
             catch { }
             return preview;
