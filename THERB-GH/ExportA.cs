@@ -84,11 +84,7 @@ namespace THERBgh
         /// </summary>
         public override Guid ComponentGuid
         {
-<<<<<<< HEAD:THERB-GH/ReadProperty.cs
-            get { return new Guid("3701b3dc-c4b6-4d44-b859-fe3f581efb8c"); }
-=======
             get { return new Guid("4d940719-485a-4f3f-96ba-58a40632dbd4"); }
->>>>>>> 5062e72d74991fdd999e66d6d9a0d4de289a4ace:THERB-GH/ExportA.cs
         }
     }
 }
