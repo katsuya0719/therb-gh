@@ -66,7 +66,6 @@
     <Compile Include="ThrebUtilsTest.cs" />
     <Compile Include="ReadConstruction.cs" />
     <Compile Include="UpdateConstruction.cs" />
-    <Compile Include="SplitGeos.cs" />
     <Compile Include="Utils.cs" />
     <Compile Include="FilterFaceByProperty.cs" />
     <Compile Include="ExportR.cs" />

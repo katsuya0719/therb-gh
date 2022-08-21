@@ -42,5 +42,18 @@ namespace Model
             this.parentWindow = parentWindow;
             parentWindowId = parentWindow.id;
         }
+
+        public override string ToString()
+        {
+            string preview = base.ToString();
+            try
+            {
+                preview += " id       :" + id + Environment.NewLine;
+                preview += " parentId :" + parentFace.id + Environment.NewLine;
+                preview += " parentWindowId :" + parentWindowId;
+            }
+            catch { }
+            return preview;
+        }
     }
 }

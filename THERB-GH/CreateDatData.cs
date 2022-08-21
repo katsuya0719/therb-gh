@@ -563,17 +563,23 @@ namespace THERBgh
     public class Construction
     {
         public int id;
+        [JsonProperty(PropertyName = "category")]
         public ElementType categories;
         public List<Material> materials;
         public List<Double> thickness;
 
         public override string ToString()
         {
-            string preview = base.ToString() + Environment.NewLine;
-            preview += " Id         :" + id + Environment.NewLine;
-            preview += " Categories :" + categories + Environment.NewLine;
-            preview += " Materials  :" + string.Join(", ", Material.GetNames(materials)) + Environment.NewLine;
-            preview += " Thickness  :" + string.Join(", ", thickness);
+            string preview = base.ToString();
+            try
+            {
+                preview += Environment.NewLine;
+                preview += " Id         :" + id + Environment.NewLine;
+                preview += " Categories :" + categories + Environment.NewLine;
+                preview += " Materials  :" + string.Join(", ", Material.GetNames(materials)) + Environment.NewLine;
+                preview += " Thickness  :" + string.Join(", ", thickness);
+            }
+            catch { }
             return preview;
         }
 
