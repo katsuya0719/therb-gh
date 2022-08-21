@@ -51,12 +51,6 @@ jobs:
           name: GrasshopperComponent
           path: ./THERB-GH/bin/THERB-GH.gha
 
-on:
-  push:
-    branches: [develop]
-    paths:
-      - "website/**"
-
 jobs:
   deploy:
     runs-on: ubuntu-18.04
