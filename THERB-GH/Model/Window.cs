@@ -40,5 +40,17 @@ namespace Model
             parentId = parent.id;
             tiltAngle = parent.tiltAngle;
         }
+        public override string ToString()
+        {
+            string preview = base.ToString();
+            try
+            {
+                preview += Environment.NewLine;
+                preview += " id       :" + id + Environment.NewLine;
+                preview += " parentId :" + parent.id;
+            }
+            catch { }
+            return preview;
+        }
     }
 }

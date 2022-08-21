@@ -64,7 +64,7 @@ namespace Model
 
         public void groupChildFaces(Face face)
         {
-            if (face.face == "wall")
+            if (face.surfaceType == SurfaceType.Wall)
             {
                 switch (face.direction)
                 {
@@ -82,11 +82,11 @@ namespace Model
                         break;
                 }
             }
-            else if (face.face == "roof")
+            else if (face.surfaceType == SurfaceType.Roof)
             {
                 roofs.Add(face);
             }
-            else if (face.face == "floor")
+            else if (face.surfaceType == SurfaceType.Floor)
             {
                 floors.Add(face);
             }
@@ -114,6 +114,29 @@ namespace Model
 
         //public static string generateDisplayName{
         //}
+
+        public override string ToString()
+        {
+            string preview = base.ToString();
+            try
+            {
+                preview += Environment.NewLine;
+                preview += " Id          :" + id + Environment.NewLine;
+                preview += " geometry    :" + geometry + Environment.NewLine;
+                preview += " centroid    :" + centroid + Environment.NewLine;
+                preview += " faceListIds :" + string.Join(", ", Face.GetFaceIds(_faceList)) + Environment.NewLine;
+                preview += " vertices    :" + vertices + Environment.NewLine;
+                preview += " sWallsIds   :" + string.Join(", ", Face.GetFaceIds(sWalls)) + Environment.NewLine;
+                preview += " wWallsIds   :" + string.Join(", ", Face.GetFaceIds(wWalls)) + Environment.NewLine;
+                preview += " nWallsIds   :" + string.Join(", ", Face.GetFaceIds(nWalls)) + Environment.NewLine;
+                preview += " eWallsIds   :" + string.Join(", ", Face.GetFaceIds(eWalls)) + Environment.NewLine;
+                preview += " floorsIds   :" + string.Join(", ", Face.GetFaceIds(floors)) + Environment.NewLine;
+                preview += " roofsIds    :" + string.Join(", ", Face.GetFaceIds(roofs)) + Environment.NewLine;
+                preview += " volume      :" + volume;
+            }
+            catch { }
+            return preview;
+        }
 
     }
 }
