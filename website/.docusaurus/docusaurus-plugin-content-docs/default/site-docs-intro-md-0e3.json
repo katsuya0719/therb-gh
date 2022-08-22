@@ -1,8 +1,8 @@
 {
   "unversionedId": "intro",
   "id": "intro",
-  "title": "Tutorial Intro",
-  "description": "Let's discover Docusaurus in less than 5 minutes.",
+  "title": "チュートリアル",
+  "description": "THERB-GHの使用方法の概略を説明します.",
   "source": "@site/docs/intro.md",
   "sourceDirName": ".",
   "slug": "/intro",
@@ -16,7 +16,7 @@
   },
   "sidebar": "tutorialSidebar",
   "next": {
-    "title": "Modelling",
-    "permalink": "/therb-gh/docs/Component/Modelling"
+    "title": "THERB interface concept",
+    "permalink": "/therb-gh/docs/Detail/Concept"
   }
 }

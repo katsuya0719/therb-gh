@@ -80,11 +80,17 @@ export default [
   },
   {
     path: '/therb-gh/docs',
-    component: ComponentCreator('/therb-gh/docs','4f1'),
+    component: ComponentCreator('/therb-gh/docs','166'),
     routes: [
       {
         path: '/therb-gh/docs/Component/Modelling',
         component: ComponentCreator('/therb-gh/docs/Component/Modelling','64c'),
+        exact: true,
+        'sidebar': "tutorialSidebar"
+      },
+      {
+        path: '/therb-gh/docs/Detail/Concept',
+        component: ComponentCreator('/therb-gh/docs/Detail/Concept','8e8'),
         exact: true,
         'sidebar': "tutorialSidebar"
       },
@@ -107,8 +113,26 @@ export default [
         'sidebar': "tutorialSidebar"
       },
       {
+        path: '/therb-gh/docs/Usage/EditTherbModel',
+        component: ComponentCreator('/therb-gh/docs/Usage/EditTherbModel','208'),
+        exact: true,
+        'sidebar': "tutorialSidebar"
+      },
+      {
         path: '/therb-gh/docs/Usage/HowToInstall',
         component: ComponentCreator('/therb-gh/docs/Usage/HowToInstall','459'),
+        exact: true,
+        'sidebar': "tutorialSidebar"
+      },
+      {
+        path: '/therb-gh/docs/Usage/RegisterConstruction',
+        component: ComponentCreator('/therb-gh/docs/Usage/RegisterConstruction','9cd'),
+        exact: true,
+        'sidebar': "tutorialSidebar"
+      },
+      {
+        path: '/therb-gh/docs/Usage/RunSimulation',
+        component: ComponentCreator('/therb-gh/docs/Usage/RunSimulation','2b3'),
         exact: true,
         'sidebar': "tutorialSidebar"
       },
