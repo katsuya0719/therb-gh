@@ -7,7 +7,7 @@ sidebar_position: 1
 THERB-GHの使用方法の概略を説明します.
 
 ## Getting Started
-
+とりあえず、therbの計算を回してみる  
 1. [github](https://github.com/becat-oss/therb-gh)からソースコードをダウンロードします。  
 
 2. THERB-GHをGrasshopperにインストールします。インストールの方法は[こちらのページ](Usage/HowToInstall.md)を参照ください。
@@ -21,3 +21,18 @@ THERB-GHの使用方法の概略を説明します.
 6. b.dat,r.dat,w.datファイルが入力情報によって生成されるので、そのファイルをダウンロードしたデータのexample/test/THERB_formatフォルダ内に生成してください。  
 
 7. コマンドプロンプトでexample/test/THERB_formatのフォルダにいき、そこでtherb.exeと入力し、そのあとt.datと入力すればtherbの計算が回ります。  
+
+## Next level  
+壁体構成を編集してみる  
+1. 使用したい壁体構成をwebアプリに登録します。詳細は[こちらのページ](Usage/RegisterConstruction.md)を参照ください。  
+
+2. 編集するFace(壁、床、天井の総称）を選択  
+example/example.ghのstep2のFilterFaceByPropertyのbc,surfT,directionを右クリックし、フィルタリングしたい条件を選択します。  
+
+3. 2で選択したFaceに適用するconstructionを選択します。  
+
+4. ComposeコンポーネントのアウトプットのTherbをexportB,exportR,exportWにつなぎます。  
+
+5. b.dat,r.dat,w.datファイルが入力情報によって生成されるので、そのファイルをダウンロードしたデータのexample/test/THERB_formatフォルダ内に生成してください。  
+
+6. コマンドプロンプトでexample/test/THERB_formatのフォルダにいき、そこでtherb.exeと入力し、そのあとt.datと入力すればtherbの計算が回ります。  

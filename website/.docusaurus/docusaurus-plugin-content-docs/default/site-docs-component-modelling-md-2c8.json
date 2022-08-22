@@ -16,8 +16,8 @@
   },
   "sidebar": "tutorialSidebar",
   "previous": {
-    "title": "THERB interface concept",
-    "permalink": "/therb-gh/docs/Detail/Concept"
+    "title": "チュートリアル",
+    "permalink": "/therb-gh/docs/intro"
   },
   "next": {
     "title": "How to use New Hasp",

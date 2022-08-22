@@ -16,20 +16,6 @@
       },
       {
         "type": "category",
-        "label": "Detail",
-        "collapsible": true,
-        "collapsed": true,
-        "items": [
-          {
-            "type": "link",
-            "label": "THERB interface concept",
-            "href": "/therb-gh/docs/Detail/Concept",
-            "docId": "Detail/Concept"
-          }
-        ]
-      },
-      {
-        "type": "category",
         "label": "Component",
         "collapsible": true,
         "collapsed": true,
@@ -53,6 +39,20 @@
             "label": "How to use New Hasp",
             "href": "/therb-gh/docs/NewHasp/HowToUse",
             "docId": "NewHasp/HowToUse"
+          }
+        ]
+      },
+      {
+        "type": "category",
+        "label": "Detail",
+        "collapsible": true,
+        "collapsed": true,
+        "items": [
+          {
+            "type": "link",
+            "label": "THERB interface concept",
+            "href": "/therb-gh/docs/Detail/Concept",
+            "docId": "Detail/Concept"
           }
         ]
       },

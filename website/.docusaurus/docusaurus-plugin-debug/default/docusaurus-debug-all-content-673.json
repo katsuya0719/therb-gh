@@ -36,8 +36,8 @@
               },
               "sidebar": "tutorialSidebar",
               "previous": {
-                "title": "THERB interface concept",
-                "permalink": "/therb-gh/docs/Detail/Concept"
+                "title": "チュートリアル",
+                "permalink": "/therb-gh/docs/intro"
               },
               "next": {
                 "title": "How to use New Hasp",
@@ -62,12 +62,12 @@
               },
               "sidebar": "tutorialSidebar",
               "previous": {
-                "title": "チュートリアル",
-                "permalink": "/therb-gh/docs/intro"
+                "title": "How to use New Hasp",
+                "permalink": "/therb-gh/docs/NewHasp/HowToUse"
               },
               "next": {
-                "title": "Modelling",
-                "permalink": "/therb-gh/docs/Component/Modelling"
+                "title": "Create THERB Model",
+                "permalink": "/therb-gh/docs/Usage/CreateTherbModel"
               }
             },
             {
@@ -88,8 +88,8 @@
               },
               "sidebar": "tutorialSidebar",
               "next": {
-                "title": "THERB interface concept",
-                "permalink": "/therb-gh/docs/Detail/Concept"
+                "title": "Modelling",
+                "permalink": "/therb-gh/docs/Component/Modelling"
               }
             },
             {
@@ -114,8 +114,8 @@
                 "permalink": "/therb-gh/docs/Component/Modelling"
               },
               "next": {
-                "title": "Create THERB Model",
-                "permalink": "/therb-gh/docs/Usage/CreateTherbModel"
+                "title": "THERB interface concept",
+                "permalink": "/therb-gh/docs/Detail/Concept"
               }
             },
             {
@@ -136,8 +136,8 @@
               },
               "sidebar": "tutorialSidebar",
               "previous": {
-                "title": "How to use New Hasp",
-                "permalink": "/therb-gh/docs/NewHasp/HowToUse"
+                "title": "THERB interface concept",
+                "permalink": "/therb-gh/docs/Detail/Concept"
               },
               "next": {
                 "title": "Edit THERB Model",
@@ -279,18 +279,6 @@
               },
               {
                 "type": "category",
-                "label": "Detail",
-                "collapsible": true,
-                "collapsed": true,
-                "items": [
-                  {
-                    "type": "doc",
-                    "id": "Detail/Concept"
-                  }
-                ]
-              },
-              {
-                "type": "category",
                 "label": "Component",
                 "collapsible": true,
                 "collapsed": true,
@@ -310,6 +298,18 @@
                   {
                     "type": "doc",
                     "id": "NewHasp/HowToUse"
+                  }
+                ]
+              },
+              {
+                "type": "category",
+                "label": "Detail",
+                "collapsible": true,
+                "collapsed": true,
+                "items": [
+                  {
+                    "type": "doc",
+                    "id": "Detail/Concept"
                   }
                 ]
               },

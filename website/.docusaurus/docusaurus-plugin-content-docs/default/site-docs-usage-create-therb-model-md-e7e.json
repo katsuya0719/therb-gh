@@ -16,8 +16,8 @@
   },
   "sidebar": "tutorialSidebar",
   "previous": {
-    "title": "How to use New Hasp",
-    "permalink": "/therb-gh/docs/NewHasp/HowToUse"
+    "title": "THERB interface concept",
+    "permalink": "/therb-gh/docs/Detail/Concept"
   },
   "next": {
     "title": "Edit THERB Model",
