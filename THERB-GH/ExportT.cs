@@ -37,7 +37,7 @@ namespace THERBgh
         /// </summary>
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
         {
-            //pManager.AddVectorParameter("north_direction", "north_direction", "north direction", GH_ParamAccess.item);
+            pManager.AddVectorParameter("north_direction", "north_direction", "north direction", GH_ParamAccess.item);
             pManager.AddIntegerParameter("start_month", "start_month", "start month for simulation", GH_ParamAccess.item);
             pManager.AddIntegerParameter("end_month", "end_month", "end month for simulation", GH_ParamAccess.item);
             
@@ -60,9 +60,9 @@ namespace THERBgh
         {
             int startMonth = 1;
             int endMonth = 12;
-            Vector3f northDirection = new Vector3f(0,0,0);
+            Vector3d northDirection = new Vector3d(0,0,0);
 
-            //DA.GetData("north_direction", ref northDirection);
+            DA.GetData("north_direction", ref northDirection);
             DA.GetData("start_month", ref startMonth);
             DA.GetData("end_month", ref endMonth);
 

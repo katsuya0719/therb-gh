@@ -462,7 +462,7 @@ namespace THERBgh
             return wDat;
         }
 
-        public static string CreateTDat(int startMonth,int EndMonth,Vector3f northDirection)
+        public static string CreateTDat(int startMonth,int EndMonth,Vector3d northDirection)
         {
             int calcDays = EndMonth * 30;
             //ベクトルから建物方位角への変換
