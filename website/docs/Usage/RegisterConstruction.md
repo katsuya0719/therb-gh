@@ -1,6 +1,7 @@
 ---
 id: RegisterConstruction
-title: Register construction
+title: 壁体構成の登録
+sidebar_position: 3
 ---
 
 [webアプリ](https://therb-frontend-amber.vercel.app/constructions)を使用して壁体構成を登録し、そのデータを使用して、壁体構成を編集することができます  

@@ -1,6 +1,7 @@
 ---
 id: EditTherbModel
-title: Edit THERB Model
+title: THERBモデルを編集する
+sidebar_position: 4
 ---
 
 THERBモデルを編集する（例. 外壁を変更するなど）手順を示します。  

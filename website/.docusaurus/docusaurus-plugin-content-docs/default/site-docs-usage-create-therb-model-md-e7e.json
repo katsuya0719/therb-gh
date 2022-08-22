@@ -1,7 +1,7 @@
 {
   "unversionedId": "Usage/CreateTherbModel",
   "id": "Usage/CreateTherbModel",
-  "title": "Create THERB Model",
+  "title": "THERBモデルを作成する",
   "description": "Rhinoにジオメトリをモデリングし、THERBモデルへ変換する手順を示します。",
   "source": "@site/docs/Usage/CreateTherbModel.md",
   "sourceDirName": "Usage",
@@ -10,17 +10,19 @@
   "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/Usage/CreateTherbModel.md",
   "tags": [],
   "version": "current",
+  "sidebarPosition": 2,
   "frontMatter": {
     "id": "CreateTherbModel",
-    "title": "Create THERB Model"
+    "title": "THERBモデルを作成する",
+    "sidebar_position": 2
   },
   "sidebar": "tutorialSidebar",
   "previous": {
-    "title": "THERB interface concept",
-    "permalink": "/therb-gh/docs/Detail/Concept"
+    "title": "インストール方法",
+    "permalink": "/therb-gh/docs/Usage/HowToInstall"
   },
   "next": {
-    "title": "Edit THERB Model",
-    "permalink": "/therb-gh/docs/Usage/EditTherbModel"
+    "title": "壁体構成の登録",
+    "permalink": "/therb-gh/docs/Usage/RegisterConstruction"
   }
 }

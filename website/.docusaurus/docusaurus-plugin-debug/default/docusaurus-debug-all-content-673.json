@@ -36,12 +36,12 @@
               },
               "sidebar": "tutorialSidebar",
               "previous": {
-                "title": "チュートリアル",
-                "permalink": "/therb-gh/docs/intro"
+                "title": "Upload to server",
+                "permalink": "/therb-gh/docs/Usage/UploadToServer"
               },
               "next": {
-                "title": "How to use New Hasp",
-                "permalink": "/therb-gh/docs/NewHasp/HowToUse"
+                "title": "THERB interface concept",
+                "permalink": "/therb-gh/docs/Detail/Concept"
               }
             },
             {
@@ -62,12 +62,12 @@
               },
               "sidebar": "tutorialSidebar",
               "previous": {
-                "title": "How to use New Hasp",
-                "permalink": "/therb-gh/docs/NewHasp/HowToUse"
+                "title": "Modelling",
+                "permalink": "/therb-gh/docs/Component/Modelling"
               },
               "next": {
-                "title": "Create THERB Model",
-                "permalink": "/therb-gh/docs/Usage/CreateTherbModel"
+                "title": "How to use New Hasp",
+                "permalink": "/therb-gh/docs/NewHasp/HowToUse"
               }
             },
             {
@@ -88,8 +88,8 @@
               },
               "sidebar": "tutorialSidebar",
               "next": {
-                "title": "Modelling",
-                "permalink": "/therb-gh/docs/Component/Modelling"
+                "title": "インストール方法",
+                "permalink": "/therb-gh/docs/Usage/HowToInstall"
               }
             },
             {
@@ -110,10 +110,6 @@
               },
               "sidebar": "tutorialSidebar",
               "previous": {
-                "title": "Modelling",
-                "permalink": "/therb-gh/docs/Component/Modelling"
-              },
-              "next": {
                 "title": "THERB interface concept",
                 "permalink": "/therb-gh/docs/Detail/Concept"
               }
@@ -121,7 +117,7 @@
             {
               "unversionedId": "Usage/CreateTherbModel",
               "id": "Usage/CreateTherbModel",
-              "title": "Create THERB Model",
+              "title": "THERBモデルを作成する",
               "description": "Rhinoにジオメトリをモデリングし、THERBモデルへ変換する手順を示します。",
               "source": "@site/docs/Usage/CreateTherbModel.md",
               "sourceDirName": "Usage",
@@ -130,24 +126,26 @@
               "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/Usage/CreateTherbModel.md",
               "tags": [],
               "version": "current",
+              "sidebarPosition": 2,
               "frontMatter": {
                 "id": "CreateTherbModel",
-                "title": "Create THERB Model"
+                "title": "THERBモデルを作成する",
+                "sidebar_position": 2
               },
               "sidebar": "tutorialSidebar",
               "previous": {
-                "title": "THERB interface concept",
-                "permalink": "/therb-gh/docs/Detail/Concept"
+                "title": "インストール方法",
+                "permalink": "/therb-gh/docs/Usage/HowToInstall"
               },
               "next": {
-                "title": "Edit THERB Model",
-                "permalink": "/therb-gh/docs/Usage/EditTherbModel"
+                "title": "壁体構成の登録",
+                "permalink": "/therb-gh/docs/Usage/RegisterConstruction"
               }
             },
             {
               "unversionedId": "Usage/EditTherbModel",
               "id": "Usage/EditTherbModel",
-              "title": "Edit THERB Model",
+              "title": "THERBモデルを編集する",
               "description": "THERBモデルを編集する（例. 外壁を変更するなど）手順を示します。",
               "source": "@site/docs/Usage/EditTherbModel.md",
               "sourceDirName": "Usage",
@@ -156,24 +154,26 @@
               "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/Usage/EditTherbModel.md",
               "tags": [],
               "version": "current",
+              "sidebarPosition": 4,
               "frontMatter": {
                 "id": "EditTherbModel",
-                "title": "Edit THERB Model"
+                "title": "THERBモデルを編集する",
+                "sidebar_position": 4
               },
               "sidebar": "tutorialSidebar",
               "previous": {
-                "title": "Create THERB Model",
-                "permalink": "/therb-gh/docs/Usage/CreateTherbModel"
+                "title": "壁体構成の登録",
+                "permalink": "/therb-gh/docs/Usage/RegisterConstruction"
               },
               "next": {
-                "title": "How to install",
-                "permalink": "/therb-gh/docs/Usage/HowToInstall"
+                "title": "THERBシミュレーションを開始する",
+                "permalink": "/therb-gh/docs/Usage/RunSimulation"
               }
             },
             {
               "unversionedId": "Usage/HowToInstall",
               "id": "Usage/HowToInstall",
-              "title": "How to install",
+              "title": "インストール方法",
               "description": "インストール方法",
               "source": "@site/docs/Usage/HowToInstall.md",
               "sourceDirName": "Usage",
@@ -182,24 +182,26 @@
               "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/Usage/HowToInstall.md",
               "tags": [],
               "version": "current",
+              "sidebarPosition": 1,
               "frontMatter": {
                 "id": "HowToInstall",
-                "title": "How to install"
+                "title": "インストール方法",
+                "sidebar_position": 1
               },
               "sidebar": "tutorialSidebar",
               "previous": {
-                "title": "Edit THERB Model",
-                "permalink": "/therb-gh/docs/Usage/EditTherbModel"
+                "title": "チュートリアル",
+                "permalink": "/therb-gh/docs/intro"
               },
               "next": {
-                "title": "Register construction",
-                "permalink": "/therb-gh/docs/Usage/RegisterConstruction"
+                "title": "THERBモデルを作成する",
+                "permalink": "/therb-gh/docs/Usage/CreateTherbModel"
               }
             },
             {
               "unversionedId": "Usage/RegisterConstruction",
               "id": "Usage/RegisterConstruction",
-              "title": "Register construction",
+              "title": "壁体構成の登録",
               "description": "webアプリを使用して壁体構成を登録し、そのデータを使用して、壁体構成を編集することができます",
               "source": "@site/docs/Usage/RegisterConstruction.md",
               "sourceDirName": "Usage",
@@ -208,24 +210,26 @@
               "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/Usage/RegisterConstruction.md",
               "tags": [],
               "version": "current",
+              "sidebarPosition": 3,
               "frontMatter": {
                 "id": "RegisterConstruction",
-                "title": "Register construction"
+                "title": "壁体構成の登録",
+                "sidebar_position": 3
               },
               "sidebar": "tutorialSidebar",
               "previous": {
-                "title": "How to install",
-                "permalink": "/therb-gh/docs/Usage/HowToInstall"
+                "title": "THERBモデルを作成する",
+                "permalink": "/therb-gh/docs/Usage/CreateTherbModel"
               },
               "next": {
-                "title": "Run THERB simulation",
-                "permalink": "/therb-gh/docs/Usage/RunSimulation"
+                "title": "THERBモデルを編集する",
+                "permalink": "/therb-gh/docs/Usage/EditTherbModel"
               }
             },
             {
               "unversionedId": "Usage/RunSimulation",
               "id": "Usage/RunSimulation",
-              "title": "Run THERB simulation",
+              "title": "THERBシミュレーションを開始する",
               "description": "THERBのモデルが構築できたら、RunSimulationコンポーネントを使用して計算を実行できます。",
               "source": "@site/docs/Usage/RunSimulation.md",
               "sourceDirName": "Usage",
@@ -234,14 +238,16 @@
               "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/Usage/RunSimulation.md",
               "tags": [],
               "version": "current",
+              "sidebarPosition": 5,
               "frontMatter": {
                 "id": "RunSimulation",
-                "title": "Run THERB simulation"
+                "title": "THERBシミュレーションを開始する",
+                "sidebar_position": 5
               },
               "sidebar": "tutorialSidebar",
               "previous": {
-                "title": "Register construction",
-                "permalink": "/therb-gh/docs/Usage/RegisterConstruction"
+                "title": "THERBモデルを編集する",
+                "permalink": "/therb-gh/docs/Usage/EditTherbModel"
               },
               "next": {
                 "title": "Upload to server",
@@ -266,8 +272,12 @@
               },
               "sidebar": "tutorialSidebar",
               "previous": {
-                "title": "Run THERB simulation",
+                "title": "THERBシミュレーションを開始する",
                 "permalink": "/therb-gh/docs/Usage/RunSimulation"
+              },
+              "next": {
+                "title": "Modelling",
+                "permalink": "/therb-gh/docs/Component/Modelling"
               }
             }
           ],
@@ -279,6 +289,38 @@
               },
               {
                 "type": "category",
+                "label": "使い方",
+                "collapsible": true,
+                "collapsed": true,
+                "items": [
+                  {
+                    "type": "doc",
+                    "id": "Usage/HowToInstall"
+                  },
+                  {
+                    "type": "doc",
+                    "id": "Usage/CreateTherbModel"
+                  },
+                  {
+                    "type": "doc",
+                    "id": "Usage/RegisterConstruction"
+                  },
+                  {
+                    "type": "doc",
+                    "id": "Usage/EditTherbModel"
+                  },
+                  {
+                    "type": "doc",
+                    "id": "Usage/RunSimulation"
+                  },
+                  {
+                    "type": "doc",
+                    "id": "Usage/UploadToServer"
+                  }
+                ]
+              },
+              {
+                "type": "category",
                 "label": "Component",
                 "collapsible": true,
                 "collapsed": true,
@@ -286,18 +328,6 @@
                   {
                     "type": "doc",
                     "id": "Component/Modelling"
-                  }
-                ]
-              },
-              {
-                "type": "category",
-                "label": "NewHasp",
-                "collapsible": true,
-                "collapsed": true,
-                "items": [
-                  {
-                    "type": "doc",
-                    "id": "NewHasp/HowToUse"
                   }
                 ]
               },
@@ -315,33 +345,13 @@
               },
               {
                 "type": "category",
-                "label": "Usage",
+                "label": "NewHasp",
                 "collapsible": true,
                 "collapsed": true,
                 "items": [
                   {
                     "type": "doc",
-                    "id": "Usage/CreateTherbModel"
-                  },
-                  {
-                    "type": "doc",
-                    "id": "Usage/EditTherbModel"
-                  },
-                  {
-                    "type": "doc",
-                    "id": "Usage/HowToInstall"
-                  },
-                  {
-                    "type": "doc",
-                    "id": "Usage/RegisterConstruction"
-                  },
-                  {
-                    "type": "doc",
-                    "id": "Usage/RunSimulation"
-                  },
-                  {
-                    "type": "doc",
-                    "id": "Usage/UploadToServer"
+                    "id": "NewHasp/HowToUse"
                   }
                 ]
               }

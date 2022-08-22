@@ -16,7 +16,7 @@
   },
   "sidebar": "tutorialSidebar",
   "next": {
-    "title": "Modelling",
-    "permalink": "/therb-gh/docs/Component/Modelling"
+    "title": "インストール方法",
+    "permalink": "/therb-gh/docs/Usage/HowToInstall"
   }
 }

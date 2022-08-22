@@ -1,6 +1,7 @@
 ---
 id: HowToInstall
-title: How to install
+title: インストール方法
+sidebar_position: 1
 ---
 
 ## インストール方法

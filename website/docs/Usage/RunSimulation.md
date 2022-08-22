@@ -1,6 +1,7 @@
 ---
 id: RunSimulation
-title: Run THERB simulation
+title: THERBシミュレーションを開始する
+sidebar_position: 5
 ---
 
 THERBのモデルが構築できたら、RunSimulationコンポーネントを使用して計算を実行できます。  

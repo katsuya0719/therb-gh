@@ -1,6 +1,7 @@
 ---
 id: CreateTherbModel
-title: Create THERB Model
+title: THERBモデルを作成する
+sidebar_position: 2
 ---
 
 Rhinoにジオメトリをモデリングし、THERBモデルへ変換する手順を示します。   

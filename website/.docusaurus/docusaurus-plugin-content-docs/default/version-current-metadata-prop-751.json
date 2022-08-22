@@ -16,6 +16,50 @@
       },
       {
         "type": "category",
+        "label": "使い方",
+        "collapsible": true,
+        "collapsed": true,
+        "items": [
+          {
+            "type": "link",
+            "label": "インストール方法",
+            "href": "/therb-gh/docs/Usage/HowToInstall",
+            "docId": "Usage/HowToInstall"
+          },
+          {
+            "type": "link",
+            "label": "THERBモデルを作成する",
+            "href": "/therb-gh/docs/Usage/CreateTherbModel",
+            "docId": "Usage/CreateTherbModel"
+          },
+          {
+            "type": "link",
+            "label": "壁体構成の登録",
+            "href": "/therb-gh/docs/Usage/RegisterConstruction",
+            "docId": "Usage/RegisterConstruction"
+          },
+          {
+            "type": "link",
+            "label": "THERBモデルを編集する",
+            "href": "/therb-gh/docs/Usage/EditTherbModel",
+            "docId": "Usage/EditTherbModel"
+          },
+          {
+            "type": "link",
+            "label": "THERBシミュレーションを開始する",
+            "href": "/therb-gh/docs/Usage/RunSimulation",
+            "docId": "Usage/RunSimulation"
+          },
+          {
+            "type": "link",
+            "label": "Upload to server",
+            "href": "/therb-gh/docs/Usage/UploadToServer",
+            "docId": "Usage/UploadToServer"
+          }
+        ]
+      },
+      {
+        "type": "category",
         "label": "Component",
         "collapsible": true,
         "collapsed": true,
@@ -25,20 +69,6 @@
             "label": "Modelling",
             "href": "/therb-gh/docs/Component/Modelling",
             "docId": "Component/Modelling"
-          }
-        ]
-      },
-      {
-        "type": "category",
-        "label": "NewHasp",
-        "collapsible": true,
-        "collapsed": true,
-        "items": [
-          {
-            "type": "link",
-            "label": "How to use New Hasp",
-            "href": "/therb-gh/docs/NewHasp/HowToUse",
-            "docId": "NewHasp/HowToUse"
           }
         ]
       },
@@ -58,45 +88,15 @@
       },
       {
         "type": "category",
-        "label": "Usage",
+        "label": "NewHasp",
         "collapsible": true,
         "collapsed": true,
         "items": [
           {
             "type": "link",
-            "label": "Create THERB Model",
-            "href": "/therb-gh/docs/Usage/CreateTherbModel",
-            "docId": "Usage/CreateTherbModel"
-          },
-          {
-            "type": "link",
-            "label": "Edit THERB Model",
-            "href": "/therb-gh/docs/Usage/EditTherbModel",
-            "docId": "Usage/EditTherbModel"
-          },
-          {
-            "type": "link",
-            "label": "How to install",
-            "href": "/therb-gh/docs/Usage/HowToInstall",
-            "docId": "Usage/HowToInstall"
-          },
-          {
-            "type": "link",
-            "label": "Register construction",
-            "href": "/therb-gh/docs/Usage/RegisterConstruction",
-            "docId": "Usage/RegisterConstruction"
-          },
-          {
-            "type": "link",
-            "label": "Run THERB simulation",
-            "href": "/therb-gh/docs/Usage/RunSimulation",
-            "docId": "Usage/RunSimulation"
-          },
-          {
-            "type": "link",
-            "label": "Upload to server",
-            "href": "/therb-gh/docs/Usage/UploadToServer",
-            "docId": "Usage/UploadToServer"
+            "label": "How to use New Hasp",
+            "href": "/therb-gh/docs/NewHasp/HowToUse",
+            "docId": "NewHasp/HowToUse"
           }
         ]
       }
@@ -129,31 +129,31 @@
     },
     "Usage/CreateTherbModel": {
       "id": "Usage/CreateTherbModel",
-      "title": "Create THERB Model",
+      "title": "THERBモデルを作成する",
       "description": "Rhinoにジオメトリをモデリングし、THERBモデルへ変換する手順を示します。",
       "sidebar": "tutorialSidebar"
     },
     "Usage/EditTherbModel": {
       "id": "Usage/EditTherbModel",
-      "title": "Edit THERB Model",
+      "title": "THERBモデルを編集する",
       "description": "THERBモデルを編集する（例. 外壁を変更するなど）手順を示します。",
       "sidebar": "tutorialSidebar"
     },
     "Usage/HowToInstall": {
       "id": "Usage/HowToInstall",
-      "title": "How to install",
+      "title": "インストール方法",
       "description": "インストール方法",
       "sidebar": "tutorialSidebar"
     },
     "Usage/RegisterConstruction": {
       "id": "Usage/RegisterConstruction",
-      "title": "Register construction",
+      "title": "壁体構成の登録",
       "description": "webアプリを使用して壁体構成を登録し、そのデータを使用して、壁体構成を編集することができます",
       "sidebar": "tutorialSidebar"
     },
     "Usage/RunSimulation": {
       "id": "Usage/RunSimulation",
-      "title": "Run THERB simulation",
+      "title": "THERBシミュレーションを開始する",
       "description": "THERBのモデルが構築できたら、RunSimulationコンポーネントを使用して計算を実行できます。",
       "sidebar": "tutorialSidebar"
     },
