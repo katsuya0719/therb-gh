@@ -2,7 +2,7 @@
   "unversionedId": "Usage/CreateTherbModel",
   "id": "Usage/CreateTherbModel",
   "title": "Create THERB Model",
-  "description": "RhinoにモデリングしたジオメトリデータをTHERBデータに変換し、サーバーにuploadするまでの一通りの流れを説明します。",
+  "description": "Rhinoにジオメトリをモデリングし、THERBモデルへ変換する手順を示します。",
   "source": "@site/docs/Usage/CreateTherbModel.md",
   "sourceDirName": "Usage",
   "slug": "/Usage/CreateTherbModel",
@@ -16,11 +16,11 @@
   },
   "sidebar": "tutorialSidebar",
   "previous": {
-    "title": "How to use New Hasp",
-    "permalink": "/therb-gh/docs/NewHasp/HowToUse"
+    "title": "Modelling",
+    "permalink": "/therb-gh/docs/Component/Modelling"
   },
   "next": {
-    "title": "How to install",
-    "permalink": "/therb-gh/docs/Usage/HowToInstall"
+    "title": "Edit THERB Model",
+    "permalink": "/therb-gh/docs/Usage/EditTherbModel"
   }
 }

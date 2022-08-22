@@ -2,7 +2,7 @@
   "unversionedId": "Component/Modelling",
   "id": "Component/Modelling",
   "title": "Modelling",
-  "description": "読み込んだRhinoジオメトリから、THERBデータを作成するコンポーネントのカテゴリ",
+  "description": "（守田君にフォーマットをお願いしたい）",
   "source": "@site/docs/Component/Modelling.md",
   "sourceDirName": "Component",
   "slug": "/Component/Modelling",
@@ -16,11 +16,11 @@
   },
   "sidebar": "tutorialSidebar",
   "previous": {
-    "title": "Tutorial Intro",
-    "permalink": "/therb-gh/docs/intro"
+    "title": "THERB interface concept",
+    "permalink": "/therb-gh/docs/Detail/Concept"
   },
   "next": {
-    "title": "How to use New Hasp",
-    "permalink": "/therb-gh/docs/NewHasp/HowToUse"
+    "title": "Create THERB Model",
+    "permalink": "/therb-gh/docs/Usage/CreateTherbModel"
   }
 }
