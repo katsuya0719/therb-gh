@@ -66,19 +66,19 @@ namespace THERBgh
             //faceを分類
             faceList.ForEach(face =>
             {
-                if (face.elementType == "exteriorwall")
+                if (face.elementType == ElementType.exteriorWall)
                 {
                     exteriorWalls.Add(face);
                 }
-                else if (face.elementType == "interiorwall" && face.unique)
+                else if (face.elementType == ElementType.interiorWall && face.unique)
                 {
                     interiorWalls.Add(face);
                 }
-                else if (face.elementType == "exteriorroof")
+                else if (face.elementType == ElementType.exteriorRoof)
                 {
                     exteriorRoofs.Add(face);
                 }
-                else if (face.elementType == "interiorroof" || face.elementType == "interiorfloor")
+                else if (face.elementType == ElementType.interiorRoof || face.elementType == ElementType.interiorFloor)
                 {
                     if (face.unique)
                     {
@@ -86,11 +86,11 @@ namespace THERBgh
                     }
 
                 }
-                else if (face.elementType == "exteriorfloor")
+                else if (face.elementType == ElementType.exteriorFloor)
                 {
                     exteriorFloors.Add(face);
                 }
-                else if (face.elementType == "groundfloor")
+                else if (face.elementType == ElementType.groundFloor)
                 {
                     groundFloors.Add(face);
                 }

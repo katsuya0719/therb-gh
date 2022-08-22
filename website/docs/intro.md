@@ -2,9 +2,9 @@
 sidebar_position: 1
 ---
 
-# Tutorial Intro
+# チュートリアル
 
-Let's discover **Docusaurus in less than 5 minutes**.
+THERB-GHの使用方法の概略を説明します**Docusaurus in less than 5 minutes**.
 
 ## Getting Started
 

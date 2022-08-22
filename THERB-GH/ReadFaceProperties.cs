@@ -92,7 +92,7 @@ namespace THERBgh
                 roomIdList.Add(face.parentId);
                 partIdList.Add(face.partId);
                 surfaceList.Add(face.geometry);
-                elementTypeList.Add(face.elementType);
+                elementTypeList.Add(face.elementType.ToString());
                 normalList.Add(face.tempNormal);
                 centerPtList.Add(face.centerPt);
                 directionList.Add(face.direction.ToString());

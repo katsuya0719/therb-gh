@@ -30,9 +30,12 @@ namespace Model
     {
         exteriorWall,
         interiorWall,
+        exteriorFloor,
         interiorFloor,
+        interiorRoof,
         exteriorRoof,
         groundFloor,
+        groundRoof,
         window
     }
 
@@ -58,7 +61,8 @@ namespace Model
         //public faceType face{get; private set;}
         public SurfaceType surfaceType { get; private set; }
         public BoundaryCondition bc { get; set; }
-        public string elementType { get; set; }
+        //public string elementType { get; set; }
+        public ElementType elementType { get; set; }
         public Room parent;
         public Vector3d tempNormal;
         public Direction direction;
@@ -250,22 +254,22 @@ namespace Model
             {
                 switch (elementType)
                 {
-                    case "exteriorwall":
+                    case ElementType.exteriorWall:
                         partId = _totalExWalls;
                         break;
-                    case "interiorwall":
+                    case ElementType.interiorWall:
                         partId = _totalInWalls;
                         break;
-                    case "interiorroof":
+                    case ElementType.interiorRoof:
                         partId = _totalFlrCeilings;
                         break;
-                    case "interiorfloor":
+                    case ElementType.interiorFloor:
                         partId = _totalFlrCeilings;
                         break;
-                    case "exteriorroof":
+                    case ElementType.exteriorRoof:
                         partId = _totalRoofs;
                         break;
-                    case "groundfloor":
+                    case ElementType.groundFloor:
                         partId = _totalGrounds;
                         break;
                 }
@@ -276,26 +280,27 @@ namespace Model
         {
             if (!unique) return;
 
-            elementType = bc.ToString() + surfaceType.ToString();
+            string strElementType = bc.ToString() + surfaceType.ToString();
+            elementType = (ElementType)Enum.Parse(typeof(ElementType), strElementType);
 
             switch (elementType)
             {
-                case "exteriorWall":
+                case ElementType.exteriorWall:
                     _totalExWalls += 1;
                     break;
-                case "interiorWall":
+                case ElementType.interiorWall:
                     _totalInWalls += 1;
                     break;
-                case "interiorRoof":
+                case ElementType.interiorRoof:
                     _totalFlrCeilings += 1;
                     break;
-                case "interiorFloor":
+                case ElementType.interiorFloor:
                     _totalFlrCeilings += 1;
                     break;
-                case "exteriorRoof":
+                case ElementType.exteriorRoof:
                     _totalRoofs += 1;
                     break;
-                case "groundFloor":
+                case ElementType.groundFloor:
                     _totalGrounds += 1;
                     break;
             }
@@ -306,31 +311,31 @@ namespace Model
             //Print("{0}", elementType);
             switch (elementType)
             {
-                case "exteriorwall":
+                case ElementType.exteriorWall:
                     constructionId = 1;
                     structureId = 1;
                     break;
-                case "interiorwall":
+                case ElementType.interiorWall:
                     constructionId = 2;
                     structureId = 2;
                     break;
-                case "interiorroof":
+                case ElementType.interiorRoof:
                     constructionId = 3;
                     structureId = 3;
                     break;
-                case "interiorfloor":
+                case ElementType.interiorFloor:
                     constructionId = 3;
                     structureId = 3;
                     break;
-                case "exteriorroof":
+                case ElementType.exteriorRoof:
                     constructionId = 4;
                     structureId = 4;
                     break;
-                case "groundroof":
+                case ElementType.groundRoof:
                     constructionId = 5;
                     structureId = 5;
                     break;
-                case "groundfloor":
+                case ElementType.groundFloor:
                     constructionId = 5;
                     structureId = 5;
                     break;
