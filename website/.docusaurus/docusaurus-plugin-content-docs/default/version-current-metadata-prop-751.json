@@ -16,20 +16,6 @@
       },
       {
         "type": "category",
-        "label": "Detail",
-        "collapsible": true,
-        "collapsed": true,
-        "items": [
-          {
-            "type": "link",
-            "label": "THERB interface concept",
-            "href": "/therb-gh/docs/Detail/Concept",
-            "docId": "Detail/Concept"
-          }
-        ]
-      },
-      {
-        "type": "category",
         "label": "Component",
         "collapsible": true,
         "collapsed": true,
@@ -39,6 +25,34 @@
             "label": "Modelling",
             "href": "/therb-gh/docs/Component/Modelling",
             "docId": "Component/Modelling"
+          }
+        ]
+      },
+      {
+        "type": "category",
+        "label": "NewHasp",
+        "collapsible": true,
+        "collapsed": true,
+        "items": [
+          {
+            "type": "link",
+            "label": "How to use New Hasp",
+            "href": "/therb-gh/docs/NewHasp/HowToUse",
+            "docId": "NewHasp/HowToUse"
+          }
+        ]
+      },
+      {
+        "type": "category",
+        "label": "Detail",
+        "collapsible": true,
+        "collapsed": true,
+        "items": [
+          {
+            "type": "link",
+            "label": "THERB interface concept",
+            "href": "/therb-gh/docs/Detail/Concept",
+            "docId": "Detail/Concept"
           }
         ]
       },
@@ -85,20 +99,6 @@
             "docId": "Usage/UploadToServer"
           }
         ]
-      },
-      {
-        "type": "category",
-        "label": "NewHasp",
-        "collapsible": true,
-        "collapsed": true,
-        "items": [
-          {
-            "type": "link",
-            "label": "How to use New Hasp",
-            "href": "/therb-gh/docs/NewHasp/HowToUse",
-            "docId": "NewHasp/HowToUse"
-          }
-        ]
       }
     ]
   },
@@ -118,7 +118,7 @@
     "intro": {
       "id": "intro",
       "title": "チュートリアル",
-      "description": "THERB-GHの使用方法の概略を説明しますDocusaurus in less than 5 minutes.",
+      "description": "THERB-GHの使用方法の概略を説明します.",
       "sidebar": "tutorialSidebar"
     },
     "NewHasp/HowToUse": {

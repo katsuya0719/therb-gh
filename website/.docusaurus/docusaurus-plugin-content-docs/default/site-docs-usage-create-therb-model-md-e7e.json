@@ -16,8 +16,8 @@
   },
   "sidebar": "tutorialSidebar",
   "previous": {
-    "title": "Modelling",
-    "permalink": "/therb-gh/docs/Component/Modelling"
+    "title": "THERB interface concept",
+    "permalink": "/therb-gh/docs/Detail/Concept"
   },
   "next": {
     "title": "Edit THERB Model",

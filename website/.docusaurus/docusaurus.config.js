@@ -75,17 +75,13 @@ export default {
             },
             {
               "label": "Usage",
-              "to": "/docs/Component/CreateTherbModel"
+              "to": "/docs/Usage/CreateTherbModel"
             }
           ]
         },
         {
           "title": "Community",
           "items": [
-            {
-              "label": "Food4Rhino",
-              "href": "https://www.food4rhino.com/app/hoaryfox"
-            },
             {
               "label": "Twitter",
               "href": "https://twitter.com/katsuyaobara"

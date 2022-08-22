@@ -36,12 +36,12 @@
               },
               "sidebar": "tutorialSidebar",
               "previous": {
-                "title": "THERB interface concept",
-                "permalink": "/therb-gh/docs/Detail/Concept"
+                "title": "チュートリアル",
+                "permalink": "/therb-gh/docs/intro"
               },
               "next": {
-                "title": "Create THERB Model",
-                "permalink": "/therb-gh/docs/Usage/CreateTherbModel"
+                "title": "How to use New Hasp",
+                "permalink": "/therb-gh/docs/NewHasp/HowToUse"
               }
             },
             {
@@ -62,19 +62,19 @@
               },
               "sidebar": "tutorialSidebar",
               "previous": {
-                "title": "チュートリアル",
-                "permalink": "/therb-gh/docs/intro"
+                "title": "How to use New Hasp",
+                "permalink": "/therb-gh/docs/NewHasp/HowToUse"
               },
               "next": {
-                "title": "Modelling",
-                "permalink": "/therb-gh/docs/Component/Modelling"
+                "title": "Create THERB Model",
+                "permalink": "/therb-gh/docs/Usage/CreateTherbModel"
               }
             },
             {
               "unversionedId": "intro",
               "id": "intro",
               "title": "チュートリアル",
-              "description": "THERB-GHの使用方法の概略を説明しますDocusaurus in less than 5 minutes.",
+              "description": "THERB-GHの使用方法の概略を説明します.",
               "source": "@site/docs/intro.md",
               "sourceDirName": ".",
               "slug": "/intro",
@@ -88,8 +88,8 @@
               },
               "sidebar": "tutorialSidebar",
               "next": {
-                "title": "THERB interface concept",
-                "permalink": "/therb-gh/docs/Detail/Concept"
+                "title": "Modelling",
+                "permalink": "/therb-gh/docs/Component/Modelling"
               }
             },
             {
@@ -110,8 +110,12 @@
               },
               "sidebar": "tutorialSidebar",
               "previous": {
-                "title": "Upload to server",
-                "permalink": "/therb-gh/docs/Usage/UploadToServer"
+                "title": "Modelling",
+                "permalink": "/therb-gh/docs/Component/Modelling"
+              },
+              "next": {
+                "title": "THERB interface concept",
+                "permalink": "/therb-gh/docs/Detail/Concept"
               }
             },
             {
@@ -132,8 +136,8 @@
               },
               "sidebar": "tutorialSidebar",
               "previous": {
-                "title": "Modelling",
-                "permalink": "/therb-gh/docs/Component/Modelling"
+                "title": "THERB interface concept",
+                "permalink": "/therb-gh/docs/Detail/Concept"
               },
               "next": {
                 "title": "Edit THERB Model",
@@ -264,10 +268,6 @@
               "previous": {
                 "title": "Run THERB simulation",
                 "permalink": "/therb-gh/docs/Usage/RunSimulation"
-              },
-              "next": {
-                "title": "How to use New Hasp",
-                "permalink": "/therb-gh/docs/NewHasp/HowToUse"
               }
             }
           ],
@@ -279,18 +279,6 @@
               },
               {
                 "type": "category",
-                "label": "Detail",
-                "collapsible": true,
-                "collapsed": true,
-                "items": [
-                  {
-                    "type": "doc",
-                    "id": "Detail/Concept"
-                  }
-                ]
-              },
-              {
-                "type": "category",
                 "label": "Component",
                 "collapsible": true,
                 "collapsed": true,
@@ -298,6 +286,30 @@
                   {
                     "type": "doc",
                     "id": "Component/Modelling"
+                  }
+                ]
+              },
+              {
+                "type": "category",
+                "label": "NewHasp",
+                "collapsible": true,
+                "collapsed": true,
+                "items": [
+                  {
+                    "type": "doc",
+                    "id": "NewHasp/HowToUse"
+                  }
+                ]
+              },
+              {
+                "type": "category",
+                "label": "Detail",
+                "collapsible": true,
+                "collapsed": true,
+                "items": [
+                  {
+                    "type": "doc",
+                    "id": "Detail/Concept"
                   }
                 ]
               },
@@ -330,18 +342,6 @@
                   {
                     "type": "doc",
                     "id": "Usage/UploadToServer"
-                  }
-                ]
-              },
-              {
-                "type": "category",
-                "label": "NewHasp",
-                "collapsible": true,
-                "collapsed": true,
-                "items": [
-                  {
-                    "type": "doc",
-                    "id": "NewHasp/HowToUse"
                   }
                 ]
               }

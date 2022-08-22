@@ -4,44 +4,35 @@ sidebar_position: 1
 
 # チュートリアル
 
-THERB-GHの使用方法の概略を説明します**Docusaurus in less than 5 minutes**.
+THERB-GHの使用方法の概略を説明します.
 
 ## Getting Started
+とりあえず、therbの計算を回してみる  
+1. [github](https://github.com/becat-oss/therb-gh)からソースコードをダウンロードします。  
 
-Get started by **creating a new site**.
+2. THERB-GHをGrasshopperにインストールします。インストールの方法は[こちらのページ](Usage/HowToInstall.md)を参照ください。
 
-Or **try Docusaurus immediately** with **[docusaurus.new](https://docusaurus.new)**.
+3. ダウンロードしたファイルの中にあるexample/example.3dmファイルを開きます。  
 
-### What you'll need
+4. Grasshopperを開き、example/example.ghファイルをGrasshopper上で開きます。  
 
-- [Node.js](https://nodejs.org/en/download/) version 14 or above:
-  - When installing Node.js, you are recommended to check all checkboxes related to dependencies.
+5. Rhino上にRoomデータ、Windowデータ、Overhang(水平庇)データをモデリングし、[THERBコンポーネント](Component/Modelling.md)に格納します。詳しい方法は[こちらのページ](Usage/CreateTherbModel.md)を参照ください。  
 
-## Generate a new site
+6. b.dat,r.dat,w.datファイルが入力情報によって生成されるので、そのファイルをダウンロードしたデータのexample/test/THERB_formatフォルダ内に生成してください。  
 
-Generate a new Docusaurus site using the **classic template**.
+7. コマンドプロンプトでexample/test/THERB_formatのフォルダにいき、そこでtherb.exeと入力し、そのあとt.datと入力すればtherbの計算が回ります。  
 
-The classic template will automatically be added to your project after you run the command:
+## Next level  
+壁体構成を編集してみる  
+1. 使用したい壁体構成をwebアプリに登録します。詳細は[こちらのページ](Usage/RegisterConstruction.md)を参照ください。  
 
-```bash
-npm init docusaurus@latest my-website classic
-```
+2. 編集するFace(壁、床、天井の総称）を選択  
+example/example.ghのstep2のFilterFaceByPropertyのbc,surfT,directionを右クリックし、フィルタリングしたい条件を選択します。  
 
-You can type this command into Command Prompt, Powershell, Terminal, or any other integrated terminal of your code editor.
+3. 2で選択したFaceに適用するconstructionを選択します。  
 
-The command also installs all necessary dependencies you need to run Docusaurus.
+4. ComposeコンポーネントのアウトプットのTherbをexportB,exportR,exportWにつなぎます。  
 
-## Start your site
+5. b.dat,r.dat,w.datファイルが入力情報によって生成されるので、そのファイルをダウンロードしたデータのexample/test/THERB_formatフォルダ内に生成してください。  
 
-Run the development server:
-
-```bash
-cd my-website
-npm run start
-```
-
-The `cd` command changes the directory you're working with. In order to work with your newly created Docusaurus site, you'll need to navigate the terminal there.
-
-The `npm run start` command builds your website locally and serves it through a development server, ready for you to view at http://localhost:3000/.
-
-Open `docs/intro.md` (this page) and edit some lines: the site **reloads automatically** and displays your changes.
+6. コマンドプロンプトでexample/test/THERB_formatのフォルダにいき、そこでtherb.exeと入力し、そのあとt.datと入力すればtherbの計算が回ります。  
