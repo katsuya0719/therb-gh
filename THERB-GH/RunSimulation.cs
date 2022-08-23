@@ -65,8 +65,9 @@ namespace THERBgh
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
         {
             pManager.AddGenericParameter("Therb", "therb", "THERB class", GH_ParamAccess.item);
+            pManager.AddGenericParameter("Constructions", "Constructions", "Construction data", GH_ParamAccess.list);
             pManager.AddTextParameter("name", "name", "simulation case name", GH_ParamAccess.item);
-            pManager.AddBooleanParameter("cloud", "cloud", "run simulation in cloud", GH_ParamAccess.item);
+            //pManager.AddBooleanParameter("cloud", "cloud", "run simulation in cloud", GH_ParamAccess.item);
             pManager.AddBooleanParameter("run", "run", "run THERB simulation", GH_ParamAccess.item);
         }
         /// <summary>
@@ -92,6 +93,9 @@ namespace THERBgh
 
             if (therb == null) return;
 
+            List<Construction> constructionList = new List<Construction>();
+            DA.GetDataList(1, constructionList);
+
             DA.GetData("name", ref namePath);
             DA.GetData("run", ref done);
             if (!done) return;
@@ -99,6 +103,7 @@ namespace THERBgh
             var bDat = CreateDatData.CreateBDat(therb);
             var rDat = CreateDatData.CreateRDat(therb);
             //TODO: CreateADat,CreateWDatも呼ぶ
+            
 
             if (string.IsNullOrEmpty(namePath)) throw new Exception("nameが読み取れませんでした。");
             //if (!File.Exists(THERB_FILE_PATH)) throw new Exception("therb.exeが見つかりませんでした。");
@@ -208,7 +213,7 @@ namespace THERBgh
 
             //処理3. コマンドラインを立ち上げ、therb.exeファイルを呼び出す
             //Process.Start(THERB_FILE_PATH);
-            //Process.Start(Path.Combine(namePath, THERB_FILE_NAME));
+            Process.Start(Path.Combine(namePath, THERB_FILE_NAME));
 
             //処理3. zipファイルを作成し、https://stingray-app-vgak2.ondigitalocean.app/therb/run にfrom-dataのキーdatasetに対応するファイルとして添付し、POSTする
 
