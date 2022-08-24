@@ -31,4 +31,6 @@ THERB-GH のインストール方法について紹介します。
 - Windows
 
 対応バージョン
-- Rhino7
+- Rhino7  
+
+インストールが完了したら、実際に[THERBモデルを作成](./CreateTherbModel.md)していきます。

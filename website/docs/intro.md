@@ -18,9 +18,9 @@ THERB-GHの使用方法の概略を説明します.
 
 5. Rhino上にRoomデータ、Windowデータ、Overhang(水平庇)データをモデリングし、[THERBコンポーネント](Component/Modelling.md)に格納します。詳しい方法は[こちらのページ](Usage/CreateTherbModel.md)を参照ください。  
 
-6. b.dat,r.dat,w.datファイルが入力情報によって生成されるので、そのファイルをダウンロードしたデータのexample/test/THERB_formatフォルダ内に生成してください。  
+6. b.dat,r.dat,w.datファイルがstep3に表示されるので、エラーが出ていないかチェックしてください。
 
-7. コマンドプロンプトでexample/test/THERB_formatのフォルダにいき、そこでtherb.exeと入力し、そのあとt.datと入力すればtherbの計算が回ります。  
+7. step4でプロジェクト名を入力し、runをtrueにすると、シミュレーションが開始します。詳細は[こちらのページ](Usage/RunSimulation.md)を参照ください。 
 
 ## Next level  
 壁体構成を編集してみる  
@@ -31,8 +31,8 @@ example/example.ghのstep2のFilterFaceByPropertyのbc,surfT,directionを右ク�
 
 3. 2で選択したFaceに適用するconstructionを選択します。  
 
-4. ComposeコンポーネントのアウトプットのTherbをexportB,exportR,exportWにつなぎます。  
+4. ComposeコンポーネントのアウトプットのTherbをstep3のexportB,exportR,exportW、step4のRunSimulationコンポーネントにつなぎます。  
 
-5. b.dat,r.dat,w.datファイルが入力情報によって生成されるので、そのファイルをダウンロードしたデータのexample/test/THERB_formatフォルダ内に生成してください。  
+6. b.dat,r.dat,w.datファイルがstep3に表示されるので、エラーが出ていないかチェックしてください。
 
-6. コマンドプロンプトでexample/test/THERB_formatのフォルダにいき、そこでtherb.exeと入力し、そのあとt.datと入力すればtherbの計算が回ります。  
+7. step4でプロジェクト名を入力し、runをtrueにすると、シミュレーションが開始します。詳細は[こちらのページ](Usage/RunSimulation.md)を参照ください。 

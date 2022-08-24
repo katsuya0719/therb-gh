@@ -60,20 +60,6 @@
       },
       {
         "type": "category",
-        "label": "Component",
-        "collapsible": true,
-        "collapsed": true,
-        "items": [
-          {
-            "type": "link",
-            "label": "Modelling",
-            "href": "/therb-gh/docs/Component/Modelling",
-            "docId": "Component/Modelling"
-          }
-        ]
-      },
-      {
-        "type": "category",
         "label": "Detail",
         "collapsible": true,
         "collapsed": true,
@@ -83,6 +69,20 @@
             "label": "THERB interface concept",
             "href": "/therb-gh/docs/Detail/Concept",
             "docId": "Detail/Concept"
+          }
+        ]
+      },
+      {
+        "type": "category",
+        "label": "Component",
+        "collapsible": true,
+        "collapsed": true,
+        "items": [
+          {
+            "type": "link",
+            "label": "Modelling",
+            "href": "/therb-gh/docs/Component/Modelling",
+            "docId": "Component/Modelling"
           }
         ]
       },

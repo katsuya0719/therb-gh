@@ -36,12 +36,12 @@
               },
               "sidebar": "tutorialSidebar",
               "previous": {
-                "title": "Upload to server",
-                "permalink": "/therb-gh/docs/Usage/UploadToServer"
-              },
-              "next": {
                 "title": "THERB interface concept",
                 "permalink": "/therb-gh/docs/Detail/Concept"
+              },
+              "next": {
+                "title": "How to use New Hasp",
+                "permalink": "/therb-gh/docs/NewHasp/HowToUse"
               }
             },
             {
@@ -62,12 +62,12 @@
               },
               "sidebar": "tutorialSidebar",
               "previous": {
-                "title": "Modelling",
-                "permalink": "/therb-gh/docs/Component/Modelling"
+                "title": "Upload to server",
+                "permalink": "/therb-gh/docs/Usage/UploadToServer"
               },
               "next": {
-                "title": "How to use New Hasp",
-                "permalink": "/therb-gh/docs/NewHasp/HowToUse"
+                "title": "Modelling",
+                "permalink": "/therb-gh/docs/Component/Modelling"
               }
             },
             {
@@ -110,8 +110,8 @@
               },
               "sidebar": "tutorialSidebar",
               "previous": {
-                "title": "THERB interface concept",
-                "permalink": "/therb-gh/docs/Detail/Concept"
+                "title": "Modelling",
+                "permalink": "/therb-gh/docs/Component/Modelling"
               }
             },
             {
@@ -276,8 +276,8 @@
                 "permalink": "/therb-gh/docs/Usage/RunSimulation"
               },
               "next": {
-                "title": "Modelling",
-                "permalink": "/therb-gh/docs/Component/Modelling"
+                "title": "THERB interface concept",
+                "permalink": "/therb-gh/docs/Detail/Concept"
               }
             }
           ],
@@ -321,18 +321,6 @@
               },
               {
                 "type": "category",
-                "label": "Component",
-                "collapsible": true,
-                "collapsed": true,
-                "items": [
-                  {
-                    "type": "doc",
-                    "id": "Component/Modelling"
-                  }
-                ]
-              },
-              {
-                "type": "category",
                 "label": "Detail",
                 "collapsible": true,
                 "collapsed": true,
@@ -340,6 +328,18 @@
                   {
                     "type": "doc",
                     "id": "Detail/Concept"
+                  }
+                ]
+              },
+              {
+                "type": "category",
+                "label": "Component",
+                "collapsible": true,
+                "collapsed": true,
+                "items": [
+                  {
+                    "type": "doc",
+                    "id": "Component/Modelling"
                   }
                 ]
               },
