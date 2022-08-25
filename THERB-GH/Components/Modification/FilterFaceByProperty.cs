@@ -25,7 +25,7 @@ namespace THERBgh
         public FilterFaceByProperty()
           : base("FilterFaceByProperty", "FilterFaceByProperty",
               "Filter face by properties",
-              "THERB-GH", "Modelling")
+              "THERB-GH", "Filter")
         {
         }
 

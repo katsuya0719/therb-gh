@@ -31,7 +31,7 @@ namespace THERBgh
         public ReadConstruction()
           : base("ReadConstruction", "ReadConstruction",
               "read construction data",
-              "THERB-GH", "Modelling")
+              "THERB-GH", "IO")
         {
         }
 
