@@ -11,8 +11,28 @@
           "mainDocId": "intro",
           "docs": [
             {
+              "id": "Component/Filter",
+              "path": "/therb-gh/docs/Component/Filter",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "Component/IO",
+              "path": "/therb-gh/docs/Component/IO",
+              "sidebar": "tutorialSidebar"
+            },
+            {
               "id": "Component/Modelling",
               "path": "/therb-gh/docs/Component/Modelling",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "Component/Simulation",
+              "path": "/therb-gh/docs/Component/Simulation",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "Component/Utility",
+              "path": "/therb-gh/docs/Component/Utility",
               "sidebar": "tutorialSidebar"
             },
             {

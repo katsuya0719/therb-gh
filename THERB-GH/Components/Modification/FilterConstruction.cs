@@ -25,7 +25,7 @@ namespace THERBgh
         public FilterConstruction()
           : base("FilterConstruction", "FilterConstruction",
               "Filter construction by properties",
-              "THERB-GH", "Modelling")
+              "THERB-GH", "Filter")
         {
         }
 

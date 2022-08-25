@@ -60,20 +60,6 @@
       },
       {
         "type": "category",
-        "label": "Detail",
-        "collapsible": true,
-        "collapsed": true,
-        "items": [
-          {
-            "type": "link",
-            "label": "THERB interface concept",
-            "href": "/therb-gh/docs/Detail/Concept",
-            "docId": "Detail/Concept"
-          }
-        ]
-      },
-      {
-        "type": "category",
         "label": "Component",
         "collapsible": true,
         "collapsed": true,
@@ -83,6 +69,30 @@
             "label": "Modelling",
             "href": "/therb-gh/docs/Component/Modelling",
             "docId": "Component/Modelling"
+          },
+          {
+            "type": "link",
+            "label": "IO",
+            "href": "/therb-gh/docs/Component/IO",
+            "docId": "Component/IO"
+          },
+          {
+            "type": "link",
+            "label": "Filter",
+            "href": "/therb-gh/docs/Component/Filter",
+            "docId": "Component/Filter"
+          },
+          {
+            "type": "link",
+            "label": "Simulation",
+            "href": "/therb-gh/docs/Component/Simulation",
+            "docId": "Component/Simulation"
+          },
+          {
+            "type": "link",
+            "label": "Utility",
+            "href": "/therb-gh/docs/Component/Utility",
+            "docId": "Component/Utility"
           }
         ]
       },
@@ -99,14 +109,52 @@
             "docId": "NewHasp/HowToUse"
           }
         ]
+      },
+      {
+        "type": "category",
+        "label": "Detail",
+        "collapsible": true,
+        "collapsed": true,
+        "items": [
+          {
+            "type": "link",
+            "label": "THERB interface concept",
+            "href": "/therb-gh/docs/Detail/Concept",
+            "docId": "Detail/Concept"
+          }
+        ]
       }
     ]
   },
   "docs": {
+    "Component/Filter": {
+      "id": "Component/Filter",
+      "title": "Filter",
+      "description": "データのフィルタリングを行うコンポーネントのカテゴリ",
+      "sidebar": "tutorialSidebar"
+    },
+    "Component/IO": {
+      "id": "Component/IO",
+      "title": "IO",
+      "description": "データの入出力を行うコンポーネントのカテゴリ",
+      "sidebar": "tutorialSidebar"
+    },
     "Component/Modelling": {
       "id": "Component/Modelling",
       "title": "Modelling",
+      "description": "THERBデータの生成、編集を行うコンポーネントのカテゴリ",
+      "sidebar": "tutorialSidebar"
+    },
+    "Component/Simulation": {
+      "id": "Component/Simulation",
+      "title": "Simulation",
       "description": "（守田君にフォーマットをお願いしたい）",
+      "sidebar": "tutorialSidebar"
+    },
+    "Component/Utility": {
+      "id": "Component/Utility",
+      "title": "Utility",
+      "description": "シミュレーションの実行に関わるコンポーネントのカテゴリ",
       "sidebar": "tutorialSidebar"
     },
     "Detail/Concept": {
@@ -160,7 +208,7 @@
     "Usage/UploadToServer": {
       "id": "Usage/UploadToServer",
       "title": "Upload to server",
-      "description": "RhinoモデルからTHERBのデータを抽出できたら、そのファイルをサーバーにuploadして計算、データ処理、ビジュアライゼーションを行います。",
+      "description": "この機能はまだ実装途中です。",
       "sidebar": "tutorialSidebar"
     }
   }

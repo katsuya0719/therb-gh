@@ -40,7 +40,7 @@ export default [
   },
   {
     path: '/therb-gh/blog',
-    component: ComponentCreator('/therb-gh/blog','258'),
+    component: ComponentCreator('/therb-gh/blog','cc8'),
     exact: true
   },
   {
@@ -54,23 +54,13 @@ export default [
     exact: true
   },
   {
-    path: '/therb-gh/blog/tags/becat',
-    component: ComponentCreator('/therb-gh/blog/tags/becat','003'),
-    exact: true
-  },
-  {
-    path: '/therb-gh/blog/tags/hello',
-    component: ComponentCreator('/therb-gh/blog/tags/hello','c52'),
-    exact: true
-  },
-  {
     path: '/therb-gh/blog/tags/therb',
-    component: ComponentCreator('/therb-gh/blog/tags/therb','c9c'),
+    component: ComponentCreator('/therb-gh/blog/tags/therb','c8c'),
     exact: true
   },
   {
     path: '/therb-gh/blog/welcome',
-    component: ComponentCreator('/therb-gh/blog/welcome','683'),
+    component: ComponentCreator('/therb-gh/blog/welcome','39a'),
     exact: true
   },
   {
@@ -80,11 +70,35 @@ export default [
   },
   {
     path: '/therb-gh/docs',
-    component: ComponentCreator('/therb-gh/docs','166'),
+    component: ComponentCreator('/therb-gh/docs','040'),
     routes: [
+      {
+        path: '/therb-gh/docs/Component/Filter',
+        component: ComponentCreator('/therb-gh/docs/Component/Filter','41d'),
+        exact: true,
+        'sidebar': "tutorialSidebar"
+      },
+      {
+        path: '/therb-gh/docs/Component/IO',
+        component: ComponentCreator('/therb-gh/docs/Component/IO','b14'),
+        exact: true,
+        'sidebar': "tutorialSidebar"
+      },
       {
         path: '/therb-gh/docs/Component/Modelling',
         component: ComponentCreator('/therb-gh/docs/Component/Modelling','64c'),
+        exact: true,
+        'sidebar': "tutorialSidebar"
+      },
+      {
+        path: '/therb-gh/docs/Component/Simulation',
+        component: ComponentCreator('/therb-gh/docs/Component/Simulation','63c'),
+        exact: true,
+        'sidebar': "tutorialSidebar"
+      },
+      {
+        path: '/therb-gh/docs/Component/Utility',
+        component: ComponentCreator('/therb-gh/docs/Component/Utility','883'),
         exact: true,
         'sidebar': "tutorialSidebar"
       },
