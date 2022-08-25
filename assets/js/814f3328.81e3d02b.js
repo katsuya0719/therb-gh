@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkwebsite=self.webpackChunkwebsite||[]).push([[535],{5641:function(e){e.exports=JSON.parse('{"title":"Recent posts","items":[{"title":"\u30c6\u30b9\u30c8\u30e6\u30fc\u30b6\u30fc\u3078\u306e\u30d7\u30ed\u30b0\u30e9\u30e0\u914d\u5e03\u3092\u958b\u59cb","permalink":"/therb-gh/blog/welcome"}]}')}}]);
