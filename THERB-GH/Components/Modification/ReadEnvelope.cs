@@ -71,7 +71,7 @@ namespace THERBgh
 
             List<Envelope> envelopes = JsonConvert.DeserializeObject<ResEnvelope>(text).data;
 
-            DA.SetDataList("Envelope", envelopes);
+            DA.SetDataList("Envelopes", envelopes);
         }
 
         /// <summary>
