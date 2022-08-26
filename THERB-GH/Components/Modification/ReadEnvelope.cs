@@ -31,7 +31,7 @@ namespace THERBgh
         public ReadEnvelope()
           : base("ReadEnvelope", "ReadEnvelope",
               "read envelope data",
-              "THERB-GH", "Modelling")
+              "THERB-GH", "IO")
         {
         }
 
