@@ -343,7 +343,7 @@ namespace Model
         }
         public void OverrideConstruction(Construction construction)
         {
-            this.structureId = construction.id;
+            this.structureId = Int32.Parse(construction.id);
         }
 
         public override string ToString()
@@ -352,12 +352,10 @@ namespace Model
             try
             {
                 preview += Environment.NewLine;
-                preview += " surfaceType       :" + surfaceType + Environment.NewLine;
                 preview += " id                :" + id + Environment.NewLine;
                 preview += " BoundaryCondition :" + bc + Environment.NewLine;
                 preview += " elementType       :" + elementType + Environment.NewLine;
                 preview += " parentId          :" + parent.id + Environment.NewLine;
-                preview += " tempNormal        :" + tempNormal + Environment.NewLine;
                 preview += " direction         :" + direction + Environment.NewLine;
                 preview += " adjacencyRoomId   :" + adjacencyRoomId + Environment.NewLine;
                 preview += " unique            :" + unique + Environment.NewLine;
