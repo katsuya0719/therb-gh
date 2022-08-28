@@ -6,6 +6,7 @@ using Rhino.Geometry.Collections;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System.Collections.ObjectModel;
+using THERBgh;
 
 namespace Model
 {
@@ -24,13 +25,13 @@ namespace Model
             _totalWindows = 0;
         }
 
-        public Window(Surface geometry) : base(geometry)
+        public Window(Surface geometry,Envelope envelope) : base(geometry)
         {
             guid = Guid.NewGuid();
             _totalWindows += 1;
             id = _totalWindows;
             this.constructionId = 6;
-            this.structureId = 6;
+            this.structureId = Int32.Parse(envelope.window.id);
         }
 
         public void addParent(Face parent)
