@@ -226,7 +226,7 @@ namespace THERBgh
             Debug.WriteLine("EXITTIME" + process.ExitTime.ToString());
 #endif
 
-            //処理3. cloud=trueのときには、zipファイルを作成し、https://stingray-app-vgak2.ondigitalocean.app/therb/run にfrom-dataのキーdatasetに対応するファイルとして添付し、POSTする
+            //処理3. cloud=trueのときには、zipファイルを作成し、https://oyster-app-8jboe.ondigitalocean.app/therb/run にfrom-dataのキーdatasetに対応するファイルとして添付し、POSTする
 
         }
 
