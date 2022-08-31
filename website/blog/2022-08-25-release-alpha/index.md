@@ -6,7 +6,7 @@ authors:
   title: Lead Engineer at BeCAT
   url: https://github.com/katsuya0719
   image_url: https://github.com/katsuya0719.png
-tags: [therb]
+tags: [announcement]
 ---
 
 テストユーザーへのプログラム配布を開始しました。  
