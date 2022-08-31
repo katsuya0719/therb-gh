@@ -4,18 +4,30 @@
         <title>THERB 2.0 Blog</title>
         <link> http://katsuya0719.github.io/therb-gh/blog</link>
         <description>THERB 2.0 Blog</description>
-        <lastBuildDate>Thu, 25 Aug 2022 00:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Wed, 31 Aug 2022 00:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
+        <item>
+            <title><![CDATA[開発のログ1]]></title>
+            <link> http://katsuya0719.github.io/therb-gh/blog/welcome</link>
+            <guid>welcome</guid>
+            <pubDate>Wed, 31 Aug 2022 00:00:00 GMT</pubDate>
+            <description><![CDATA[打ち合わせしたい点]]></description>
+            <content:encoded><![CDATA[<p>打ち合わせしたい点  </p><ul><li>全体のシステムに関する説明  </li><li>クラウドで計算するTHERBのランタイムがo.datファイルに書き出す項目について  </li><li>想定する内壁の数について  </li><li>秋学期でのTHERBを使用するカリキュラムのイメージ  </li></ul><p>例)簡単な建物モデルを自分で作ってTHERB-GHを使って計算<br>
+<!-- -->窓の大きさ、形、壁体構成などを変更してみて、その結果を分析、考察する  </p><p>全体のシステムダイアグラム<br>
+<img alt="THERB2.0" src="/therb-gh/assets/images/system-diagram-c3fecc31084557c5056a92c465bfd6d7.png" width="881" height="462"></p>]]></content:encoded>
+            <category>development</category>
+        </item>
         <item>
             <title><![CDATA[テストユーザーへのプログラム配布を開始]]></title>
             <link> http://katsuya0719.github.io/therb-gh/blog/welcome</link>
             <guid>welcome</guid>
             <pubDate>Thu, 25 Aug 2022 00:00:00 GMT</pubDate>
             <description><![CDATA[テストユーザーへのプログラム配布を開始しました。]]></description>
-            <content:encoded><![CDATA[<p>テストユーザーへのプログラム配布を開始しました。<br>
-<!-- -->興味のある方は<a href="/docs/intro.md">こちら</a>のチュートリアルを見ながら使用してみてください。  </p><p>わからなかったところ、エラー、追加してほしい機能の要望などは<a href="https://docs.google.com/forms/d/e/1FAIpQLSf_hwBQsHda7q7WF_2N-yyQiMSB1owK8hnQPH9IKP7tqypqOg/viewform?usp=sf_link" target="_blank" rel="noopener noreferrer">こちらのフォーム</a>に入力ください。</p>]]></content:encoded>
-            <category>therb</category>
+            <content:encoded><![CDATA[<p>打ち合わせしたい点  </p><ul><li>全体のシステムに関する説明  </li><li>クラウドで計算するTHERBのランタイムがo.datファイルに書き出す項目について  </li><li>想定する内壁の数について  </li><li>秋学期でのTHERBを使用するカリキュラムのイメージ  </li></ul><p>例)簡単な建物モデルを自分で作ってTHERB-GHを使って計算<br>
+<!-- -->窓の大きさ、形、壁体構成などを変更してみて、その結果を分析、考察する  </p><p>全体のシステムダイアグラム<br>
+<img alt="THERB2.0" src="/therb-gh/assets/images/system-diagram-c3fecc31084557c5056a92c465bfd6d7.png" width="881" height="462"></p>]]></content:encoded>
+            <category>announcement</category>
         </item>
     </channel>
 </rss>
