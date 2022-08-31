@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Components\Compose.cs" />
+    <Compile Include="Components\Modification\ReadEnvelope.cs" />
     <Compile Include="CreateDatData.cs" />
     <Compile Include="Components\Exporter\ExportT.cs" />
     <Compile Include="Components\Exporter\ExportW.cs" />

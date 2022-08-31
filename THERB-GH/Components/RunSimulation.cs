@@ -211,7 +211,7 @@ namespace THERBgh
                 writer.Write(rDat);
             }
 
-            //処理3. コマンドラインを立ち上げ、therb.exeファイルを呼び出す
+            //処理3. cloud=falseのときには、コマンドラインを立ち上げ、therb.exeファイルを呼び出す
             var process = new Process();
             process.StartInfo = new ProcessStartInfo()
             {
@@ -226,7 +226,7 @@ namespace THERBgh
             Debug.WriteLine("EXITTIME" + process.ExitTime.ToString());
 #endif
 
-            //処理3. zipファイルを作成し、https://stingray-app-vgak2.ondigitalocean.app/therb/run にfrom-dataのキーdatasetに対応するファイルとして添付し、POSTする
+            //処理3. cloud=trueのときには、zipファイルを作成し、https://oyster-app-8jboe.ondigitalocean.app/therb/run にfrom-dataのキーdatasetに対応するファイルとして添付し、POSTする
 
         }
 

@@ -30,6 +30,8 @@ namespace THERBgh
         {
         }
 
+        public Envelope envelope;
+
         /// <summary>
         /// Registers all the input parameters for this component.
         /// </summary>
@@ -38,6 +40,7 @@ namespace THERBgh
             pManager.AddBoxParameter("boxes", "boxes", "list of room boxes", GH_ParamAccess.list);
             pManager.AddSurfaceParameter("windows", "windows", "list of windows", GH_ParamAccess.list);
             pManager.AddSurfaceParameter("overhangs", "overhangs", "list of overhangs", GH_ParamAccess.list);
+            pManager.AddGenericParameter("Envelope", "Envelope", "Envelope class", GH_ParamAccess.item);
             pManager.AddNumberParameter("tol", "tolerance", "tolerance", GH_ParamAccess.item, 0.1);
             pManager[1].Optional = true;
             pManager[2].Optional = true;
@@ -62,6 +65,7 @@ namespace THERBgh
             List<Box> boxes = new List<Box>();
             List<Surface> windows = new List<Surface>();
             List<Surface> overhangs = new List<Surface>();
+            envelope = new Envelope();
 
             List<Room> roomList = new List<Room>();
             List<Face> faceList = new List<Face>();
@@ -77,7 +81,8 @@ namespace THERBgh
             DA.GetDataList(0, boxes);
             DA.GetDataList(1, windows);
             DA.GetDataList(2, overhangs);
-            DA.GetData(3, ref tol);
+            DA.GetData(3, ref envelope);
+            DA.GetData(4, ref tol);
 
             var exBoxes = ExBox.SplitGeometry(boxes, tol);
 
@@ -154,7 +159,6 @@ namespace THERBgh
             Therb therb = new Therb(roomList, faceListWindow, windowList, overhangList);
 
             DA.SetData("Therb", therb);
-            DA.SetDataList("test", splitSurfs);
         }
 
         private List<Brep> SplitGeometry(List<Brep> breps, double tol)
@@ -191,7 +195,7 @@ namespace THERBgh
             foreach(Surface windowGeo in windows) {
                 Face parent = externalFaces[0];
                 double closestDistance = 10000;
-                Window window = new Window(windowGeo);
+                Window window = new Window(windowGeo,envelope);
                 foreach(Face exFace in externalFaces)
                 {
                     double distance = window.centerPt.DistanceTo(exFace.centerPt);
@@ -306,9 +310,10 @@ namespace THERBgh
                     }
                     testFace.adjacencyRoomId = 0;
                 }
+                
                 testFace.setElementType();
                 testFace.setPartId();
-                testFace.setConstructionId();
+                testFace.setConstructionId(envelope);
                 faceListBC.Add(testFace);
             }
             return faceListBC;

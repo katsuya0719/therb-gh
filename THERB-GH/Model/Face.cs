@@ -306,44 +306,44 @@ namespace Model
             }
         }
 
-        public void setConstructionId()
+        public void setConstructionId(Envelope envelope)
         {
             //Print("{0}", elementType);
             switch (elementType)
             {
                 case ElementType.exteriorWall:
                     constructionId = 1;
-                    structureId = 1;
+                    structureId = Int32.Parse(envelope.exteriorWall.id);
                     break;
                 case ElementType.interiorWall:
                     constructionId = 2;
-                    structureId = 2;
+                    structureId = Int32.Parse(envelope.interiorWall.id);
                     break;
                 case ElementType.interiorRoof:
                     constructionId = 3;
-                    structureId = 3;
+                    structureId = Int32.Parse(envelope.floorCeiling.id);
                     break;
                 case ElementType.interiorFloor:
                     constructionId = 3;
-                    structureId = 3;
+                    structureId = Int32.Parse(envelope.floorCeiling.id);
                     break;
                 case ElementType.exteriorRoof:
                     constructionId = 4;
-                    structureId = 4;
+                    structureId = Int32.Parse(envelope.roof.id);
                     break;
                 case ElementType.groundRoof:
                     constructionId = 5;
-                    structureId = 5;
+                    structureId = Int32.Parse(envelope.groundFloor.id);
                     break;
                 case ElementType.groundFloor:
                     constructionId = 5;
-                    structureId = 5;
+                    structureId = Int32.Parse(envelope.groundFloor.id);
                     break;
             }
         }
         public void OverrideConstruction(Construction construction)
         {
-            this.structureId = construction.id;
+            this.structureId = Int32.Parse(construction.id);
         }
 
         public override string ToString()
@@ -352,12 +352,10 @@ namespace Model
             try
             {
                 preview += Environment.NewLine;
-                preview += " surfaceType       :" + surfaceType + Environment.NewLine;
                 preview += " id                :" + id + Environment.NewLine;
                 preview += " BoundaryCondition :" + bc + Environment.NewLine;
                 preview += " elementType       :" + elementType + Environment.NewLine;
                 preview += " parentId          :" + parent.id + Environment.NewLine;
-                preview += " tempNormal        :" + tempNormal + Environment.NewLine;
                 preview += " direction         :" + direction + Environment.NewLine;
                 preview += " adjacencyRoomId   :" + adjacencyRoomId + Environment.NewLine;
                 preview += " unique            :" + unique + Environment.NewLine;
