@@ -15,7 +15,7 @@
         <summary type="html"><![CDATA[打ち合わせしたい点]]></summary>
         <content type="html"><![CDATA[<p>打ち合わせしたい点  </p><ul><li>全体のシステムに関する説明  </li><li>クラウドで計算するTHERBのランタイムがo.datファイルに書き出す項目について  </li><li>想定する内壁の数について  </li><li>秋学期でのTHERBを使用するカリキュラムのイメージ  </li></ul><p>例)簡単な建物モデルを自分で作ってTHERB-GHを使って計算<br>
 <!-- -->窓の大きさ、形、壁体構成などを変更してみて、その結果を分析、考察する  </p><p>全体のシステムダイアグラム<br>
-<img alt="THERB2.0" src="/therb-gh/assets/images/system-diagram-c3fecc31084557c5056a92c465bfd6d7.png" width="881" height="462"></p>]]></content>
+<img alt="THERB2.0" src="/therb-gh/assets/images/system-diagram-c3fecc31084557c5056a92c465bfd6d7.png" width="881" height="462">  </p><p>出力項目  </p><ul><li>外気温度</li><li>外気相対湿度  </li><li>外気絶対湿度  </li><li>室内温度  </li><li>相対湿度  </li><li>絶対湿度  </li><li>顕熱負荷  </li><li>潜熱負荷</li></ul>]]></content>
         <author>
             <name>katsuya obara</name>
             <uri>https://github.com/katsuya0719</uri>
@@ -30,7 +30,7 @@
         <summary type="html"><![CDATA[テストユーザーへのプログラム配布を開始しました。]]></summary>
         <content type="html"><![CDATA[<p>打ち合わせしたい点  </p><ul><li>全体のシステムに関する説明  </li><li>クラウドで計算するTHERBのランタイムがo.datファイルに書き出す項目について  </li><li>想定する内壁の数について  </li><li>秋学期でのTHERBを使用するカリキュラムのイメージ  </li></ul><p>例)簡単な建物モデルを自分で作ってTHERB-GHを使って計算<br>
 <!-- -->窓の大きさ、形、壁体構成などを変更してみて、その結果を分析、考察する  </p><p>全体のシステムダイアグラム<br>
-<img alt="THERB2.0" src="/therb-gh/assets/images/system-diagram-c3fecc31084557c5056a92c465bfd6d7.png" width="881" height="462"></p>]]></content>
+<img alt="THERB2.0" src="/therb-gh/assets/images/system-diagram-c3fecc31084557c5056a92c465bfd6d7.png" width="881" height="462">  </p><p>出力項目  </p><ul><li>外気温度</li><li>外気相対湿度  </li><li>外気絶対湿度  </li><li>室内温度  </li><li>相対湿度  </li><li>絶対湿度  </li><li>顕熱負荷  </li><li>潜熱負荷</li></ul>]]></content>
         <author>
             <name>katsuya obara</name>
             <uri>https://github.com/katsuya0719</uri>
