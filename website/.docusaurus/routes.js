@@ -40,7 +40,7 @@ export default [
   },
   {
     path: '/therb-gh/blog',
-    component: ComponentCreator('/therb-gh/blog','cc8'),
+    component: ComponentCreator('/therb-gh/blog','466'),
     exact: true
   },
   {
@@ -54,13 +54,23 @@ export default [
     exact: true
   },
   {
-    path: '/therb-gh/blog/tags/therb',
-    component: ComponentCreator('/therb-gh/blog/tags/therb','c8c'),
+    path: '/therb-gh/blog/tags/announcement',
+    component: ComponentCreator('/therb-gh/blog/tags/announcement','ed9'),
+    exact: true
+  },
+  {
+    path: '/therb-gh/blog/tags/development',
+    component: ComponentCreator('/therb-gh/blog/tags/development','e82'),
     exact: true
   },
   {
     path: '/therb-gh/blog/welcome',
     component: ComponentCreator('/therb-gh/blog/welcome','39a'),
+    exact: true
+  },
+  {
+    path: '/therb-gh/blog/welcome',
+    component: ComponentCreator('/therb-gh/blog/welcome','505'),
     exact: true
   },
   {
@@ -70,7 +80,7 @@ export default [
   },
   {
     path: '/therb-gh/docs',
-    component: ComponentCreator('/therb-gh/docs','040'),
+    component: ComponentCreator('/therb-gh/docs','970'),
     routes: [
       {
         path: '/therb-gh/docs/Component/Filter',
@@ -117,6 +127,12 @@ export default [
       {
         path: '/therb-gh/docs/NewHasp/HowToUse',
         component: ComponentCreator('/therb-gh/docs/NewHasp/HowToUse','cda'),
+        exact: true,
+        'sidebar': "tutorialSidebar"
+      },
+      {
+        path: '/therb-gh/docs/Usage/AnalyzeResult',
+        component: ComponentCreator('/therb-gh/docs/Usage/AnalyzeResult','680'),
         exact: true,
         'sidebar': "tutorialSidebar"
       },

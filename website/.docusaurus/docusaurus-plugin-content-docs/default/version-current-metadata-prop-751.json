@@ -52,6 +52,12 @@
           },
           {
             "type": "link",
+            "label": "AnalyzeResult",
+            "href": "/therb-gh/docs/Usage/AnalyzeResult",
+            "docId": "Usage/AnalyzeResult"
+          },
+          {
+            "type": "link",
             "label": "Upload to server",
             "href": "/therb-gh/docs/Usage/UploadToServer",
             "docId": "Usage/UploadToServer"
@@ -98,20 +104,6 @@
       },
       {
         "type": "category",
-        "label": "NewHasp",
-        "collapsible": true,
-        "collapsed": true,
-        "items": [
-          {
-            "type": "link",
-            "label": "How to use New Hasp",
-            "href": "/therb-gh/docs/NewHasp/HowToUse",
-            "docId": "NewHasp/HowToUse"
-          }
-        ]
-      },
-      {
-        "type": "category",
         "label": "Detail",
         "collapsible": true,
         "collapsed": true,
@@ -121,6 +113,20 @@
             "label": "THERB interface concept",
             "href": "/therb-gh/docs/Detail/Concept",
             "docId": "Detail/Concept"
+          }
+        ]
+      },
+      {
+        "type": "category",
+        "label": "NewHasp",
+        "collapsible": true,
+        "collapsed": true,
+        "items": [
+          {
+            "type": "link",
+            "label": "How to use New Hasp",
+            "href": "/therb-gh/docs/NewHasp/HowToUse",
+            "docId": "NewHasp/HowToUse"
           }
         ]
       }
@@ -173,6 +179,12 @@
       "id": "NewHasp/HowToUse",
       "title": "How to use New Hasp",
       "description": "THERB-GHではNew Haspという熱負荷計算ソフトへの連携もできます。",
+      "sidebar": "tutorialSidebar"
+    },
+    "Usage/AnalyzeResult": {
+      "id": "Usage/AnalyzeResult",
+      "title": "AnalyzeResult",
+      "description": "",
       "sidebar": "tutorialSidebar"
     },
     "Usage/CreateTherbModel": {

@@ -2,6 +2,10 @@
   "title": "Recent posts",
   "items": [
     {
+      "title": "開発のログ1",
+      "permalink": "/therb-gh/blog/welcome"
+    },
+    {
       "title": "テストユーザーへのプログラム配布を開始",
       "permalink": "/therb-gh/blog/welcome"
     }

@@ -154,8 +154,8 @@
                 "permalink": "/therb-gh/docs/Component/Simulation"
               },
               "next": {
-                "title": "How to use New Hasp",
-                "permalink": "/therb-gh/docs/NewHasp/HowToUse"
+                "title": "THERB interface concept",
+                "permalink": "/therb-gh/docs/Detail/Concept"
               }
             },
             {
@@ -176,6 +176,10 @@
               },
               "sidebar": "tutorialSidebar",
               "previous": {
+                "title": "Utility",
+                "permalink": "/therb-gh/docs/Component/Utility"
+              },
+              "next": {
                 "title": "How to use New Hasp",
                 "permalink": "/therb-gh/docs/NewHasp/HowToUse"
               }
@@ -220,12 +224,31 @@
               },
               "sidebar": "tutorialSidebar",
               "previous": {
-                "title": "Utility",
-                "permalink": "/therb-gh/docs/Component/Utility"
-              },
-              "next": {
                 "title": "THERB interface concept",
                 "permalink": "/therb-gh/docs/Detail/Concept"
+              }
+            },
+            {
+              "unversionedId": "Usage/AnalyzeResult",
+              "id": "Usage/AnalyzeResult",
+              "title": "AnalyzeResult",
+              "description": "",
+              "source": "@site/docs/Usage/AnalyzeResult.md",
+              "sourceDirName": "Usage",
+              "slug": "/Usage/AnalyzeResult",
+              "permalink": "/therb-gh/docs/Usage/AnalyzeResult",
+              "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/docs/Usage/AnalyzeResult.md",
+              "tags": [],
+              "version": "current",
+              "frontMatter": {},
+              "sidebar": "tutorialSidebar",
+              "previous": {
+                "title": "THERBシミュレーションを開始する",
+                "permalink": "/therb-gh/docs/Usage/RunSimulation"
+              },
+              "next": {
+                "title": "Upload to server",
+                "permalink": "/therb-gh/docs/Usage/UploadToServer"
               }
             },
             {
@@ -364,8 +387,8 @@
                 "permalink": "/therb-gh/docs/Usage/EditTherbModel"
               },
               "next": {
-                "title": "Upload to server",
-                "permalink": "/therb-gh/docs/Usage/UploadToServer"
+                "title": "AnalyzeResult",
+                "permalink": "/therb-gh/docs/Usage/AnalyzeResult"
               }
             },
             {
@@ -386,8 +409,8 @@
               },
               "sidebar": "tutorialSidebar",
               "previous": {
-                "title": "THERBシミュレーションを開始する",
-                "permalink": "/therb-gh/docs/Usage/RunSimulation"
+                "title": "AnalyzeResult",
+                "permalink": "/therb-gh/docs/Usage/AnalyzeResult"
               },
               "next": {
                 "title": "Modelling",
@@ -429,6 +452,10 @@
                   },
                   {
                     "type": "doc",
+                    "id": "Usage/AnalyzeResult"
+                  },
+                  {
+                    "type": "doc",
                     "id": "Usage/UploadToServer"
                   }
                 ]
@@ -463,18 +490,6 @@
               },
               {
                 "type": "category",
-                "label": "NewHasp",
-                "collapsible": true,
-                "collapsed": true,
-                "items": [
-                  {
-                    "type": "doc",
-                    "id": "NewHasp/HowToUse"
-                  }
-                ]
-              },
-              {
-                "type": "category",
                 "label": "Detail",
                 "collapsible": true,
                 "collapsed": true,
@@ -482,6 +497,18 @@
                   {
                     "type": "doc",
                     "id": "Detail/Concept"
+                  }
+                ]
+              },
+              {
+                "type": "category",
+                "label": "NewHasp",
+                "collapsible": true,
+                "collapsed": true,
+                "items": [
+                  {
+                    "type": "doc",
+                    "id": "NewHasp/HowToUse"
                   }
                 ]
               }
@@ -501,6 +528,54 @@
           "id": "welcome",
           "metadata": {
             "permalink": "/therb-gh/blog/welcome",
+            "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/blog/2022-08-31-development-log/index.md",
+            "source": "@site/blog/2022-08-31-development-log/index.md",
+            "title": "開発のログ1",
+            "description": "打ち合わせしたい点",
+            "date": "2022-08-31T00:00:00.000Z",
+            "formattedDate": "August 31, 2022",
+            "tags": [
+              {
+                "label": "development",
+                "permalink": "/therb-gh/blog/tags/development"
+              }
+            ],
+            "readingTime": 0.615,
+            "truncated": false,
+            "authors": [
+              {
+                "name": "katsuya obara",
+                "title": "Lead Engineer at BeCAT",
+                "url": "https://github.com/katsuya0719",
+                "image_url": "https://github.com/katsuya0719.png",
+                "imageURL": "https://github.com/katsuya0719.png"
+              }
+            ],
+            "frontMatter": {
+              "slug": "welcome",
+              "title": "開発のログ1",
+              "authors": {
+                "name": "katsuya obara",
+                "title": "Lead Engineer at BeCAT",
+                "url": "https://github.com/katsuya0719",
+                "image_url": "https://github.com/katsuya0719.png",
+                "imageURL": "https://github.com/katsuya0719.png"
+              },
+              "tags": [
+                "development"
+              ]
+            },
+            "nextItem": {
+              "title": "テストユーザーへのプログラム配布を開始",
+              "permalink": "/therb-gh/blog/welcome"
+            }
+          },
+          "content": "打ち合わせしたい点  \r\n- 全体のシステムに関する説明  \r\n- クラウドで計算するTHERBのランタイムがo.datファイルに書き出す項目について  \r\n- 想定する内壁の数について  \r\n- 秋学期でのTHERBを使用するカリキュラムのイメージ  \r\n\r\n例)簡単な建物モデルを自分で作ってTHERB-GHを使って計算  \r\n窓の大きさ、形、壁体構成などを変更してみて、その結果を分析、考察する  \r\n\r\n全体のシステムダイアグラム  \r\n![THERB2.0](./system-diagram.png)"
+        },
+        {
+          "id": "welcome",
+          "metadata": {
+            "permalink": "/therb-gh/blog/welcome",
             "editUrl": "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/blog/2022-08-25-release-alpha/index.md",
             "source": "@site/blog/2022-08-25-release-alpha/index.md",
             "title": "テストユーザーへのプログラム配布を開始",
@@ -509,8 +584,8 @@
             "formattedDate": "August 25, 2022",
             "tags": [
               {
-                "label": "therb",
-                "permalink": "/therb-gh/blog/tags/therb"
+                "label": "announcement",
+                "permalink": "/therb-gh/blog/tags/announcement"
               }
             ],
             "readingTime": 0.395,
@@ -535,8 +610,12 @@
                 "imageURL": "https://github.com/katsuya0719.png"
               },
               "tags": [
-                "therb"
+                "announcement"
               ]
+            },
+            "prevItem": {
+              "title": "開発のログ1",
+              "permalink": "/therb-gh/blog/welcome"
             }
           },
           "content": "テストユーザーへのプログラム配布を開始しました。  \r\n興味のある方は[こちら](../../docs/intro.md)のチュートリアルを見ながら使用してみてください。  \r\n\r\nわからなかったところ、エラー、追加してほしい機能の要望などは[こちらのフォーム](https://docs.google.com/forms/d/e/1FAIpQLSf_hwBQsHda7q7WF_2N-yyQiMSB1owK8hnQPH9IKP7tqypqOg/viewform?usp=sf_link)に入力ください。"
@@ -549,24 +628,32 @@
             "page": 1,
             "postsPerPage": 10,
             "totalPages": 1,
-            "totalCount": 1,
+            "totalCount": 2,
             "previousPage": null,
             "nextPage": null,
             "blogDescription": "Blog",
             "blogTitle": "Blog"
           },
           "items": [
+            "welcome",
             "welcome"
           ]
         }
       ],
       "blogTags": {
-        "/therb-gh/blog/tags/therb": {
-          "name": "therb",
+        "/therb-gh/blog/tags/development": {
+          "name": "development",
           "items": [
             "welcome"
           ],
-          "permalink": "/therb-gh/blog/tags/therb"
+          "permalink": "/therb-gh/blog/tags/development"
+        },
+        "/therb-gh/blog/tags/announcement": {
+          "name": "announcement",
+          "items": [
+            "welcome"
+          ],
+          "permalink": "/therb-gh/blog/tags/announcement"
         }
       },
       "blogTagsListPath": "/therb-gh/blog/tags"

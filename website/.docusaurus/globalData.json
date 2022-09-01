@@ -51,6 +51,11 @@
               "sidebar": "tutorialSidebar"
             },
             {
+              "id": "Usage/AnalyzeResult",
+              "path": "/therb-gh/docs/Usage/AnalyzeResult",
+              "sidebar": "tutorialSidebar"
+            },
+            {
               "id": "Usage/CreateTherbModel",
               "path": "/therb-gh/docs/Usage/CreateTherbModel",
               "sidebar": "tutorialSidebar"
