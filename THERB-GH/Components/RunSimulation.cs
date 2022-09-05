@@ -15,6 +15,13 @@ using Newtonsoft.Json;
 using Model;
 using System.Threading;
 
+using System.Web;
+using System.Net;
+using System.IO.Compression;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Threading.Tasks;
+
 // In order to load the result of this wizard, you will also need to
 // add the output bin/ folder of this project to the list of loaded
 // folder in Grasshopper.
@@ -28,6 +35,16 @@ namespace THERBgh
         const string THERB_FOLDER_PATH = @"C:\therb";
         const string CREATE_FILE_B = "b.dat";
         const string CREATE_FILE_R = "r.dat";
+        const int MAX_SERVER_TRY_COUNT = 6;
+        //const string POST_URL = "https://stingray-app-vgak2.ondigitalocean.app/therb/run";
+        readonly static string[] POST_URLS = new string[5] { 
+            "https://oyster-app-8jboe.ondigitalocean.app/therb/run",
+            "https://oyster-app-8jboe.ondigitalocean.app/therb/run",
+            "https://oyster-app-8jboe.ondigitalocean.app/therb/run",
+            "https://oyster-app-8jboe.ondigitalocean.app/therb/run",
+            "https://oyster-app-8jboe.ondigitalocean.app/therb/run"
+        };
+
         /*
         readonly string[] FILES_TO_COPY = new[]
         {
@@ -67,7 +84,7 @@ namespace THERBgh
             pManager.AddGenericParameter("Therb", "therb", "THERB class", GH_ParamAccess.item);
             pManager.AddGenericParameter("Constructions", "Constructions", "Construction data", GH_ParamAccess.list);
             pManager.AddTextParameter("name", "name", "simulation case name", GH_ParamAccess.item);
-            //pManager.AddBooleanParameter("cloud", "cloud", "run simulation in cloud", GH_ParamAccess.item);
+            pManager.AddBooleanParameter("cloud", "cloud", "run simulation in cloud", GH_ParamAccess.item);
             pManager.AddBooleanParameter("run", "run", "run THERB simulation", GH_ParamAccess.item);
         }
         /// <summary>
@@ -85,9 +102,9 @@ namespace THERBgh
         /// to store data in output parameters.</param>
         protected override void SolveInstance(IGH_DataAccess DA)
         {
-            string namePath = "";
+            string name = "", namePath = "";
 
-            bool done = false;
+            bool cloudRun = false, done = false;
             Therb therb = null;
             DA.GetData(0, ref therb);
 
@@ -96,7 +113,8 @@ namespace THERBgh
             List<Construction> constructionList = new List<Construction>();
             DA.GetDataList(1, constructionList);
 
-            DA.GetData("name", ref namePath);
+            DA.GetData("name", ref name);
+            DA.GetData("cloud", ref cloudRun);
             DA.GetData("run", ref done);
             if (!done) return;
 
@@ -105,7 +123,7 @@ namespace THERBgh
             //TODO: CreateADat,CreateWDatも呼ぶ
             
 
-            if (string.IsNullOrEmpty(namePath)) throw new Exception("nameが読み取れませんでした。");
+            if (string.IsNullOrEmpty(name)) throw new Exception("nameが読み取れませんでした。");
             //if (!File.Exists(THERB_FILE_PATH)) throw new Exception("therb.exeが見つかりませんでした。");
 
             if (!Directory.Exists(THERB_FOLDER_PATH))
@@ -121,7 +139,7 @@ namespace THERBgh
                 }
             }
 
-            namePath = Path.Combine(THERB_FOLDER_PATH, namePath);
+            namePath = Path.Combine(THERB_FOLDER_PATH, name);
             if (Directory.Exists(namePath)){
                 if(MessageBox.Show(namePath + Environment.NewLine + "と同じフォルダが見つかりました。" + Environment.NewLine + "上書きしますか？"
                     , "", MessageBoxButtons.OKCancel) != DialogResult.OK) return;
@@ -162,7 +180,7 @@ namespace THERBgh
                         MessageBox.Show("パスが読み取れませんでした。");
                         return;
                     }
-                    if(!File.Exists(Path.Combine(dirPath, THERB_FILE_NAME)))
+                    if(!File.Exists(Path.Combine(dirPath, THERB_FILE_NAME)) && !cloudRun)
                     {
                         MessageBox.Show("パス内にtherb.exeがありませんでした。" + Environment.NewLine + "中止します。");
                         return;
@@ -211,23 +229,94 @@ namespace THERBgh
                 writer.Write(rDat);
             }
 
-            //処理3. cloud=falseのときには、コマンドラインを立ち上げ、therb.exeファイルを呼び出す
-            var process = new Process();
-            process.StartInfo = new ProcessStartInfo()
+            if (cloudRun)
             {
-                FileName = Path.Combine(namePath, THERB_FILE_NAME),
-                WorkingDirectory = namePath
-            };
-            process.Start();
-            process.WaitForExit();
+                //処理3. cloud=trueのときには、zipファイルを作成し、https://oyster-app-8jboe.ondigitalocean.app/therb/run にfrom-dataのキーdatasetに対応するファイルとして添付し、POSTする
+
+                var zipfile = namePath + ".zip";
+                if (File.Exists(zipfile))
+                {
+                    if (MessageBox.Show($"{zipfile}がありましたが上書きされます。{Environment.NewLine}実行しますか？", "", MessageBoxButtons.OKCancel) != DialogResult.OK)
+                        return;
+                    File.Delete(zipfile);
+                }
+                ZipFile.CreateFromDirectory(namePath, zipfile);
+
+                bool post_done = false;
+                for (int i = 0; i < MAX_SERVER_TRY_COUNT; i++)
+                {
+                    foreach(var url in POST_URLS)
+                    {
+                        using (FileStream fs = new FileStream(zipfile, FileMode.Open, FileAccess.Read))
+                        {
+                            try
+                            {
+                                MultipartFormDataContent content = new MultipartFormDataContent();
+
+                                StreamContent streamContent = new StreamContent(fs);
+                                streamContent.Headers.ContentDisposition =
+                                       new ContentDispositionHeaderValue("form-data")
+                                       {
+                                           Name = "dataset",
+                                           FileName = name + ".zip"
+                                       };
+
+                                content.Add(streamContent);
+                                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, url);
+                                request.Content = content;
+                                var responseTask = new HttpClient().SendAsync(request);
+                                responseTask.Wait();
+                                var response = responseTask.Result;
+
+                                if (response.StatusCode == HttpStatusCode.OK)
+                                {
+                                    Debug.WriteLine(response.Content);
+                                    MessageBox.Show("解析できました。");
+                                    post_done = true;
+                                    break;
+                                }
+                                Debug.WriteLine(response.StatusCode);
+                            }
+                            catch (Exception e)
+                            {
+                                Debug.WriteLine("error: " + e.Message);
+                                Task.Delay(1000);
+                            }
+                        }
+                    }
+                    if (post_done)
+                    {
+                        break;
+                    }
+                }
+                if (post_done)
+                {
+                    File.Delete(zipfile);
+                }
+                else
+                {
+                    MessageBox.Show("解析できませんでした。");
+                    throw new Exception("解析できませんでした。");
+                }
+            }
+            else
+            {
+                //処理3. cloud=falseのときには、コマンドラインを立ち上げ、therb.exeファイルを呼び出す
+                var process = new Process();
+                process.StartInfo = new ProcessStartInfo()
+                {
+                    FileName = Path.Combine(namePath, THERB_FILE_NAME),
+                    WorkingDirectory = namePath
+                };
+                process.Start();
+                process.WaitForExit();
 #if DEBUG
-            Debug.WriteLine("END");
-            Debug.WriteLine("EXITCODE:" + process.ExitCode.ToString());
-            Debug.WriteLine("EXITTIME" + process.ExitTime.ToString());
+                Debug.WriteLine("END");
+                Debug.WriteLine("EXITCODE:" + process.ExitCode.ToString());
+                Debug.WriteLine("EXITTIME" + process.ExitTime.ToString());
 #endif
 
-            //処理3. cloud=trueのときには、zipファイルを作成し、https://oyster-app-8jboe.ondigitalocean.app/therb/run にfrom-dataのキーdatasetに対応するファイルとして添付し、POSTする
-
+            }
         }
 
 
