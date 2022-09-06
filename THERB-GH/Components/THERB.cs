@@ -423,12 +423,14 @@ namespace THERBgh
         {
             base.AppendAdditionalComponentMenuItems(menu);
 
-
-            ToolStripTextBox toleranceItem = Menu_AppendTextItem(menu,
+            Menu_AppendItem(menu, FONT_SIZE_NAME);
+            ToolStripTextBox textBox = Menu_AppendTextItem(menu,
                     this._fontsize.ToString(),
                     (obj, e) => { },
                     Menu_TextBoxChanged,
                     true);
+            textBox.Name = FONT_SIZE_NAME;
+
         }
 
         protected void Menu_TextBoxChanged(GH_MenuTextBox sender, string newText)
