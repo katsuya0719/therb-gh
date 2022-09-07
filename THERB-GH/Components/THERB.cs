@@ -6,6 +6,11 @@ using System.Collections.Generic;
 using Rhino.Geometry.Intersect;
 using Newtonsoft.Json;
 using Model;
+using Rhino.Display;
+using System.Drawing;
+using System.Windows.Forms;
+using Grasshopper.GUI;
+using GH_IO.Serialization;
 
 // In order to load the result of this wizard, you will also need to
 // add the output bin/ folder of this project to the list of loaded
@@ -30,7 +35,12 @@ namespace THERBgh
         {
         }
 
+        const string FONT_SIZE_NAME = "fontsize";
+        const int DEFALT_FONT_SIZE = 12;
+
         public Envelope envelope;
+        private Therb _therb;
+        private int _fontsize;
 
         /// <summary>
         /// Registers all the input parameters for this component.
@@ -156,9 +166,9 @@ namespace THERBgh
                 }
             }
 
-            Therb therb = new Therb(roomList, faceListWindow, windowList, overhangList);
+            _therb = new Therb(roomList, faceListWindow, windowList, overhangList);
 
-            DA.SetData("Therb", therb);
+            DA.SetData("Therb", _therb);
         }
 
         private List<Brep> SplitGeometry(List<Brep> breps, double tol)
@@ -407,6 +417,68 @@ namespace THERBgh
         public override Guid ComponentGuid
         {
             get { return new Guid("871d367b-8760-4573-b161-304cb7d17bf0"); }
+        }
+
+        protected override void AppendAdditionalComponentMenuItems(ToolStripDropDown menu)
+        {
+            base.AppendAdditionalComponentMenuItems(menu);
+
+            Menu_AppendItem(menu, FONT_SIZE_NAME);
+            ToolStripTextBox textBox = Menu_AppendTextItem(menu,
+                    this._fontsize.ToString(),
+                    (obj, e) => { },
+                    Menu_TextBoxChanged,
+                    true);
+            textBox.Name = FONT_SIZE_NAME;
+
+        }
+
+        protected void Menu_TextBoxChanged(GH_MenuTextBox sender, string newText)
+        {
+            try
+            {
+                this._fontsize = int.Parse(newText);
+                this.ExpireSolution(true);
+            }
+            catch
+            {
+                this._fontsize = DEFALT_FONT_SIZE;
+            }
+        }
+
+        public override bool Write(GH_IWriter writer)
+        {
+            writer.SetInt32(FONT_SIZE_NAME, _fontsize);
+            return base.Write(writer);
+        }
+
+        public override bool Read(GH_IReader reader)
+        {
+            try { _fontsize = reader.GetInt32(FONT_SIZE_NAME); }
+            catch { this._fontsize = DEFALT_FONT_SIZE; }
+
+            return base.Read(reader);
+        }
+
+        public override void DrawViewportWires(IGH_PreviewArgs args)
+        {
+            base.DrawViewportWires(args);
+            try
+            {
+                foreach (var room in _therb.rooms)
+                {
+                    //var text3d = new Text3d("RoomId:" + room.id, new Plane(room.centroid, new Vector3d(0, 0, 1)), _fontsize);
+                    //args.Display.Draw3dText(text3d, Color.Black);
+                    //args.Display.Draw2dText("RoomId:" + room.id, Color.Black, room.centroid, false);
+                    args.Display.Draw2dText(
+                        "RoomId:" + room.id, 
+                        Color.Black,
+                        room.centroid, 
+                        true, 
+                        _fontsize);
+                }
+            }
+            catch { }
         }
     }
 
