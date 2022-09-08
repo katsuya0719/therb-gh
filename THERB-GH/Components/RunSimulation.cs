@@ -36,6 +36,9 @@ namespace THERBgh
         const string CREATE_FILE_B = "b.dat";
         const string CREATE_FILE_R = "r.dat";
         const string CREATE_FILE_T = "t.dat";
+        const string CREATE_FILE_W = "w.dat";
+        const string CREATE_FILE_A = "a.dat";
+        const string CREATE_FILE_S = "s.dat";
 
         const int MAX_SERVER_TRY_COUNT = 6;
         //const string POST_URL = "https://stingray-app-vgak2.ondigitalocean.app/therb/run";
@@ -125,8 +128,11 @@ namespace THERBgh
 
             Vector3d northDirection = new Vector3d(0, 0, 0);
             var tDat = CreateDatData.CreateTDat(1,12,northDirection);
+            var wDat = CreateDatData.CreateWDat(constructionList);
+            var aDat = CreateDatData.CreateADat(therb);
+            var sDat = CreateDatData.CreateSDat();
             //TODO: CreateADat,CreateWDatも呼ぶ
-            
+
 
             if (string.IsNullOrEmpty(name)) throw new Exception("nameが読み取れませんでした。");
             //if (!File.Exists(THERB_FILE_PATH)) throw new Exception("therb.exeが見つかりませんでした。");
@@ -232,6 +238,21 @@ namespace THERBgh
             using (StreamWriter writer = File.CreateText(Path.Combine(namePath, CREATE_FILE_R)))
             {
                 writer.Write(rDat);
+            }
+
+            using (StreamWriter writer = File.CreateText(Path.Combine(namePath, CREATE_FILE_W)))
+            {
+                writer.Write(wDat);
+            }
+
+            using (StreamWriter writer = File.CreateText(Path.Combine(namePath, CREATE_FILE_A)))
+            {
+                writer.Write(aDat);
+            }
+
+            using (StreamWriter writer = File.CreateText(Path.Combine(namePath, CREATE_FILE_S)))
+            {
+                writer.Write(sDat);
             }
 
             //t.datだけはshift-JISで書き出す

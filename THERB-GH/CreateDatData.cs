@@ -462,7 +462,7 @@ namespace THERBgh
             return wDat;
         }
 
-        public static string CreateSDat(Schedule sch)
+        public static string CreateSDat()
         {
 
 
