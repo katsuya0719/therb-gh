@@ -462,8 +462,10 @@ namespace THERBgh
             return wDat;
         }
 
-        public static string CreateSDat()
+        public static string CreateSDat(Schedule sch)
         {
+
+
             string sDat = "*month data   ----1---2---3---4---5---6---7---8---9--10--11--12 <== (no-con.=0, heating=1, cooling=2, h.c.=3) \r\n"
                 + " air condi.   -   1   1   1   0   0   2   2   2   2   0   0   1 \r\n"
                 + "*week data    - sun mon tue wed thu fri sat <== (no-con.=0, conditioning=1) \r\n"
@@ -601,7 +603,27 @@ namespace THERBgh
             catch { }
             return preview;
         }
+    }
 
+    public class Schedule
+    {
+        public List<int> monthly;
+        public WeeklySch weekly;
+        public DailySch daily;
+    }
+
+    public class WeeklySch
+    {
+        public int weekday;
+        public int saturday;
+        public int sunday;
+    }
+
+    public class DailySch
+    {
+        public List<int> hvac;
+        public List<Double> heating;
+        public List<Double> cooling;
     }
 
     public class ResConstruction

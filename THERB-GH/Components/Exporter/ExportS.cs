@@ -56,8 +56,7 @@ namespace THERBgh
         /// to store data in output parameters.</param>
         protected override void SolveInstance(IGH_DataAccess DA)
         {
-
-            DA.SetData("s_dat", CreateDatData.CreateSDat());
+            
         }
 
         /// <summary>
