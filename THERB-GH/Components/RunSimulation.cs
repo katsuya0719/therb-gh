@@ -35,6 +35,8 @@ namespace THERBgh
         const string THERB_FOLDER_PATH = @"C:\therb";
         const string CREATE_FILE_B = "b.dat";
         const string CREATE_FILE_R = "r.dat";
+        const string CREATE_FILE_T = "t.dat";
+
         const int MAX_SERVER_TRY_COUNT = 6;
         //const string POST_URL = "https://stingray-app-vgak2.ondigitalocean.app/therb/run";
         readonly static string[] POST_URLS = new string[5] { 
@@ -120,6 +122,9 @@ namespace THERBgh
 
             var bDat = CreateDatData.CreateBDat(therb);
             var rDat = CreateDatData.CreateRDat(therb);
+
+            Vector3d northDirection = new Vector3d(0, 0, 0);
+            var tDat = CreateDatData.CreateTDat(1,12,northDirection);
             //TODO: CreateADat,CreateWDatも呼ぶ
             
 
@@ -228,6 +233,13 @@ namespace THERBgh
             {
                 writer.Write(rDat);
             }
+
+            //t.datだけはshift-JISで書き出す
+            using (StreamWriter sw = new StreamWriter(Path.Combine(namePath, CREATE_FILE_T), false, Encoding.GetEncoding("shift-jis")))
+            {
+                sw.Write(tDat);
+            };
+                
 
             if (cloudRun)
             {
