@@ -462,7 +462,7 @@ namespace THERBgh
             return wDat;
         }
 
-        public static string CreateSDat()
+        public static string CreateSDat(Schedule schedule)
         {
 
 
@@ -605,25 +605,35 @@ namespace THERBgh
         }
     }
 
+    public class ResSchedule
+    {
+        public List<Schedule> data;
+    }
+
     public class Schedule
     {
-        public List<int> monthly;
+        public string name;
+        public string description;
+        public MonthlySch monthly;
         public WeeklySch weekly;
         public DailySch daily;
     }
 
     public class WeeklySch
     {
-        public int weekday;
-        public int saturday;
-        public int sunday;
+        public List<int> hvac;
+    }
+
+    public class MonthlySch
+    {
+        public List<int> hvac;
     }
 
     public class DailySch
     {
         public List<int> hvac;
-        public List<Double> heating;
-        public List<Double> cooling;
+        public List<int> heating;
+        public List<int> cooling;
     }
 
     public class ResConstruction

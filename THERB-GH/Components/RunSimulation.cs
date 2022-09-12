@@ -130,7 +130,7 @@ namespace THERBgh
             var tDat = CreateDatData.CreateTDat(1,12,northDirection);
             var wDat = CreateDatData.CreateWDat(constructionList);
             var aDat = CreateDatData.CreateADat(therb);
-            var sDat = CreateDatData.CreateSDat();
+            //var sDat = CreateDatData.CreateSDat();
             //TODO: CreateADat,CreateWDatも呼ぶ
 
 
@@ -250,10 +250,10 @@ namespace THERBgh
                 writer.Write(aDat);
             }
 
-            using (StreamWriter writer = File.CreateText(Path.Combine(namePath, CREATE_FILE_S)))
-            {
-                writer.Write(sDat);
-            }
+            //using (StreamWriter writer = File.CreateText(Path.Combine(namePath, CREATE_FILE_S)))
+            //{
+            //    writer.Write(sDat);
+            //}
 
             //t.datだけはshift-JISで書き出す
             using (StreamWriter sw = new StreamWriter(Path.Combine(namePath, CREATE_FILE_T), false, Encoding.GetEncoding("shift-jis")))
