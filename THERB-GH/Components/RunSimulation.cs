@@ -176,28 +176,37 @@ namespace THERBgh
             }
 
             string dirPath = "";
-            using (FolderBrowserDialog FBD = new FolderBrowserDialog()
+
+            if (Directory.Exists(Path.Combine(initDir, "THERB")))
             {
-                Description = "フォルダを開く", 
-                SelectedPath = initDir,
-                ShowNewFolderButton = false
-            })
+                dirPath = Path.Combine(initDir, "THERB");
+            }
+            else
             {
-                if(FBD.ShowDialog() == DialogResult.OK)
+                using (FolderBrowserDialog FBD = new FolderBrowserDialog()
                 {
-                    //MessageBox.Show(FBD.SelectedPath);
-                    dirPath = FBD.SelectedPath;
-                    if (string.IsNullOrEmpty(dirPath)) {
-                        MessageBox.Show("パスが読み取れませんでした。");
-                        return;
-                    }
-                    if(!File.Exists(Path.Combine(dirPath, THERB_FILE_NAME)) && !cloudRun)
+                    Description = "フォルダを開く",
+                    SelectedPath = initDir,
+                    ShowNewFolderButton = false
+                })
+                {
+                    if (FBD.ShowDialog() == DialogResult.OK)
                     {
-                        MessageBox.Show("パス内にtherb.exeがありませんでした。" + Environment.NewLine + "中止します。");
-                        return;
+                        //MessageBox.Show(FBD.SelectedPath);
+                        dirPath = FBD.SelectedPath;
+                        if (string.IsNullOrEmpty(dirPath))
+                        {
+                            MessageBox.Show("パスが読み取れませんでした。");
+                            return;
+                        }
+                        if (!File.Exists(Path.Combine(dirPath, THERB_FILE_NAME)) && !cloudRun)
+                        {
+                            MessageBox.Show("パス内にtherb.exeがありませんでした。" + Environment.NewLine + "中止します。");
+                            return;
+                        }
                     }
+                    else return;
                 }
-                else　return;
             }
 
             #region TRY CommonOpenFileDialog
