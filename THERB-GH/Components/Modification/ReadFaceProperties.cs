@@ -3,6 +3,11 @@ using Rhino.Geometry;
 using System;
 using System.Collections.Generic;
 using Model;
+using Grasshopper.Kernel.Parameters;
+using System.Windows.Forms;
+using GH_IO.Serialization;
+using Grasshopper.GUI;
+using System.Drawing;
 
 // In order to load the result of this wizard, you will also need to
 // add the output bin/ folder of this project to the list of loaded
@@ -11,6 +16,14 @@ using Model;
 
 namespace THERBgh
 {
+    public enum VisualizeType
+    {
+        partId,
+        elementType,
+        structureId,
+        direction,
+        None
+    }
     public class ReadFaceProperty : GH_Component
     {
         /// <summary>
@@ -27,6 +40,13 @@ namespace THERBgh
         {
         }
 
+        const string FONT_SIZE_NAME = "fontsize";
+        const int DEFALT_FONT_SIZE = 12;
+
+        private List<Face> _faces;
+        private int _fontsize;
+        private VisualizeType _visualizeType;
+
         /// <summary>
         /// Registers all the input parameters for this component.
         /// </summary>
@@ -35,6 +55,13 @@ namespace THERBgh
             //pManager.AddGenericParameter("Therb", "Therb", "Therb data", GH_ParamAccess.item);
             pManager.AddGenericParameter("Faces", "Faces", "list of Face", GH_ParamAccess.list);
             pManager[0].Optional = true;
+            pManager.AddIntegerParameter("Type", "Type", "Visualize id type.", GH_ParamAccess.item, -1);
+            var bcInput = (Param_Integer)pManager[1];
+            bcInput.AddNamedValue("partId", (int)VisualizeType.partId);
+            bcInput.AddNamedValue("elementType", (int)VisualizeType.elementType);
+            bcInput.AddNamedValue("structureId", (int)VisualizeType.structureId);
+            bcInput.AddNamedValue("direction", (int)VisualizeType.direction);
+            bcInput.AddNamedValue("None", -1);
             //pManager[1].Optional = true;
             //pManager.AddTextParameter("property", "property", "property to extract", GH_ParamAccess.item);
             //pManager.AddTextParameter("class", "class", "room or face or window", GH_ParamAccess.item);
@@ -70,10 +97,20 @@ namespace THERBgh
         {
             //Therb therb = null;
             List<Face> faceList = new List<Face>();
+            int visualizeType = -1;
             //DA.GetData(0, ref therb);
             DA.GetDataList(0, faceList);
+            DA.GetData(1, ref visualizeType);
             //faceList.AddRange(therb.faces);
             //List<Face> faceList = therb.faces;
+
+            _faces = faceList;
+            if (visualizeType < -1 | Enum.GetNames(typeof(VisualizeType)).Length < visualizeType)
+            {
+                throw new ArgumentException("範囲外の数字が入れられました。", "Type");
+            }
+            _visualizeType = (VisualizeType)visualizeType;
+
             List<int> roomIdList = new List<int>();
             List<int> partIdList = new List<int>();
             List<Surface> surfaceList = new List<Surface>();
@@ -139,6 +176,80 @@ namespace THERBgh
         public override Guid ComponentGuid
         {
             get { return new Guid("01bf9c59-9cce-48b5-b00b-0c0ecb858f63"); }
+        }
+
+        protected override void AppendAdditionalComponentMenuItems(ToolStripDropDown menu)
+        {
+            base.AppendAdditionalComponentMenuItems(menu);
+
+            Menu_AppendItem(menu, FONT_SIZE_NAME);
+            ToolStripTextBox textBox = Menu_AppendTextItem(menu,
+                    this._fontsize.ToString(),
+                    (obj, e) => { },
+                    Menu_TextBoxChanged,
+                    true);
+            textBox.Name = FONT_SIZE_NAME;
+
+        }
+
+        protected void Menu_TextBoxChanged(GH_MenuTextBox sender, string newText)
+        {
+            try
+            {
+                this._fontsize = int.Parse(newText);
+                this.ExpireSolution(true);
+            }
+            catch
+            {
+                this._fontsize = DEFALT_FONT_SIZE;
+            }
+        }
+
+        public override bool Write(GH_IWriter writer)
+        {
+            writer.SetInt32(FONT_SIZE_NAME, _fontsize);
+            return base.Write(writer);
+        }
+
+        public override bool Read(GH_IReader reader)
+        {
+            try { _fontsize = reader.GetInt32(FONT_SIZE_NAME); }
+            catch { this._fontsize = DEFALT_FONT_SIZE; }
+
+            return base.Read(reader);
+        }
+
+        public override void DrawViewportWires(IGH_PreviewArgs args)
+        {
+            base.DrawViewportWires(args);
+            try
+            {
+                if (_visualizeType == VisualizeType.None)
+                    return;
+                foreach (var face in _faces)
+                {
+                    //var text3d = new Text3d("RoomId:" + room.id, new Plane(room.centroid, new Vector3d(0, 0, 1)), _fontsize);
+                    //args.Display.Draw3dText(text3d, Color.Black);
+                    //args.Display.Draw2dText("RoomId:" + room.id, Color.Black, room.centroid, false);
+                    var writeText = "";
+                    if (_visualizeType == VisualizeType.partId)
+                        writeText = "partId:" + face.partId;
+                    else if (_visualizeType == VisualizeType.elementType)
+                        writeText = "elementType:" + face.elementType;
+                    else if (_visualizeType == VisualizeType.structureId)
+                        writeText = "structureId:" + face.structureId;
+                    else if (_visualizeType == VisualizeType.direction)
+                        writeText = "direction:" + face.direction;
+
+                    args.Display.Draw2dText(
+                        writeText,
+                        Color.Black,
+                        face.centerPt,
+                        true,
+                        _fontsize);
+                }
+            }
+            catch { }
         }
     }
 }
