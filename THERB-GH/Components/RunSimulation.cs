@@ -39,10 +39,11 @@ namespace THERBgh
         const string CREATE_FILE_W = "w.dat";
         const string CREATE_FILE_A = "a.dat";
         const string CREATE_FILE_S = "s.dat";
+        const string CREATED_FILE_O = "o.dat";
 
         const int MAX_SERVER_TRY_COUNT = 6;
         //const string POST_URL = "https://stingray-app-vgak2.ondigitalocean.app/therb/run";
-        readonly static string[] POST_URLS = new string[5] { 
+        readonly static string[] POST_URLS = new string[5] {
             "https://oyster-app-8jboe.ondigitalocean.app/therb/run",
             "https://oyster-app-8jboe.ondigitalocean.app/therb/run",
             "https://oyster-app-8jboe.ondigitalocean.app/therb/run",
@@ -97,7 +98,8 @@ namespace THERBgh
         /// </summary>
         protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
         {
-            pManager.AddTextParameter("result", "result", "Room class", GH_ParamAccess.item);
+            //pManager.AddTextParameter("result", "result", "Room class", GH_ParamAccess.item);
+            pManager.AddTextParameter("o_dat_file_path", "o_dat_file_path", "o.dat file path", GH_ParamAccess.item);
         }
 
         /// <summary>
@@ -269,7 +271,7 @@ namespace THERBgh
             {
                 sw.Write(tDat);
             };
-                
+
 
             if (cloudRun)
             {
@@ -287,7 +289,7 @@ namespace THERBgh
                 bool post_done = false;
                 for (int i = 0; i < MAX_SERVER_TRY_COUNT; i++)
                 {
-                    foreach(var url in POST_URLS)
+                    foreach (var url in POST_URLS)
                     {
                         using (FileStream fs = new FileStream(zipfile, FileMode.Open, FileAccess.Read))
                         {
@@ -352,11 +354,15 @@ namespace THERBgh
                 };
                 process.Start();
                 process.WaitForExit();
-#if DEBUG
-                Debug.WriteLine("END");
-                Debug.WriteLine("EXITCODE:" + process.ExitCode.ToString());
-                Debug.WriteLine("EXITTIME" + process.ExitTime.ToString());
-#endif
+                if (process.ExitCode != 0)
+                {
+                    MessageBox.Show("解析がうまく行きませんでした。");
+                    throw new Exception("解析がうまく行きませんでした。");
+                }
+
+                var path = Path.Combine(namePath, CREATED_FILE_O);
+
+                DA.SetData("o_dat_file_path", path);
 
             }
         }
