@@ -614,9 +614,20 @@ namespace THERBgh
     {
         public string name;
         public string description;
-        public MonthlySch monthly;
-        public WeeklySch weekly;
-        public DailySch daily;
+        public List<MonthlySch> monthly;
+        public List<WeeklySch> weekly;
+        public List<DailySch> daily;
+        public override string ToString()
+        {
+            string preview = base.ToString();
+            try
+            {
+                preview += Environment.NewLine;
+                preview += " Name :" + name + Environment.NewLine;
+            }
+            catch { }
+            return preview;
+        }
     }
 
     public class WeeklySch
