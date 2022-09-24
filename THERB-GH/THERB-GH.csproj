@@ -50,6 +50,7 @@
     <Compile Include="Components\Exporter\ExportS.cs" />
     <Compile Include="Components\Modification\ReadSchedule.cs" />
     <Compile Include="Components\Modification\ReadEnvelope.cs" />
+    <Compile Include="Components\Modification\UploadResult.cs" />
     <Compile Include="CreateDatData.cs" />
     <Compile Include="Components\Exporter\ExportT.cs" />
     <Compile Include="Components\Exporter\ExportW.cs" />

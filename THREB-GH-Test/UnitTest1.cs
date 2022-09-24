@@ -115,5 +115,18 @@ namespace THREB_GH_Test
 
             var source = JsonConvert.DeserializeObject<ResConstruction>(text);
         }
+
+        [TestMethod]
+        public void GetScheduleFromWebTest()
+        {
+            const string SCHEDULE_URL = "https://stingray-app-vgak2.ondigitalocean.app/schedules";
+
+            var wc = new WebClient();
+            string text = wc.DownloadString(SCHEDULE_URL);
+
+            var schedules = JsonConvert.DeserializeObject<ResSchedule>(text);
+
+
+        }
     }
 }
