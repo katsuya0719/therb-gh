@@ -89,6 +89,7 @@ namespace THERBgh
         {
             pManager.AddGenericParameter("Therb", "therb", "THERB class", GH_ParamAccess.item);
             pManager.AddGenericParameter("Constructions", "Constructions", "Construction data", GH_ParamAccess.list);
+            pManager.AddGenericParameter("Schedule", "Schedule", "Schedule data", GH_ParamAccess.item);
             pManager.AddTextParameter("name", "name", "simulation case name", GH_ParamAccess.item);
             pManager.AddBooleanParameter("cloud", "cloud", "run simulation in cloud", GH_ParamAccess.item);
             pManager.AddBooleanParameter("run", "run", "run THERB simulation", GH_ParamAccess.item);
@@ -119,6 +120,9 @@ namespace THERBgh
 
             List<Construction> constructionList = new List<Construction>();
             DA.GetDataList(1, constructionList);
+            //TODO: schedule inputをoptionalにしたい
+            Schedule schedule = new Schedule();
+            DA.GetData("Schedule", ref schedule);
 
             DA.GetData("name", ref name);
             DA.GetData("cloud", ref cloudRun);
@@ -132,8 +136,7 @@ namespace THERBgh
             var tDat = CreateDatData.CreateTDat(1,12,northDirection);
             var wDat = CreateDatData.CreateWDat(constructionList);
             var aDat = CreateDatData.CreateADat(therb);
-            //var sDat = CreateDatData.CreateSDat();
-            //TODO: CreateADat,CreateWDatも呼ぶ
+            var sDat = CreateDatData.CreateSDat(schedule);
 
 
             if (string.IsNullOrEmpty(name)) throw new Exception("nameが読み取れませんでした。");
@@ -261,10 +264,10 @@ namespace THERBgh
                 writer.Write(aDat);
             }
 
-            //using (StreamWriter writer = File.CreateText(Path.Combine(namePath, CREATE_FILE_S)))
-            //{
-            //    writer.Write(sDat);
-            //}
+            using (StreamWriter writer = File.CreateText(Path.Combine(namePath, CREATE_FILE_S)))
+            {
+                writer.Write(sDat);
+            }
 
             //t.datだけはshift-JISで書き出す
             using (StreamWriter sw = new StreamWriter(Path.Combine(namePath, CREATE_FILE_T), false, Encoding.GetEncoding("shift-jis")))

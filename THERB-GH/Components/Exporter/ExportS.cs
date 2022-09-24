@@ -37,8 +37,7 @@ namespace THERBgh
         /// </summary>
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
         {
-            //pManager.AddGenericParameter("Therb", "therb", "THERB class", GH_ParamAccess.item);
-
+            pManager.AddGenericParameter("Schedule", "Schedule", "Schedule data", GH_ParamAccess.item);
         }
 
         /// <summary>
@@ -56,7 +55,10 @@ namespace THERBgh
         /// to store data in output parameters.</param>
         protected override void SolveInstance(IGH_DataAccess DA)
         {
-            
+            Schedule schedule = new Schedule();
+            DA.GetData("Schedule", ref schedule);
+
+            DA.SetData("s_dat", CreateDatData.CreateSDat(schedule));
         }
 
         /// <summary>
