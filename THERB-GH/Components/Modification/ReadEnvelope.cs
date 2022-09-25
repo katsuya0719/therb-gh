@@ -40,7 +40,7 @@ namespace THERBgh
         /// </summary>
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
         {
-            pManager.AddBooleanParameter("Run", "Run", "Read construction json data", GH_ParamAccess.item);
+            pManager.AddBooleanParameter("Run", "Run", "Read envelope json data", GH_ParamAccess.item);
         }
 
         /// <summary>

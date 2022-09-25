@@ -464,16 +464,20 @@ namespace THERBgh
 
         public static string CreateSDat(Schedule schedule)
         {
-
+            List<int> m = schedule.monthly.hvac;
+            List<int> w = schedule.weekly.hvac;
+            List<int> dh = schedule.daily.hvac;
+            List<int> dht = schedule.daily.heating;
+            List<int> dct = schedule.daily.cooling;
 
             string sDat = "*month data   ----1---2---3---4---5---6---7---8---9--10--11--12 <== (no-con.=0, heating=1, cooling=2, h.c.=3) \r\n"
-                + " air condi.   -   1   1   1   0   0   2   2   2   2   0   0   1 \r\n"
+                + " air condi.   -"+ FillSchedule(m,4)+ "\r\n"
                 + "*week data    - sun mon tue wed thu fri sat <== (no-con.=0, conditioning=1) \r\n"
-                + " air condi.   -   1   1   1   1   1   1   1 \r\n"
+                + " air condi.   -"+FillSchedule(w,4) +"\r\n"
                 + "*hour  data   - ----1 ----2 ----3 ----4 ----5 ----6 ----7 ----8 ----9 ---10 ---11 ---12 ---13 ---14 ---15 ---16 ---17 ---18 ---19 ---20 ---21 ---22 ---23 ---24 \r\n"
-                + "room ======>  1     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0     0 \r\n"
-                + " set low  tem.-  20.0  20.0  20.0  20.0  20.0  20.0  20.0  20.0  20.0  20.0  20.0  20.0  20.0  20.0  20.0  20.0  20.0  20.0  20.0  20.0  20.0  20.0  20.0  20.0 \r\n"
-                + " set high tem.-  27.0  27.0  27.0  27.0  27.0  27.0  27.0  27.0  27.0  27.0  27.0  27.0  27.0  27.0  27.0  27.0  27.0  27.0  27.0  27.0  27.0  27.0  27.0  27.0 \r\n"
+                + "room ======>  1"+FillSchedule(dh,6) +"\r\n"
+                + " set low  tem.-" + FillSchedule(dht, 6) + "\r\n"
+                + " set high tem.-" + FillSchedule(dct, 6,1) + "\r\n"
                 + " inner heating-   0.0   0.0   0.0   0.0   0.0   0.0   0.0   0.0   0.0   0.0   0.0   0.0   0.0   0.0   0.0   0.0   0.0   0.0   0.0   0.0   0.0   0.0   0.0   0.0 \r\n"
                 + " set low  R.H.-  40.0  40.0  40.0  40.0  40.0  40.0  40.0  40.0  40.0  40.0  40.0  40.0  40.0  40.0  40.0  40.0  40.0  40.0  40.0  40.0  40.0  40.0  40.0  40.0 \r\n"
                 + " set high R.H.-  60.0  60.0  60.0  60.0  60.0  60.0  60.0  60.0  60.0  60.0  60.0  60.0  60.0  60.0  60.0  60.0  60.0  60.0  60.0  60.0  60.0  60.0  60.0  60.0 \r\n"
@@ -527,6 +531,25 @@ namespace THERBgh
 
             return tDat;
 
+        }
+
+        private static string FillSchedule(List<int> schedule,int eachLength)
+        {
+            string result = "";
+            schedule.ForEach(s =>
+            {
+                result += Converter.FillEmpty(s, eachLength);
+            });
+            return result;
+        }
+        private static string FillSchedule(List<int> schedule, int eachLength,int digit)
+        {
+            string result = "";
+            schedule.ForEach(s =>
+            {
+                result += Converter.FillEmpty(s, eachLength, digit);
+            });
+            return result;
         }
         private static string FillMultipleZeros(int repeatNum,int totalLength,int digit)
         {
@@ -617,6 +640,17 @@ namespace THERBgh
         public MonthlySch monthly;
         public WeeklySch weekly;
         public DailySch daily;
+        public override string ToString()
+        {
+            string preview = base.ToString();
+            try
+            {
+                preview += Environment.NewLine;
+                preview += " Name :" + name + Environment.NewLine;
+            }
+            catch { }
+            return preview;
+        }
     }
 
     public class WeeklySch

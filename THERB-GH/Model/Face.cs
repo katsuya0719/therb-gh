@@ -57,11 +57,8 @@ namespace Model
     }
     public class Face : BaseFace
     {
-        //public int partId;
-        //public faceType face{get; private set;}
         public SurfaceType surfaceType { get; private set; }
         public BoundaryCondition bc { get; set; }
-        //public string elementType { get; set; }
         public ElementType elementType { get; set; }
         public Room parent;
         public Vector3d tempNormal;
