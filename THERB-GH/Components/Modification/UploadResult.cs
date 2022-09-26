@@ -17,13 +17,14 @@ namespace Components.Modification
         const string UPLOAD_FILE_O = "o.dat";
 
         const int MAX_SERVER_TRY_COUNT = 6;
-        readonly static string[] POST_URLS = new string[5] {
-            "https://oyster-app-8jboe.ondigitalocean.app/therb/result",
-            "https://oyster-app-8jboe.ondigitalocean.app/therb/result",
-            "https://oyster-app-8jboe.ondigitalocean.app/therb/result",
-            "https://oyster-app-8jboe.ondigitalocean.app/therb/result",
-            "https://oyster-app-8jboe.ondigitalocean.app/therb/result"
-        };
+        //readonly static string[] POST_URLS = new string[5] {
+        //    "https://oyster-app-8jboe.ondigitalocean.app/therb/result",
+        //    "https://oyster-app-8jboe.ondigitalocean.app/therb/result",
+        //    "https://oyster-app-8jboe.ondigitalocean.app/therb/result",
+        //    "https://oyster-app-8jboe.ondigitalocean.app/therb/result",
+        //    "https://oyster-app-8jboe.ondigitalocean.app/therb/result"
+        //};
+        string POST_URL = "https://oyster-app-8jboe.ondigitalocean.app/therb/result";
 
         /// <summary>
         /// Initializes a new instance of the UploadResult class.
@@ -48,6 +49,7 @@ namespace Components.Modification
         /// </summary>
         protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
         {
+            pManager.AddTextParameter("result","result","result data", GH_ParamAccess.item);
         }
 
         /// <summary>
@@ -64,67 +66,51 @@ namespace Components.Modification
             var paths = path.Split(seps);
             var name = paths[paths.Length - 2];
 
-            bool post_done = false;
-            for (int i = 0; i < MAX_SERVER_TRY_COUNT; i++)
+            using (FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read))
             {
-                foreach (var url in POST_URLS)
+                try
                 {
-                    using (FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read))
-                    {
-                        try
-                        {
-                            MultipartFormDataContent content = new MultipartFormDataContent();
+                    MultipartFormDataContent content = new MultipartFormDataContent();
 
-                            StreamContent streamContentOFile = new StreamContent(fs);
-                            streamContentOFile.Headers.ContentDisposition =
-                                   new ContentDispositionHeaderValue("form-data")
-                                   {
-                                       Name = "data",
-                                       FileName = UPLOAD_FILE_O
-                                   };
-
-                            StringContent stringContentName = new StringContent(name);
-                            stringContentName.Headers.ContentDisposition =
-                                   new ContentDispositionHeaderValue("form-data")
-                                   {
-                                       Name = "name",
-                                   };
-
-                            content.Add(streamContentOFile);
-                            content.Add(stringContentName);
-                            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, url);
-                            request.Content = content;
-                            var responseTask = new HttpClient().SendAsync(request);
-                            responseTask.Wait();
-                            var response = responseTask.Result;
-
-                            if (response.StatusCode == HttpStatusCode.OK)
+                    StreamContent streamContentOFile = new StreamContent(fs);
+                    streamContentOFile.Headers.ContentDisposition =
+                            new ContentDispositionHeaderValue("form-data")
                             {
-                                Debug.WriteLine(response.Content);
-                                MessageBox.Show("送信できました。");
-                                post_done = true;
-                                break;
-                            }
-                            Debug.WriteLine(response.StatusCode);
-                        }
-                        catch (Exception e)
-                        {
-                            Debug.WriteLine("error: " + e.Message);
-                            Task.Delay(1000);
-                        }
-                    }
-                }
-                if (post_done)
-                {
-                    break;
-                }
-            }
-            if (!post_done)
-            {
-                MessageBox.Show("送信できませんでした。");
-                throw new Exception("送信できませんでした。");
-            }
+                                Name = "data",
+                                FileName = UPLOAD_FILE_O
+                            };
 
+                    StringContent stringContentName = new StringContent(name);
+                    stringContentName.Headers.ContentDisposition =
+                            new ContentDispositionHeaderValue("form-data")
+                            {
+                                Name = "name",
+                            };
+
+                    content.Add(streamContentOFile);
+                    content.Add(stringContentName);
+                    HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, POST_URL);
+                    request.Content = content;
+                    var responseTask = new HttpClient().SendAsync(request);
+                    responseTask.Wait();
+                    var response = responseTask.Result;
+
+                    if (response.StatusCode == HttpStatusCode.OK)
+                    {
+                        Debug.WriteLine(response.Content);
+                        MessageBox.Show("送信できました。");
+                        DA.SetData("result", response.Content);
+                    }
+                    Debug.WriteLine(response.StatusCode);
+                }
+                catch (Exception e)
+                {
+                    Debug.WriteLine("error: " + e.Message);
+                    MessageBox.Show("送信できませんでした。");
+                    throw new Exception("送信できませんでした。");
+                    //Task.Delay(1000);
+                }
+            }
         }
 
         /// <summary>
