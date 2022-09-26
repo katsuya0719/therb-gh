@@ -39,10 +39,11 @@ namespace THERBgh
         const string CREATE_FILE_W = "w.dat";
         const string CREATE_FILE_A = "a.dat";
         const string CREATE_FILE_S = "s.dat";
+        const string CREATED_FILE_O = "o.dat";
 
         const int MAX_SERVER_TRY_COUNT = 6;
         //const string POST_URL = "https://stingray-app-vgak2.ondigitalocean.app/therb/run";
-        readonly static string[] POST_URLS = new string[5] { 
+        readonly static string[] POST_URLS = new string[5] {
             "https://oyster-app-8jboe.ondigitalocean.app/therb/run",
             "https://oyster-app-8jboe.ondigitalocean.app/therb/run",
             "https://oyster-app-8jboe.ondigitalocean.app/therb/run",
@@ -88,6 +89,7 @@ namespace THERBgh
         {
             pManager.AddGenericParameter("Therb", "therb", "THERB class", GH_ParamAccess.item);
             pManager.AddGenericParameter("Constructions", "Constructions", "Construction data", GH_ParamAccess.list);
+            pManager.AddGenericParameter("Schedule", "Schedule", "Schedule data", GH_ParamAccess.item);
             pManager.AddTextParameter("name", "name", "simulation case name", GH_ParamAccess.item);
             pManager.AddBooleanParameter("cloud", "cloud", "run simulation in cloud", GH_ParamAccess.item);
             pManager.AddBooleanParameter("run", "run", "run THERB simulation", GH_ParamAccess.item);
@@ -97,7 +99,8 @@ namespace THERBgh
         /// </summary>
         protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
         {
-            pManager.AddTextParameter("result", "result", "Room class", GH_ParamAccess.item);
+            //pManager.AddTextParameter("result", "result", "Room class", GH_ParamAccess.item);
+            pManager.AddTextParameter("o_dat_file_path", "o_dat_file_path", "o.dat file path", GH_ParamAccess.item);
         }
 
         /// <summary>
@@ -117,6 +120,9 @@ namespace THERBgh
 
             List<Construction> constructionList = new List<Construction>();
             DA.GetDataList(1, constructionList);
+            //TODO: schedule inputをoptionalにしたい
+            Schedule schedule = new Schedule();
+            DA.GetData("Schedule", ref schedule);
 
             DA.GetData("name", ref name);
             DA.GetData("cloud", ref cloudRun);
@@ -130,8 +136,7 @@ namespace THERBgh
             var tDat = CreateDatData.CreateTDat(1,12,northDirection);
             var wDat = CreateDatData.CreateWDat(constructionList);
             var aDat = CreateDatData.CreateADat(therb);
-            //var sDat = CreateDatData.CreateSDat();
-            //TODO: CreateADat,CreateWDatも呼ぶ
+            var sDat = CreateDatData.CreateSDat(schedule);
 
 
             if (string.IsNullOrEmpty(name)) throw new Exception("nameが読み取れませんでした。");
@@ -259,17 +264,17 @@ namespace THERBgh
                 writer.Write(aDat);
             }
 
-            //using (StreamWriter writer = File.CreateText(Path.Combine(namePath, CREATE_FILE_S)))
-            //{
-            //    writer.Write(sDat);
-            //}
+            using (StreamWriter writer = File.CreateText(Path.Combine(namePath, CREATE_FILE_S)))
+            {
+                writer.Write(sDat);
+            }
 
             //t.datだけはshift-JISで書き出す
             using (StreamWriter sw = new StreamWriter(Path.Combine(namePath, CREATE_FILE_T), false, Encoding.GetEncoding("shift-jis")))
             {
                 sw.Write(tDat);
             };
-                
+
 
             if (cloudRun)
             {
@@ -287,7 +292,7 @@ namespace THERBgh
                 bool post_done = false;
                 for (int i = 0; i < MAX_SERVER_TRY_COUNT; i++)
                 {
-                    foreach(var url in POST_URLS)
+                    foreach (var url in POST_URLS)
                     {
                         using (FileStream fs = new FileStream(zipfile, FileMode.Open, FileAccess.Read))
                         {
@@ -352,11 +357,15 @@ namespace THERBgh
                 };
                 process.Start();
                 process.WaitForExit();
-#if DEBUG
-                Debug.WriteLine("END");
-                Debug.WriteLine("EXITCODE:" + process.ExitCode.ToString());
-                Debug.WriteLine("EXITTIME" + process.ExitTime.ToString());
-#endif
+                if (process.ExitCode != 0)
+                {
+                    MessageBox.Show("解析がうまく行きませんでした。");
+                    throw new Exception("解析がうまく行きませんでした。");
+                }
+
+                var path = Path.Combine(namePath, CREATED_FILE_O);
+
+                DA.SetData("o_dat_file_path", path);
 
             }
         }
