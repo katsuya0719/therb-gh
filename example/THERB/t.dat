@@ -1,6 +1,6 @@
 *** THERB 起動用データ ***
 \------------------\ ----------------- \（入出力データ）
-出  力  データ     -o.dat                                                            !daout
+出  力  データ     -o.csv                                                            !daout
 気  象  データ     -Fukuoka.dat                                                   !weather
 壁  体  データ     -w.dat                                                            !dwall
 建  物  データ     -b.dat                                                            !dbld
