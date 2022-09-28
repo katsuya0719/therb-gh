@@ -93,6 +93,7 @@ namespace THERBgh
             pManager.AddTextParameter("name", "name", "simulation case name", GH_ParamAccess.item);
             pManager.AddBooleanParameter("cloud", "cloud", "run simulation in cloud", GH_ParamAccess.item);
             pManager.AddBooleanParameter("run", "run", "run THERB simulation", GH_ParamAccess.item);
+            pManager[2].Optional = true;
         }
         /// <summary>
         /// Registers all the output parameters for this component.
