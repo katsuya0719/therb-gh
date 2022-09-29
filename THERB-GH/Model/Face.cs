@@ -34,8 +34,12 @@ namespace Model
         interiorFloor,
         interiorRoof,
         exteriorRoof,
+        interiorCeiling,
+        exteriorCeiling,
         groundFloor,
         groundRoof,
+        groundWall,
+        groundCeiling,
         window
     }
 

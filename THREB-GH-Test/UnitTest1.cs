@@ -128,5 +128,23 @@ namespace THREB_GH_Test
 
 
         }
+
+        [TestMethod]
+        public void GetString()
+        {
+            foreach(var bc in Enum.GetNames(typeof(BoundaryCondition)))
+            {
+                foreach(var surfaceType in Enum.GetNames(typeof(SurfaceType)))
+                {
+
+                    string strElementType = bc.ToString() + surfaceType.ToString();
+                    var elementType = (ElementType)Enum.Parse(typeof(ElementType), strElementType);
+
+                    Console.WriteLine(elementType);
+                }
+            }
+            //var bc = BoundaryCondition.exterior;
+            //var surfaceType = SurfaceType.Roof;
+        }
     }
 }
