@@ -19,8 +19,8 @@ namespace THERBgh
 {
     public class ReadSchedule : GH_Component
     {
-        //const string SCHEDULE_URL = "https://stingray-app-vgak2.ondigitalocean.app/schedules";
-        const string SCHEDULE_URL = "http://localhost:5000/schedules";//データを入れるまでの一次的措置
+        const string SCHEDULE_URL = "https://stingray-app-vgak2.ondigitalocean.app/schedules";
+        //const string SCHEDULE_URL = "http://localhost:5000/schedules";//データを入れるまでの一次的措置
 
         /// <summary>
         /// Each implementation of GH_Component must provide a public 

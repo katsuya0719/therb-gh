@@ -513,7 +513,7 @@ namespace THERBgh
                 + "------------------ ---.--- （計算地域等の基本データ） \r\n"
                 + "緯度      (°)     -  33.60 \r\n"
                 + "経度      (°)     - 130.22 \r\n"
-                + "建物方位角(°)     -   " + NorthDegree(northDirection) + " \r\n"
+                + "建物方位角(°)     -  " + NorthDegree(northDirection).ToString() + " \r\n"
                 + "地表面日射吸収率   -   0.8 \r\n"
                 + "地表面長波放射率   -   0.9 \r\n"
                 + "------------------ -----.- （計算時間間隔） \r\n"
@@ -611,7 +611,7 @@ namespace THERBgh
             else
                 northDegree = angle2;
 
-            return northDegree;
+            return Math.Round(northDegree,1);
         }
     }
     public class ResEnvelope

@@ -279,10 +279,10 @@ namespace Model
 
         public void setElementType()
         {
-            if (!unique) return;
-
             string strElementType = bc.ToString() + surfaceType.ToString();
             elementType = (ElementType)Enum.Parse(typeof(ElementType), strElementType);
+
+            if (!unique) return;
 
             switch (elementType)
             {
