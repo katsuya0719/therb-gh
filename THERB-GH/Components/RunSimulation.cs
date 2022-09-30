@@ -271,10 +271,10 @@ namespace THERBgh
             }
 
             //t.datだけはshift-JISで書き出す
-            using (StreamWriter sw = new StreamWriter(Path.Combine(namePath, CREATE_FILE_T), false, Encoding.GetEncoding("shift-jis")))
-            {
-                sw.Write(tDat);
-            };
+            //using (StreamWriter sw = new StreamWriter(Path.Combine(namePath, CREATE_FILE_T), false, Encoding.GetEncoding("shift-jis")))
+            //{
+            //    sw.Write(tDat);
+            //};
 
 
             if (cloudRun)
