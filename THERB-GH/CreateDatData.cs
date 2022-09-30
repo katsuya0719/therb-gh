@@ -8,6 +8,7 @@ using Rhino.Geometry.Intersect;
 using Newtonsoft.Json;
 using Model;
 using Utils;
+using Rhino;
 
 namespace THERBgh
 {
@@ -464,11 +465,11 @@ namespace THERBgh
 
         public static string CreateSDat(Schedule schedule)
         {
-            List<int> m = schedule.monthly.hvac;
-            List<int> w = schedule.weekly.hvac;
-            List<int> dh = schedule.daily.hvac;
-            List<int> dht = schedule.daily.heating;
-            List<int> dct = schedule.daily.cooling;
+            List<int> m = schedule.monthly[0].hvac;
+            List<int> w = schedule.weekly[0].hvac;
+            List<int> dh = schedule.daily[0].hvac;
+            List<int> dht = schedule.daily[0].heating;
+            List<int> dct = schedule.daily[0].cooling;
 
             string sDat = "*month data   ----1---2---3---4---5---6---7---8---9--10--11--12 <== (no-con.=0, heating=1, cooling=2, h.c.=3) \r\n"
                 + " air condi.   -"+ FillSchedule(m,4)+ "\r\n"
@@ -512,7 +513,7 @@ namespace THERBgh
                 + "------------------ ---.--- （計算地域等の基本データ） \r\n"
                 + "緯度      (°)     -  33.60 \r\n"
                 + "経度      (°)     - 130.22 \r\n"
-                + "建物方位角(°)     -   0.0 \r\n"
+                + "建物方位角(°)     -  " + NorthDegree(northDirection).ToString() + " \r\n"
                 + "地表面日射吸収率   -   0.8 \r\n"
                 + "地表面長波放射率   -   0.9 \r\n"
                 + "------------------ -----.- （計算時間間隔） \r\n"
@@ -597,6 +598,21 @@ namespace THERBgh
             }
             return windowIdStrs;
         }
+
+        private static double NorthDegree(Vector3d north)
+        {
+            var northDegree = 0d;
+
+            var angle1 = RhinoMath.ToDegrees(Vector3d.VectorAngle(Vector3d.XAxis, north));
+            var angle2 = RhinoMath.ToDegrees(Vector3d.VectorAngle(Vector3d.YAxis, north));
+
+            if (angle1 < 90)
+                northDegree = 360 - angle2;
+            else
+                northDegree = angle2;
+
+            return Math.Round(northDegree,1);
+        }
     }
     public class ResEnvelope
     {
@@ -637,9 +653,9 @@ namespace THERBgh
     {
         public string name;
         public string description;
-        public MonthlySch monthly;
-        public WeeklySch weekly;
-        public DailySch daily;
+        public List<MonthlySch> monthly;
+        public List<WeeklySch> weekly;
+        public List<DailySch> daily;
         public override string ToString()
         {
             string preview = base.ToString();
