@@ -48,12 +48,13 @@ namespace THERBgh
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
         {
             pManager.AddBoxParameter("boxes", "boxes", "list of room boxes", GH_ParamAccess.list);
-            pManager.AddSurfaceParameter("windows", "windows", "list of windows", GH_ParamAccess.list);
-            pManager.AddSurfaceParameter("overhangs", "overhangs", "list of overhangs", GH_ParamAccess.list);
-            pManager.AddGenericParameter("Envelope", "Envelope", "Envelope class", GH_ParamAccess.item);
+            pManager.AddSurfaceParameter("_windows", "windows", "list of windows", GH_ParamAccess.list);
+            pManager.AddSurfaceParameter("_overhangs", "overhangs", "list of overhangs", GH_ParamAccess.list);
+            pManager.AddGenericParameter("_Envelope", "Envelope", "Envelope class", GH_ParamAccess.item); //Envelopeのinputをoptionalにしたい
             pManager.AddNumberParameter("tol", "tolerance", "tolerance", GH_ParamAccess.item, 0.1);
             pManager[1].Optional = true;
             pManager[2].Optional = true;
+            pManager[3].Optional = true;
         }
 
         /// <summary>
@@ -91,6 +92,8 @@ namespace THERBgh
             DA.GetDataList(0, boxes);
             DA.GetDataList(1, windows);
             DA.GetDataList(2, overhangs);
+            //Envelopeのinputがなかったら以下の情報でEnvelopeを初期化
+            //Envelope defaultEnv = new Envelope(1, 2, 3, 4, 5, 6);
             DA.GetData(3, ref envelope);
             DA.GetData(4, ref tol);
 
@@ -193,8 +196,6 @@ namespace THERBgh
             }
             return splitGeos;
         }
-
-
 
         private List<Window> windowOnFace(List<Face> faceList, List<Surface> windows)
         {
