@@ -144,7 +144,7 @@ namespace THERBgh
             var tDat = CreateDatData.CreateTDat(setting.startMonth,setting.endMonth,setting.northDirection);
             //TODO: settingが入力されていなかったら、デフォルト値を入れて計算
             var wDat = CreateDatData.CreateWDat(constructionList);
-            var aDat = CreateDatData.CreateADat(therb);
+            var aDat = CreateDatData.CreateADat(therb,setting.ventilationRate);
             var sDat = CreateDatData.CreateSDat(schedule);
 
 

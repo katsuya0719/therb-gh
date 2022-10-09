@@ -14,7 +14,7 @@ namespace THERBgh
 {
     public class CreateDatData
     {
-        public static string CreateADat(Therb therb)
+        public static string CreateADat(Therb therb,double ach)
         {
 
             List<Room> roomList = therb.rooms;
@@ -26,12 +26,12 @@ namespace THERBgh
                     + "=>  \r\n"
                     + Converter.FillEmpty("from outdoor=0", 25)
                     + Converter.FillEmpty("- ", 6)
-                    + string.Join("", Enumerable.Repeat(Converter.FillEmpty(room.volume / 2, 7, 1), 12)) + "\r\n" 
+                    + string.Join("", Enumerable.Repeat(Converter.FillEmpty(room.volume*ach, 7, 1), 12)) + "\r\n" 
                     + Converter.FillEmpty("quantity (m3/h)", 25)
                     + Converter.FillEmpty("- ", 6) + "\r\n"
                     + Converter.FillEmpty("(-1.:natural vent.)", 25)
                     + Converter.FillEmpty("- ", 6) 
-                    + string.Join("", Enumerable.Repeat(Converter.FillEmpty(room.volume / 2, 7, 1), 12)) + "\r\n" + "\r\n"; 
+                    + string.Join("", Enumerable.Repeat(Converter.FillEmpty(room.volume*ach, 7, 1), 12)) + "\r\n" + "\r\n"; 
             });
 
             return aDat;
