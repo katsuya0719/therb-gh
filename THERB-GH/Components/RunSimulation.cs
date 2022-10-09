@@ -89,11 +89,13 @@ namespace THERBgh
         {
             pManager.AddGenericParameter("Therb", "therb", "THERB class", GH_ParamAccess.item);
             pManager.AddGenericParameter("Constructions", "Constructions", "Construction data", GH_ParamAccess.list);
+            pManager.AddGenericParameter("Setting", "Setting", "Setting data", GH_ParamAccess.item);
             pManager.AddGenericParameter("Schedule", "Schedule", "Schedule data", GH_ParamAccess.item);
             pManager.AddTextParameter("name", "name", "simulation case name", GH_ParamAccess.item);
-            pManager.AddBooleanParameter("cloud", "cloud", "run simulation in cloud", GH_ParamAccess.item);
+            //pManager.AddBooleanParameter("cloud", "cloud", "run simulation in cloud", GH_ParamAccess.item);
             pManager.AddBooleanParameter("run", "run", "run THERB simulation", GH_ParamAccess.item);
             pManager[2].Optional = true;
+            pManager[3].Optional = true;
         }
         /// <summary>
         /// Registers all the output parameters for this component.
@@ -121,20 +123,26 @@ namespace THERBgh
 
             List<Construction> constructionList = new List<Construction>();
             DA.GetDataList(1, constructionList);
-            //TODO: schedule inputをoptionalにしたい
+
             Schedule schedule = new Schedule();
             DA.GetData("Schedule", ref schedule);
 
+            //settingのinputをoptionalにしたい
+            Setting setting = new Setting();
+            DA.GetData("Setting", ref setting);
+
             DA.GetData("name", ref name);
-            DA.GetData("cloud", ref cloudRun);
+            //DA.GetData("cloud", ref cloudRun);
+            DA.GetData("run", ref done);
             DA.GetData("run", ref done);
             if (!done) return;
 
             var bDat = CreateDatData.CreateBDat(therb);
             var rDat = CreateDatData.CreateRDat(therb);
 
-            Vector3d northDirection = new Vector3d(0, 0, 0);
-            var tDat = CreateDatData.CreateTDat(1,12,northDirection);
+            //Vector3d northDirection = new Vector3d(0, 0, 0);
+            var tDat = CreateDatData.CreateTDat(setting.startMonth,setting.endMonth,setting.northDirection);
+            //TODO: settingが入力されていなかったら、デフォルト値を入れて計算
             var wDat = CreateDatData.CreateWDat(constructionList);
             var aDat = CreateDatData.CreateADat(therb);
             var sDat = CreateDatData.CreateSDat(schedule);
@@ -265,17 +273,18 @@ namespace THERBgh
                 writer.Write(aDat);
             }
 
+            //Schedule inputがあるときには、以下のロジックを回す。ないときには回さない
             using (StreamWriter writer = File.CreateText(Path.Combine(namePath, CREATE_FILE_S)))
             {
                 writer.Write(sDat);
             }
 
             //t.datだけはshift-JISで書き出す
-            //Schedule inputがあるときには、以下のロジックを回す。ないときには回さない
-            //using (StreamWriter sw = new StreamWriter(Path.Combine(namePath, CREATE_FILE_T), false, Encoding.GetEncoding("shift-jis")))
-            //{
-            //    sw.Write(tDat);
-            //};
+            
+            using (StreamWriter sw = new StreamWriter(Path.Combine(namePath, CREATE_FILE_T), false, Encoding.GetEncoding("shift-jis")))
+            {
+                sw.Write(tDat);
+            };
 
 
             if (cloudRun)

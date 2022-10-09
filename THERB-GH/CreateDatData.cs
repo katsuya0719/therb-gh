@@ -490,7 +490,7 @@ namespace THERBgh
                 + " air condi.   -"+FillSchedule(w,4) +"\r\n"
                 + "*hour  data   - ----1 ----2 ----3 ----4 ----5 ----6 ----7 ----8 ----9 ---10 ---11 ---12 ---13 ---14 ---15 ---16 ---17 ---18 ---19 ---20 ---21 ---22 ---23 ---24 \r\n"
                 + "room ======>  1"+FillSchedule(dh,6) +"\r\n"
-                + " set low  tem.-" + FillSchedule(dht, 6) + "\r\n"
+                + " set low  tem.-" + FillSchedule(dht, 6,1) + "\r\n"
                 + " set high tem.-" + FillSchedule(dct, 6,1) + "\r\n"
                 + " inner heating-   0.0   0.0   0.0   0.0   0.0   0.0   0.0   0.0   0.0   0.0   0.0   0.0   0.0   0.0   0.0   0.0   0.0   0.0   0.0   0.0   0.0   0.0   0.0   0.0 \r\n"
                 + " set low  R.H.-  40.0  40.0  40.0  40.0  40.0  40.0  40.0  40.0  40.0  40.0  40.0  40.0  40.0  40.0  40.0  40.0  40.0  40.0  40.0  40.0  40.0  40.0  40.0  40.0 \r\n"
@@ -526,7 +526,7 @@ namespace THERBgh
                 + "------------------ ---.--- （計算地域等の基本データ） \r\n"
                 + "緯度      (°)     -  33.60 \r\n"
                 + "経度      (°)     - 130.22 \r\n"
-                + "建物方位角(°)     -  " + NorthDegree(northDirection).ToString() + " \r\n"
+                + "建物方位角(°)     -" + Converter.FillEmpty(NorthDegree(northDirection),6,1) + " \r\n"
                 + "地表面日射吸収率   -   0.8 \r\n"
                 + "地表面長波放射率   -   0.9 \r\n"
                 + "------------------ -----.- （計算時間間隔） \r\n"
@@ -624,7 +624,28 @@ namespace THERBgh
             else
                 northDegree = angle2;
 
-            return Math.Round(northDegree,1);
+            return northDegree;
+        }
+    }
+
+    public class Setting
+    {
+        public Vector3d northDirection;
+        public int startMonth;
+        public int endMonth;
+        public double ventilationRate;
+
+        public Setting()
+        {
+
+        }
+
+        public Setting(Vector3d northDirection,int startMonth,int endMonth,double ventilationRate)
+        {
+            this.northDirection = northDirection;
+            this.startMonth = startMonth;
+            this.endMonth = endMonth;
+            this.ventilationRate = ventilationRate;
         }
     }
     public class ResEnvelope
