@@ -5,6 +5,7 @@ using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Grasshopper.Kernel;
@@ -42,6 +43,7 @@ namespace Components.Modification
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
         {
             pManager.AddTextParameter("o_dat_file_path", "o_dat_file_path", "o.dat file path", GH_ParamAccess.item);
+            pManager.AddBooleanParameter("run", "run", "run upload result", GH_ParamAccess.item);
         }
 
         /// <summary>
@@ -58,8 +60,13 @@ namespace Components.Modification
         /// <param name="DA">The DA object is used to retrieve from inputs and store in outputs.</param>
         protected override void SolveInstance(IGH_DataAccess DA)
         {
+            var done = false;
+            DA.GetData("run", ref done);
+            if (!done) return;
+
             var path = "";
             DA.GetData("o_dat_file_path", ref path);
+
             if (string.IsNullOrEmpty(path)) throw new Exception("pathが読み取れませんでした。");
 
             char[] seps = { Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar };
@@ -99,7 +106,11 @@ namespace Components.Modification
                     {
                         Debug.WriteLine(response.Content);
                         MessageBox.Show("送信できました。");
-                        DA.SetData("result", response.Content);
+                        using (Stream responseStream = response.Content.ReadAsStreamAsync().Result)
+                        {
+                            using (StreamReader sr = new StreamReader(responseStream, Encoding.UTF8))
+                                DA.SetData("result", sr.ReadToEnd());
+                        }
                     }
                     Debug.WriteLine(response.StatusCode);
                 }
