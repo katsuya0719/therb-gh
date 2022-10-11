@@ -145,7 +145,8 @@ namespace THERBgh
             //TODO: settingが入力されていなかったら、デフォルト値を入れて計算
             var wDat = CreateDatData.CreateWDat(constructionList);
             var aDat = CreateDatData.CreateADat(therb,setting.ventilationRate);
-            var sDat = CreateDatData.CreateSDat(schedule);
+            List<Room> rooms = therb.rooms;
+            var sDat = CreateDatData.CreateSDat(schedule,rooms);
 
 
             if (string.IsNullOrEmpty(name)) throw new Exception("nameが読み取れませんでした。");

@@ -476,7 +476,7 @@ namespace THERBgh
             return wDat;
         }
 
-        public static string CreateSDat(Schedule schedule)
+        public static string CreateSDat(Schedule schedule,List<Room> rooms)
         {
             List<int> m = schedule.monthly.hvac;
             List<int> w = schedule.weekly.hvac;
@@ -485,17 +485,21 @@ namespace THERBgh
             List<int> dct = schedule.daily.cooling;
 
             string sDat = "*month data   ----1---2---3---4---5---6---7---8---9--10--11--12 <== (no-con.=0, heating=1, cooling=2, h.c.=3) \r\n"
-                + " air condi.   -"+ FillSchedule(m,4)+ "\r\n"
-                + "*week data    - sun mon tue wed thu fri sat <== (no-con.=0, conditioning=1) \r\n"
-                + " air condi.   -"+FillSchedule(w,4) +"\r\n"
-                + "*hour  data   - ----1 ----2 ----3 ----4 ----5 ----6 ----7 ----8 ----9 ---10 ---11 ---12 ---13 ---14 ---15 ---16 ---17 ---18 ---19 ---20 ---21 ---22 ---23 ---24 \r\n"
-                + "room ======>  1"+FillSchedule(dh,6) +"\r\n"
-                + " set low  tem.-" + FillSchedule(dht, 6,1) + "\r\n"
-                + " set high tem.-" + FillSchedule(dct, 6,1) + "\r\n"
-                + " inner heating-   0.0   0.0   0.0   0.0   0.0   0.0   0.0   0.0   0.0   0.0   0.0   0.0   0.0   0.0   0.0   0.0   0.0   0.0   0.0   0.0   0.0   0.0   0.0   0.0 \r\n"
-                + " set low  R.H.-  40.0  40.0  40.0  40.0  40.0  40.0  40.0  40.0  40.0  40.0  40.0  40.0  40.0  40.0  40.0  40.0  40.0  40.0  40.0  40.0  40.0  40.0  40.0  40.0 \r\n"
-                + " set high R.H.-  60.0  60.0  60.0  60.0  60.0  60.0  60.0  60.0  60.0  60.0  60.0  60.0  60.0  60.0  60.0  60.0  60.0  60.0  60.0  60.0  60.0  60.0  60.0  60.0 \r\n"
-                + " moisture gen.-   0.0   0.0   0.0   0.0   0.0   0.0   0.0   0.0   0.0   0.0   0.0   0.0   0.0   0.0   0.0   0.0   0.0   0.0   0.0   0.0   0.0   0.0   0.0   0.0 \r\n";
+                    + " air condi.   -" + FillSchedule(m, 4) + "\r\n"
+                    + "*week data    - sun mon tue wed thu fri sat <== (no-con.=0, conditioning=1) \r\n"
+                    + " air condi.   -" + FillSchedule(w, 4) + "\r\n"
+                    + "*hour  data   - ----1 ----2 ----3 ----4 ----5 ----6 ----7 ----8 ----9 ---10 ---11 ---12 ---13 ---14 ---15 ---16 ---17 ---18 ---19 ---20 ---21 ---22 ---23 ---24 \r\n";
+
+            rooms.ForEach(room =>
+            {
+                sDat += "room ======>" + Converter.FillEmpty(room.id, 3) + FillSchedule(dh, 6) + "\r\n"
+                    + " set low  tem.-" + FillSchedule(dht, 6, 1) + "\r\n"
+                    + " set high tem.-" + FillSchedule(dct, 6, 1) + "\r\n"
+                    + " inner heating-   0.0   0.0   0.0   0.0   0.0   0.0   0.0   0.0   0.0   0.0   0.0   0.0   0.0   0.0   0.0   0.0   0.0   0.0   0.0   0.0   0.0   0.0   0.0   0.0 \r\n"
+                    + " set low  R.H.-  40.0  40.0  40.0  40.0  40.0  40.0  40.0  40.0  40.0  40.0  40.0  40.0  40.0  40.0  40.0  40.0  40.0  40.0  40.0  40.0  40.0  40.0  40.0  40.0 \r\n"
+                    + " set high R.H.-  60.0  60.0  60.0  60.0  60.0  60.0  60.0  60.0  60.0  60.0  60.0  60.0  60.0  60.0  60.0  60.0  60.0  60.0  60.0  60.0  60.0  60.0  60.0  60.0 \r\n"
+                    + " moisture gen.-   0.0   0.0   0.0   0.0   0.0   0.0   0.0   0.0   0.0   0.0   0.0   0.0   0.0   0.0   0.0   0.0   0.0   0.0   0.0   0.0   0.0   0.0   0.0   0.0 \r\n";
+            });
 
             return sDat;
         }
