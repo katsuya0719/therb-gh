@@ -146,14 +146,11 @@ namespace THERBgh
             //TODO: settingが入力されていなかったら、デフォルト値を入れて計算
             var wDat = CreateDatData.CreateWDat(constructionList);
             var aDat = CreateDatData.CreateADat(therb,setting.ventilationRate);
-<<<<<<< HEAD
+
             List<Room> rooms = therb.rooms;
-            var sDat = CreateDatData.CreateSDat(schedule,rooms);
-=======
             var sDat = "";
-            if(hasSchedule)
-                sDat = CreateDatData.CreateSDat(schedule);
->>>>>>> e7c407de752ceb8e6dbdc3d25256149f91924a31
+            if (hasSchedule)
+                sDat = CreateDatData.CreateSDat(schedule,rooms);
 
 
             if (string.IsNullOrEmpty(name)) throw new Exception("nameが読み取れませんでした。");
