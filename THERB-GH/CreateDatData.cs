@@ -628,6 +628,9 @@ namespace THERBgh
             else
                 northDegree = angle2;
 
+            if (double.IsInfinity(northDegree))
+                throw new Exception("建物方位角が無限大になりました。");
+
             return northDegree;
         }
     }
