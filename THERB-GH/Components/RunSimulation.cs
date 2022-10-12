@@ -31,7 +31,7 @@ namespace THERBgh
 {
     public class RunSimulation : GH_Component
     {
-        const string THERB_FILE_NAME = "therb.exe";
+        const string THERB_FILE_NAME = "Therb.exe";
         const string THERB_FOLDER_PATH = @"C:\therb";
         const string CREATE_FILE_B = "b.dat";
         const string CREATE_FILE_R = "r.dat";
@@ -126,6 +126,8 @@ namespace THERBgh
 
             Schedule schedule = new Schedule();
             DA.GetData("Schedule", ref schedule);
+            var hasSchedule = false;
+            if (schedule.name != null) hasSchedule = true;
 
             //settingのinputをoptionalにしたい
             Setting setting = new Setting();
@@ -133,7 +135,6 @@ namespace THERBgh
 
             DA.GetData("name", ref name);
             //DA.GetData("cloud", ref cloudRun);
-            DA.GetData("run", ref done);
             DA.GetData("run", ref done);
             if (!done) return;
 
@@ -145,8 +146,14 @@ namespace THERBgh
             //TODO: settingが入力されていなかったら、デフォルト値を入れて計算
             var wDat = CreateDatData.CreateWDat(constructionList);
             var aDat = CreateDatData.CreateADat(therb,setting.ventilationRate);
+<<<<<<< HEAD
             List<Room> rooms = therb.rooms;
             var sDat = CreateDatData.CreateSDat(schedule,rooms);
+=======
+            var sDat = "";
+            if(hasSchedule)
+                sDat = CreateDatData.CreateSDat(schedule);
+>>>>>>> e7c407de752ceb8e6dbdc3d25256149f91924a31
 
 
             if (string.IsNullOrEmpty(name)) throw new Exception("nameが読み取れませんでした。");
@@ -275,9 +282,18 @@ namespace THERBgh
             }
 
             //Schedule inputがあるときには、以下のロジックを回す。ないときには回さない
-            using (StreamWriter writer = File.CreateText(Path.Combine(namePath, CREATE_FILE_S)))
+            if (hasSchedule)
             {
-                writer.Write(sDat);
+                using (StreamWriter writer = File.CreateText(Path.Combine(namePath, CREATE_FILE_S)))
+                {
+                    writer.Write(sDat);
+                }
+            }
+            if(!File.Exists(Path.Combine(namePath, CREATE_FILE_S)))
+            {
+                MessageBox.Show("s.datファイルが読み取れませんでした。" + Environment.NewLine + 
+                    "file path : " + Path.Combine(namePath, CREATE_FILE_S));
+                throw new Exception("s.datファイルが読み取れませんでした。 - file path : " + Path.Combine(namePath, CREATE_FILE_S));
             }
 
             //t.datだけはshift-JISで書き出す
@@ -371,8 +387,9 @@ namespace THERBgh
                 process.WaitForExit();
                 if (process.ExitCode != 0)
                 {
-                    MessageBox.Show("解析がうまく行きませんでした。");
-                    throw new Exception("解析がうまく行きませんでした。");
+                    MessageBox.Show("解析がうまく行きませんでした。" + Environment.NewLine + 
+                        "EXITCODE : " + process.ExitCode);
+                    throw new Exception("解析がうまく行きませんでした。 - EXITCODE : " + process.ExitCode);
                 }
 
                 var path = Path.Combine(namePath, CREATED_FILE_O);
