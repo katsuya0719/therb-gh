@@ -20,6 +20,10 @@ namespace THERBgh
     public class ReadEnvelope : GH_Component
     {
         const string ENVELOPE_URL = "https://stingray-app-vgak2.ondigitalocean.app/envelopes";
+        const string OPAQUE_URL = "https://stingray-app-vgak2.ondigitalocean.app/constructions";
+
+        //const string ENVELOPE_URL = "http://localhost:5000/envelopes";
+        //const string OPAQUE_URL = "http://localhost:5000/constructions";
 
         /// <summary>
         /// Each implementation of GH_Component must provide a public 
@@ -66,10 +70,21 @@ namespace THERBgh
             var wc = new WebClient();
 
             string text = wc.DownloadString(ENVELOPE_URL);
+            string text2 = wc.DownloadString(OPAQUE_URL);
 
-            //jsonデータに基づいてUpdateConstructionにつなげるためのoutputを生成=>形式は齋藤君と相談
+            List<EnvelopePayload> envelopePayload = JsonConvert.DeserializeObject<ResEnvelope>(text).data;
 
-            List<Envelope> envelopes = JsonConvert.DeserializeObject<ResEnvelope>(text).data;
+            List<Opaque> opaques = JsonConvert.DeserializeObject<ResOpaque>(text2).data;
+
+            int opaqueCnt = opaques.Count;
+
+            //windowのidを変える必要あり
+            List<Envelope> envelopes = new List<Envelope>();
+
+            foreach(EnvelopePayload e in envelopePayload)
+            {
+                envelopes.Add(new Envelope(e, opaqueCnt));
+            }
 
             DA.SetDataList("Envelopes", envelopes);
         }

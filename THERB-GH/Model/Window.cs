@@ -31,7 +31,7 @@ namespace Model
             _totalWindows += 1;
             id = _totalWindows;
             this.constructionId = 6;
-            this.structureId = Int32.Parse(envelope.window.id);
+            this.structureId = envelope.windowId;
         }
 
         public void addParent(Face parent)

@@ -314,31 +314,31 @@ namespace Model
             {
                 case ElementType.exteriorWall:
                     constructionId = 1;
-                    structureId = Int32.Parse(envelope.exteriorWall.id);
+                    structureId = envelope.exteriorWallId;
                     break;
                 case ElementType.interiorWall:
                     constructionId = 2;
-                    structureId = Int32.Parse(envelope.interiorWall.id);
+                    structureId = envelope.interiorWallId;
                     break;
                 case ElementType.interiorRoof:
                     constructionId = 3;
-                    structureId = Int32.Parse(envelope.floorCeiling.id);
+                    structureId = envelope.floorCeilingId;
                     break;
                 case ElementType.interiorFloor:
                     constructionId = 3;
-                    structureId = Int32.Parse(envelope.floorCeiling.id);
+                    structureId = envelope.floorCeilingId;
                     break;
                 case ElementType.exteriorRoof:
                     constructionId = 4;
-                    structureId = Int32.Parse(envelope.roof.id);
+                    structureId = envelope.roofId;
                     break;
                 case ElementType.groundRoof:
                     constructionId = 5;
-                    structureId = Int32.Parse(envelope.groundFloor.id);
+                    structureId = envelope.groundFloorId;
                     break;
                 case ElementType.groundFloor:
                     constructionId = 5;
-                    structureId = Int32.Parse(envelope.groundFloor.id);
+                    structureId = envelope.groundFloorId;
                     break;
             }
         }

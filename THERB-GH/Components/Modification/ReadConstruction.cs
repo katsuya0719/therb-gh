@@ -19,7 +19,11 @@ namespace THERBgh
 {
     public class ReadConstruction : GH_Component
     {
-        const string CONSTRUCTION_URL = "https://stingray-app-vgak2.ondigitalocean.app/constructions";
+        const string OPAQUE_URL = "https://stingray-app-vgak2.ondigitalocean.app/constructions";
+        const string TRANSLUCENT_URL = "https://stingray-app-vgak2.ondigitalocean.app/windows";
+
+        //const string OPAQUE_URL = "http://localhost:5000/constructions";
+        //const string TRANSLUCENT_URL = "http://localhost:5000/windows";
 
         /// <summary>
         /// Each implementation of GH_Component must provide a public 
@@ -66,11 +70,34 @@ namespace THERBgh
             //jsonデータを読み込む（データフォーマットはnotionを参照）
             var wc = new WebClient();
 
-            string text = wc.DownloadString(CONSTRUCTION_URL);
+            string text = wc.DownloadString(OPAQUE_URL);
+            string text2 = wc.DownloadString(TRANSLUCENT_URL);
 
-            //jsonデータに基づいてUpdateConstructionにつなげるためのoutputを生成=>形式は齋藤君と相談
+            //List<Construction> constructions = JsonConvert.DeserializeObject<ResConstruction>(text).data;
+            List<Opaque> opaques = JsonConvert.DeserializeObject<ResOpaque>(text).data;
 
-            List<Construction> constructions = JsonConvert.DeserializeObject<ResConstruction>(text).data;
+            List<TranslucentPayload> translucentsPayload = JsonConvert.DeserializeObject<ResTranslucent>(text2).data;
+
+            int opaqueCnt = opaques.Count;
+
+            List<Translucent> translucents = new List<Translucent>();
+
+            foreach(TranslucentPayload t in translucentsPayload)
+            {
+                translucents.Add(new Translucent(t, opaqueCnt));
+            }
+
+            List<Construction> constructions = new List<Construction>();
+
+            foreach(Opaque opaque in opaques)
+            {
+                constructions.Add(new Construction(opaque));
+            }
+
+            foreach(Translucent t in translucents)
+            {
+                constructions.Add(new Construction(t));
+            }
 
             DA.SetDataList("Construction", constructions);
         }

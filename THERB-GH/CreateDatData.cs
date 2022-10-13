@@ -337,7 +337,6 @@ namespace THERBgh
 
         public static string CreateWDat(List<Construction> constructions)
         {
-            //w.datデータを構成していく  
             string wDat = "";
 
             var elementIdDict = new Dictionary<ElementType, int>(){
@@ -367,6 +366,8 @@ namespace THERBgh
                 {ElementType.groundFloor," 0.70 0.90 0.70 0.90 0.000e-09 0.000e-10"},
                 {ElementType.window," 0.00 0.84 0.00 0.84 0.000e-00 0.000e-00"},
             };
+
+            //
 
             constructions.ForEach(construction =>
             {
@@ -657,19 +658,31 @@ namespace THERBgh
     }
     public class ResEnvelope
     {
-        public List<Envelope> data;
+        public List<EnvelopePayload> data;
+    }
+
+    public class EnvelopePayload
+    {
+        public string name;
+        public string id;
+        public Opaque exteriorWall;
+        public Opaque interiorWall;
+        public Opaque floorCeiling;
+        public Opaque groundFloor;
+        public Opaque roof;
+        public Translucent window;
     }
 
     public class Envelope
     {
         public string name;
         public string id;
-        public Construction exteriorWall;
-        public Construction interiorWall;
-        public Construction floorCeiling;
-        public Construction groundFloor;
-        public Construction roof;
-        public Construction window;
+        public Opaque exteriorWall;
+        public Opaque interiorWall;
+        public Opaque floorCeiling;
+        public Opaque groundFloor;
+        public Opaque roof;
+        public Translucent window;
         public int exteriorWallId;
         public int interiorWallId;
         public int floorCeilingId;
@@ -682,14 +695,24 @@ namespace THERBgh
 
         }
 
-        public Envelope(int exWallId,int interiorWallId,int floorCeilingId, int roofId, int groundFloorId, int windowId)
+        public Envelope(EnvelopePayload payload, int count)
+        {
+            exteriorWallId = Int32.Parse(payload.exteriorWall.id);
+            interiorWallId = Int32.Parse(payload.interiorWall.id);
+            floorCeilingId = Int32.Parse(payload.floorCeiling.id);
+            groundFloorId = Int32.Parse(payload.groundFloor.id);
+            roofId = Int32.Parse(payload.roof.id);
+            windowId = Int32.Parse(payload.window.id)+count;
+        }
+
+        public Envelope(int exWallId,int inWallId,int floorCeilId, int exRoofId, int groundFlrId, int windowCntId)
         {
             exteriorWallId = exWallId;
-            interiorWallId = interiorWallId;
-            floorCeilingId = floorCeilingId;
-            groundFloorId = groundFloorId;
-            roofId = roofId;
-            windowId = windowId;
+            interiorWallId = inWallId;
+            floorCeilingId = floorCeilId;
+            groundFloorId = groundFlrId;
+            roofId = exRoofId;
+            windowId = windowCntId;
         }
 
         public override string ToString()
@@ -700,6 +723,9 @@ namespace THERBgh
                 preview += Environment.NewLine;
                 //preview += " Id         :" + id + Environment.NewLine;
                 preview += " Name :" + name + Environment.NewLine;
+                preview += " exteriorWallId :" + exteriorWallId.ToString() + Environment.NewLine;
+                preview += " interiorWallId :" + interiorWallId.ToString() + Environment.NewLine;
+                preview += " windowId :" + windowId.ToString() + Environment.NewLine;
             }
             catch { }
             return preview;
@@ -753,6 +779,55 @@ namespace THERBgh
         public List<Construction> data;
     }
 
+    public class ResTranslucent
+    {
+        public List<TranslucentPayload> data;
+    }
+
+    public class TranslucentPayload
+    {
+        public string id;
+        [JsonProperty(PropertyName = "category")]
+        public ElementType categories;
+        public List<Material> materials;
+        public List<Double> thickness;
+    }
+
+    public class Translucent
+    {
+        public string id;
+        [JsonProperty(PropertyName = "category")]
+        public ElementType categories;
+        public List<Material> materials;
+        public List<Double> thickness;
+
+        public Translucent() { }
+
+
+        public Translucent(TranslucentPayload translucent, int count)
+        {
+            int idNum = Int32.Parse(translucent.id) + count;
+            id = idNum.ToString();
+            categories = ElementType.window;
+            materials = translucent.materials;
+            thickness = translucent.thickness;
+        }
+    }
+
+    public class ResOpaque
+    {
+        public List<Opaque> data;
+    }
+
+    public class Opaque
+    {
+        public string id;
+        [JsonProperty(PropertyName = "category")]
+        public ElementType categories;
+        public List<Material> materials;
+        public List<Double> thickness;
+    }
+
     public class Construction
     {
         public string id;
@@ -760,6 +835,26 @@ namespace THERBgh
         public ElementType categories;
         public List<Material> materials;
         public List<Double> thickness;
+
+        public Construction()
+        {
+
+        }
+
+        public Construction (Opaque opaque){
+            id = opaque.id;
+            categories = opaque.categories;
+            materials = opaque.materials;
+            thickness = opaque.thickness;
+        }
+
+        public Construction (Translucent traslucent)
+        {
+            id = traslucent.id;
+            categories = ElementType.window;
+            materials = traslucent.materials;
+            thickness = traslucent.thickness;
+        }
 
         public override string ToString()
         {
