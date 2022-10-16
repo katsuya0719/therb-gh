@@ -373,7 +373,7 @@ namespace THERBgh
             {
                 int numMaterials = construction.materials.Count;
                 int cavityLayer = 0;
-
+                bool window = false;
 
                 wDat += Converter.FillEmpty(construction.id, 3)
                 + Converter.FillEmpty(elementIdDict[construction.categories], 2)
@@ -386,6 +386,11 @@ namespace THERBgh
                 {
                     i += 1;
                     wDat += Converter.FillEmpty(material.classification, 10);
+                    if (material.classification == 6)
+                    {
+                        window = true;
+                    }
+
                     if (material.classification == 3 || material.classification == 4|| material.classification == 5)
                     {
                         cavityLayer = i;
@@ -459,7 +464,7 @@ namespace THERBgh
                 wDat += " \r\n";
 
                 //TODO: this logic has to be fixed
-                if (cavityLayer>0)
+                if (window)
                 {
                     wDat += CavityLayers(numMaterials, cavityLayer, 0.0, 0.0) + "\r\n" //solar absorptance
                     + CavityLayers(numMaterials, cavityLayer, 0.0,0.0) + "\r\n" //solar transmittance
@@ -724,7 +729,10 @@ namespace THERBgh
                 //preview += " Id         :" + id + Environment.NewLine;
                 preview += " Name :" + name + Environment.NewLine;
                 preview += " exteriorWallId :" + exteriorWallId.ToString() + Environment.NewLine;
+                preview += " roofId :" + roofId.ToString() + Environment.NewLine;
+                preview += " groundFloorId :" + groundFloorId.ToString() + Environment.NewLine;
                 preview += " interiorWallId :" + interiorWallId.ToString() + Environment.NewLine;
+                preview += " floorCeilingId :" + floorCeilingId.ToString() + Environment.NewLine;
                 preview += " windowId :" + windowId.ToString() + Environment.NewLine;
             }
             catch { }
