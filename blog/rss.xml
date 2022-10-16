@@ -9,8 +9,8 @@
         <generator>https://github.com/jpmonette/feed</generator>
         <item>
             <title><![CDATA[建築環境設備設計演習 THERB-GHによる熱負荷計算の検討演習]]></title>
-            <link> http://katsuya0719.github.io/therb-gh/blog/welcome</link>
-            <guid>welcome</guid>
+            <link> http://katsuya0719.github.io/therb-gh/blog/class</link>
+            <guid>class</guid>
             <pubDate>Mon, 17 Oct 2022 00:00:00 GMT</pubDate>
             <description><![CDATA[熱負荷計算は何をしているのか?]]></description>
             <content:encoded><![CDATA[<h3 class="anchor anchorWithStickyNavbar_mojV" id="熱負荷計算は何をしているのか">熱負荷計算は何をしているのか?<a class="hash-link" href="#熱負荷計算は何をしているのか" title="Direct link to heading">​</a></h3><p>室内空間に着目して、時々刻々の<strong>熱収支</strong>を計算している。<br>
@@ -19,55 +19,42 @@
 <!-- -->それでは早速THERB-GHを皆さんのPCにインストールしてもらいます。
 環境構築の方法は、<a href="/docs/Usage/HowToInstall.md">こちらのページ</a>を使いながら行います。  </p><h3 class="anchor anchorWithStickyNavbar_mojV" id="tutorial-0-therbモデルを作成する">Tutorial 0. THERBモデルを作成する<a class="hash-link" href="#tutorial-0-therbモデルを作成する" title="Direct link to heading">​</a></h3><p>環境が構築出来たら、実際にexample.3dm、example.ghファイルを元にTHERBモデルを構築してみます。<br>
 <a href="/docs/Usage/CreateTherbModel.md">こちらのページ</a>をみながら、準備してあるジオメトリを使ってシミュレーションを計算、結果を見てみます。<br>
-<!-- -->(分析結果については、Jupyter Notebookにリンクをとばす)</p><h3 class="anchor anchorWithStickyNavbar_mojV" id="tuotirial-1-0からモデルを作ってみよう">Tuotirial 1. 0からモデルを作ってみよう<a class="hash-link" href="#tuotirial-1-0からモデルを作ってみよう" title="Direct link to heading">​</a></h3><p>5m×5mの室をモデリングしたあと、南面に窓をモデリングして計算結果を見てみましょう。<br>
+<a href="https://colab.research.google.com/github/becat-oss/therb-notebook/blob/main/.ipynb_checkpoints/%E6%99%82%E7%B3%BB%E5%88%97%E3%83%87%E3%83%BC%E3%82%BF%E5%88%86%E6%9E%90-checkpoint.ipynb" target="_blank" rel="noopener noreferrer">結果分析はjupyter notebookへ</a></p><h3 class="anchor anchorWithStickyNavbar_mojV" id="tuotirial-1-0からモデルを作ってみよう">Tuotirial 1. 0からモデルを作ってみよう<a class="hash-link" href="#tuotirial-1-0からモデルを作ってみよう" title="Direct link to heading">​</a></h3><p>5m×5mの室をモデリングしたあと、南面に窓をモデリングして計算結果を見てみましょう。<br>
 <!-- -->①5m×5mの室（高さ3m)をモデリング<br>
 <!-- -->②南面に2m×2mの大きさの窓をモデリング<br>
 <!-- -->③計算を回してみる  </p><h3 class="anchor anchorWithStickyNavbar_mojV" id="tutorial-2-窓を変えてみよう">Tutorial 2. 窓を変えてみよう<a class="hash-link" href="#tutorial-2-窓を変えてみよう" title="Direct link to heading">​</a></h3><p>窓の大きさ、方位角を変えると入射日射量が変化し、室内の熱取得に影響します。どれくらい自然室温が変わるのか、比較してみましょう。  </p><h3 class="anchor anchorWithStickyNavbar_mojV" id="tutorial-3-換気回数を変えてみよう">Tutorial 3. 換気回数を変えてみよう<a class="hash-link" href="#tutorial-3-換気回数を変えてみよう" title="Direct link to heading">​</a></h3><p>一般的な住宅における必要な換気回数は0.5回/hと定められています。さらに、コロナ禍ということもあり、換気回数を増やすことが奨励されています。一方、換気回数を増やすことで夏であれば、暖かい空気を室内に取り込むこととなるため、室温の増加、空調負荷の増加につながります。適切な換気回数の設定は空気質の確保、空調負荷の最適化の面で重要です。</p><h3 class="anchor anchorWithStickyNavbar_mojV" id="tutorial-4-壁屋根床壁体構成の種類を変えてみよう">Tutorial 4. 壁、屋根、床（壁体構成）の種類を変えてみよう<a class="hash-link" href="#tutorial-4-壁屋根床壁体構成の種類を変えてみよう" title="Direct link to heading">​</a></h3><p>壁体構成を変更することで、断熱性、熱容量（室温の安定性に影響）が変わります。どれくらい自然室温が変わるのか、比較してみましょう。  </p><h3 class="anchor anchorWithStickyNavbar_mojV" id="totorial-5-空調負荷を計算してみよう">Totorial 5. 空調負荷を計算してみよう<a class="hash-link" href="#totorial-5-空調負荷を計算してみよう" title="Direct link to heading">​</a></h3><p>自然室温のままだと、人間が快適に室内で過ごすには夏は暑すぎたり、冬は寒すぎたりします。そこで空調をすることで熱を取り除いたり、加えることによって空気を調和しています。空調負荷とは、自然室温の状態から設定温度（暖房であれば20℃、冷房であれば28℃）にするためにどれくらいの熱量をコントロールしないといけないかという計算をした結果です。<br>
 <!-- -->この空調負荷を実際に取り除くために、設備設計の方々が空調の容量を選定しています。<br>
-<!-- -->省エネな建築を設計するためには、この空調負荷をなるべく小さくするような設計をすることが必要です。  </p><h3 class="anchor anchorWithStickyNavbar_mojV" id="課題-空調負荷のなるべく少ない窓壁体構成換気負荷方位角の組み合わせを考えてみよう">課題. 空調負荷のなるべく少ない窓、壁体構成、換気負荷、方位角の組み合わせを考えてみよう<a class="hash-link" href="#課題-空調負荷のなるべく少ない窓壁体構成換気負荷方位角の組み合わせを考えてみよう" title="Direct link to heading">​</a></h3><p>制約条件: 5m×5m×3mの建物<br>
-<!-- -->変更可能なパラメータ:   </p><ul><li>窓の位置、大きさ  </li><li>壁体構成  </li><li>換気負荷  </li><li>方位角<br>評価指標: 合計の空調負荷</li></ul>]]></content:encoded>
+<!-- -->省エネな建築を設計するためには、この空調負荷をなるべく小さくするような設計をすることが必要です。  </p><h3 class="anchor anchorWithStickyNavbar_mojV" id="課題-空調負荷のなるべく少ない窓壁体構成換気負荷方位角の組み合わせを考えてみよう">課題. 空調負荷のなるべく少ない窓、壁体構成、換気負荷、方位角の組み合わせを考えてみよう<a class="hash-link" href="#課題-空調負荷のなるべく少ない窓壁体構成換気負荷方位角の組み合わせを考えてみよう" title="Direct link to heading">​</a></h3><p>制約条件: </p><ul><li>建物の容積は100m3(室の数は問わない / 人が入れる空間にしてください)      </li><li>換気量は全室0.5回/h  </li></ul><p>変更可能なパラメータ:   </p><ul><li>窓の位置、大きさ  </li><li>壁体構成  </li><li>方位角  </li></ul><p>評価指標:<br>
+<!-- -->快適時間率=&gt;試験的に快適時間率ランキングってのを試してみます。<br>
+<!-- -->合計の空調負荷<br>
+<!-- -->ディグリーデー  </p><h3 class="anchor anchorWithStickyNavbar_mojV" id="快適時間率ランキング">快適時間率ランキング<a class="hash-link" href="#快適時間率ランキング" title="Direct link to heading">​</a></h3><p>実験的試みとして、快適時間率ランキングというのをしてみます。<br>
+<!-- -->ルール：<br>
+<!-- -->上記課題の条件で、快適時間率が一番高いデザインを目指してください。<br>
+<!-- -->計算結果をアップロードするたび、サーバーで快適時間率を計算しています。<br>
+<!-- -->次回の授業で、快適時間率が最も高いデザインを表彰します。  </p><p>快適時間率の定義:<br>
+<!-- -->下限値：18℃<br>
+<!-- -->上限値: 28℃  </p><div class="admonition admonition-note alert alert--secondary"><div class="admonition-heading"><h5><span class="admonition-icon"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="16" viewBox="0 0 14 16"><path fill-rule="evenodd" d="M6.3 5.69a.942.942 0 0 1-.28-.7c0-.28.09-.52.28-.7.19-.18.42-.28.7-.28.28 0 .52.09.7.28.18.19.28.42.28.7 0 .28-.09.52-.28.7a1 1 0 0 1-.7.3c-.28 0-.52-.11-.7-.3zM8 7.99c-.02-.25-.11-.48-.31-.69-.2-.19-.42-.3-.69-.31H6c-.27.02-.48.13-.69.31-.2.2-.3.44-.31.69h1v3c.02.27.11.5.31.69.2.2.42.31.69.31h1c.27 0 .48-.11.69-.31.2-.19.3-.42.31-.69H8V7.98v.01zM7 2.3c-3.14 0-5.7 2.54-5.7 5.68 0 3.14 2.56 5.7 5.7 5.7s5.7-2.55 5.7-5.7c0-3.15-2.56-5.69-5.7-5.69v.01zM7 .98c3.86 0 7 3.14 7 7s-3.14 7-7 7-7-3.12-7-7 3.14-7 7-7z"></path></svg></span>note</h5></div><div class="admonition-content"><p>今回使用するシステムはベータ版であり、データの永続性を保証するわけではないので、計算データの管理はそれぞれでお願いします。   </p></div></div><h3 class="anchor anchorWithStickyNavbar_mojV" id="もっと興味ある人はこんなのもおすすめ">もっと興味ある人はこんなのもおすすめ<a class="hash-link" href="#もっと興味ある人はこんなのもおすすめ" title="Direct link to heading">​</a></h3><p><a href="https://comfort.cbe.berkeley.edu/" target="_blank" rel="noopener noreferrer">快適性の判断をしたければこれ</a>  </p><p>温暖化の影響を検討したければ=&gt;有馬先生に温暖化したあとの気象データをもらってください</p>]]></content:encoded>
             <category>lecture</category>
         </item>
         <item>
             <title><![CDATA[開発のログ1]]></title>
-            <link> http://katsuya0719.github.io/therb-gh/blog/welcome</link>
-            <guid>welcome</guid>
+            <link> http://katsuya0719.github.io/therb-gh/blog/development</link>
+            <guid>development</guid>
             <pubDate>Wed, 31 Aug 2022 00:00:00 GMT</pubDate>
             <description><![CDATA[打ち合わせしたい点]]></description>
-            <content:encoded><![CDATA[<h3 class="anchor anchorWithStickyNavbar_mojV" id="熱負荷計算は何をしているのか">熱負荷計算は何をしているのか?<a class="hash-link" href="#熱負荷計算は何をしているのか" title="Direct link to heading">​</a></h3><p>室内空間に着目して、時々刻々の<strong>熱収支</strong>を計算している。<br>
-<!-- -->結果として、自然室温や表面温度の変化をシミュレーションで計算することができる<br>
-<img alt="heat" src="/therb-gh/assets/images/heatBalance-746d1f5a91ea5dd844ddfa6a74c612fa.png" width="786" height="253">  </p><h3 class="anchor anchorWithStickyNavbar_mojV" id="授業の目的-therb-ghを使って簡単な熱負荷計算をハンズオンで行ってみる">授業の目的: THERB-GHを使って簡単な熱負荷計算をハンズオンで行ってみる<a class="hash-link" href="#授業の目的-therb-ghを使って簡単な熱負荷計算をハンズオンで行ってみる" title="Direct link to heading">​</a></h3><p>この授業では、尾崎研究室で開発している熱負荷計算用のシミュレーションエンジンTHERBを使います。ただし、このTHERBという計算エンジンは入力用、出力用のGUIがないので初心者がいきなり触り始めるのはおすすめできません。このTHERB-GHを使うことでRhinocerosでモデリングしたジオメトリを使って熱負荷計算をすることができます。<br>
-<!-- -->それでは早速THERB-GHを皆さんのPCにインストールしてもらいます。
-環境構築の方法は、<a href="/docs/Usage/HowToInstall.md">こちらのページ</a>を使いながら行います。  </p><h3 class="anchor anchorWithStickyNavbar_mojV" id="tutorial-0-therbモデルを作成する">Tutorial 0. THERBモデルを作成する<a class="hash-link" href="#tutorial-0-therbモデルを作成する" title="Direct link to heading">​</a></h3><p>環境が構築出来たら、実際にexample.3dm、example.ghファイルを元にTHERBモデルを構築してみます。<br>
-<a href="/docs/Usage/CreateTherbModel.md">こちらのページ</a>をみながら、準備してあるジオメトリを使ってシミュレーションを計算、結果を見てみます。<br>
-<!-- -->(分析結果については、Jupyter Notebookにリンクをとばす)</p><h3 class="anchor anchorWithStickyNavbar_mojV" id="tuotirial-1-0からモデルを作ってみよう">Tuotirial 1. 0からモデルを作ってみよう<a class="hash-link" href="#tuotirial-1-0からモデルを作ってみよう" title="Direct link to heading">​</a></h3><p>5m×5mの室をモデリングしたあと、南面に窓をモデリングして計算結果を見てみましょう。<br>
-<!-- -->①5m×5mの室（高さ3m)をモデリング<br>
-<!-- -->②南面に2m×2mの大きさの窓をモデリング<br>
-<!-- -->③計算を回してみる  </p><h3 class="anchor anchorWithStickyNavbar_mojV" id="tutorial-2-窓を変えてみよう">Tutorial 2. 窓を変えてみよう<a class="hash-link" href="#tutorial-2-窓を変えてみよう" title="Direct link to heading">​</a></h3><p>窓の大きさ、方位角を変えると入射日射量が変化し、室内の熱取得に影響します。どれくらい自然室温が変わるのか、比較してみましょう。  </p><h3 class="anchor anchorWithStickyNavbar_mojV" id="tutorial-3-換気回数を変えてみよう">Tutorial 3. 換気回数を変えてみよう<a class="hash-link" href="#tutorial-3-換気回数を変えてみよう" title="Direct link to heading">​</a></h3><p>一般的な住宅における必要な換気回数は0.5回/hと定められています。さらに、コロナ禍ということもあり、換気回数を増やすことが奨励されています。一方、換気回数を増やすことで夏であれば、暖かい空気を室内に取り込むこととなるため、室温の増加、空調負荷の増加につながります。適切な換気回数の設定は空気質の確保、空調負荷の最適化の面で重要です。</p><h3 class="anchor anchorWithStickyNavbar_mojV" id="tutorial-4-壁屋根床壁体構成の種類を変えてみよう">Tutorial 4. 壁、屋根、床（壁体構成）の種類を変えてみよう<a class="hash-link" href="#tutorial-4-壁屋根床壁体構成の種類を変えてみよう" title="Direct link to heading">​</a></h3><p>壁体構成を変更することで、断熱性、熱容量（室温の安定性に影響）が変わります。どれくらい自然室温が変わるのか、比較してみましょう。  </p><h3 class="anchor anchorWithStickyNavbar_mojV" id="totorial-5-空調負荷を計算してみよう">Totorial 5. 空調負荷を計算してみよう<a class="hash-link" href="#totorial-5-空調負荷を計算してみよう" title="Direct link to heading">​</a></h3><p>自然室温のままだと、人間が快適に室内で過ごすには夏は暑すぎたり、冬は寒すぎたりします。そこで空調をすることで熱を取り除いたり、加えることによって空気を調和しています。空調負荷とは、自然室温の状態から設定温度（暖房であれば20℃、冷房であれば28℃）にするためにどれくらいの熱量をコントロールしないといけないかという計算をした結果です。<br>
-<!-- -->この空調負荷を実際に取り除くために、設備設計の方々が空調の容量を選定しています。<br>
-<!-- -->省エネな建築を設計するためには、この空調負荷をなるべく小さくするような設計をすることが必要です。  </p><h3 class="anchor anchorWithStickyNavbar_mojV" id="課題-空調負荷のなるべく少ない窓壁体構成換気負荷方位角の組み合わせを考えてみよう">課題. 空調負荷のなるべく少ない窓、壁体構成、換気負荷、方位角の組み合わせを考えてみよう<a class="hash-link" href="#課題-空調負荷のなるべく少ない窓壁体構成換気負荷方位角の組み合わせを考えてみよう" title="Direct link to heading">​</a></h3><p>制約条件: 5m×5m×3mの建物<br>
-<!-- -->変更可能なパラメータ:   </p><ul><li>窓の位置、大きさ  </li><li>壁体構成  </li><li>換気負荷  </li><li>方位角<br>評価指標: 合計の空調負荷</li></ul>]]></content:encoded>
+            <content:encoded><![CDATA[<p>打ち合わせしたい点  </p><ul><li>全体のシステムに関する説明  </li><li>クラウドで計算するTHERBのランタイムがo.datファイルに書き出す項目について  </li><li>想定する内壁の数について  </li><li>秋学期でのTHERBを使用するカリキュラムのイメージ  </li></ul><p>例)簡単な建物モデルを自分で作ってTHERB-GHを使って計算<br>
+<!-- -->窓の大きさ、形、壁体構成などを変更してみて、その結果を分析、考察する  </p><p>全体のシステムダイアグラム<br>
+<img alt="THERB2.0" src="/therb-gh/assets/images/system-diagram-c3fecc31084557c5056a92c465bfd6d7.png" width="881" height="462">  </p><p>出力項目  </p><ul><li>外気温度</li><li>外気相対湿度  </li><li>外気絶対湿度  </li><li>室内温度  </li><li>相対湿度  </li><li>絶対湿度  </li><li>顕熱負荷  </li><li>潜熱負荷</li></ul>]]></content:encoded>
             <category>development</category>
         </item>
         <item>
             <title><![CDATA[テストユーザーへのプログラム配布を開始]]></title>
-            <link> http://katsuya0719.github.io/therb-gh/blog/welcome</link>
-            <guid>welcome</guid>
+            <link> http://katsuya0719.github.io/therb-gh/blog/release</link>
+            <guid>release</guid>
             <pubDate>Thu, 25 Aug 2022 00:00:00 GMT</pubDate>
             <description><![CDATA[テストユーザーへのプログラム配布を開始しました。]]></description>
-            <content:encoded><![CDATA[<h3 class="anchor anchorWithStickyNavbar_mojV" id="熱負荷計算は何をしているのか">熱負荷計算は何をしているのか?<a class="hash-link" href="#熱負荷計算は何をしているのか" title="Direct link to heading">​</a></h3><p>室内空間に着目して、時々刻々の<strong>熱収支</strong>を計算している。<br>
-<!-- -->結果として、自然室温や表面温度の変化をシミュレーションで計算することができる<br>
-<img alt="heat" src="/therb-gh/assets/images/heatBalance-746d1f5a91ea5dd844ddfa6a74c612fa.png" width="786" height="253">  </p><h3 class="anchor anchorWithStickyNavbar_mojV" id="授業の目的-therb-ghを使って簡単な熱負荷計算をハンズオンで行ってみる">授業の目的: THERB-GHを使って簡単な熱負荷計算をハンズオンで行ってみる<a class="hash-link" href="#授業の目的-therb-ghを使って簡単な熱負荷計算をハンズオンで行ってみる" title="Direct link to heading">​</a></h3><p>この授業では、尾崎研究室で開発している熱負荷計算用のシミュレーションエンジンTHERBを使います。ただし、このTHERBという計算エンジンは入力用、出力用のGUIがないので初心者がいきなり触り始めるのはおすすめできません。このTHERB-GHを使うことでRhinocerosでモデリングしたジオメトリを使って熱負荷計算をすることができます。<br>
-<!-- -->それでは早速THERB-GHを皆さんのPCにインストールしてもらいます。
-環境構築の方法は、<a href="/docs/Usage/HowToInstall.md">こちらのページ</a>を使いながら行います。  </p><h3 class="anchor anchorWithStickyNavbar_mojV" id="tutorial-0-therbモデルを作成する">Tutorial 0. THERBモデルを作成する<a class="hash-link" href="#tutorial-0-therbモデルを作成する" title="Direct link to heading">​</a></h3><p>環境が構築出来たら、実際にexample.3dm、example.ghファイルを元にTHERBモデルを構築してみます。<br>
-<a href="/docs/Usage/CreateTherbModel.md">こちらのページ</a>をみながら、準備してあるジオメトリを使ってシミュレーションを計算、結果を見てみます。<br>
-<!-- -->(分析結果については、Jupyter Notebookにリンクをとばす)</p><h3 class="anchor anchorWithStickyNavbar_mojV" id="tuotirial-1-0からモデルを作ってみよう">Tuotirial 1. 0からモデルを作ってみよう<a class="hash-link" href="#tuotirial-1-0からモデルを作ってみよう" title="Direct link to heading">​</a></h3><p>5m×5mの室をモデリングしたあと、南面に窓をモデリングして計算結果を見てみましょう。<br>
-<!-- -->①5m×5mの室（高さ3m)をモデリング<br>
-<!-- -->②南面に2m×2mの大きさの窓をモデリング<br>
-<!-- -->③計算を回してみる  </p><h3 class="anchor anchorWithStickyNavbar_mojV" id="tutorial-2-窓を変えてみよう">Tutorial 2. 窓を変えてみよう<a class="hash-link" href="#tutorial-2-窓を変えてみよう" title="Direct link to heading">​</a></h3><p>窓の大きさ、方位角を変えると入射日射量が変化し、室内の熱取得に影響します。どれくらい自然室温が変わるのか、比較してみましょう。  </p><h3 class="anchor anchorWithStickyNavbar_mojV" id="tutorial-3-換気回数を変えてみよう">Tutorial 3. 換気回数を変えてみよう<a class="hash-link" href="#tutorial-3-換気回数を変えてみよう" title="Direct link to heading">​</a></h3><p>一般的な住宅における必要な換気回数は0.5回/hと定められています。さらに、コロナ禍ということもあり、換気回数を増やすことが奨励されています。一方、換気回数を増やすことで夏であれば、暖かい空気を室内に取り込むこととなるため、室温の増加、空調負荷の増加につながります。適切な換気回数の設定は空気質の確保、空調負荷の最適化の面で重要です。</p><h3 class="anchor anchorWithStickyNavbar_mojV" id="tutorial-4-壁屋根床壁体構成の種類を変えてみよう">Tutorial 4. 壁、屋根、床（壁体構成）の種類を変えてみよう<a class="hash-link" href="#tutorial-4-壁屋根床壁体構成の種類を変えてみよう" title="Direct link to heading">​</a></h3><p>壁体構成を変更することで、断熱性、熱容量（室温の安定性に影響）が変わります。どれくらい自然室温が変わるのか、比較してみましょう。  </p><h3 class="anchor anchorWithStickyNavbar_mojV" id="totorial-5-空調負荷を計算してみよう">Totorial 5. 空調負荷を計算してみよう<a class="hash-link" href="#totorial-5-空調負荷を計算してみよう" title="Direct link to heading">​</a></h3><p>自然室温のままだと、人間が快適に室内で過ごすには夏は暑すぎたり、冬は寒すぎたりします。そこで空調をすることで熱を取り除いたり、加えることによって空気を調和しています。空調負荷とは、自然室温の状態から設定温度（暖房であれば20℃、冷房であれば28℃）にするためにどれくらいの熱量をコントロールしないといけないかという計算をした結果です。<br>
-<!-- -->この空調負荷を実際に取り除くために、設備設計の方々が空調の容量を選定しています。<br>
-<!-- -->省エネな建築を設計するためには、この空調負荷をなるべく小さくするような設計をすることが必要です。  </p><h3 class="anchor anchorWithStickyNavbar_mojV" id="課題-空調負荷のなるべく少ない窓壁体構成換気負荷方位角の組み合わせを考えてみよう">課題. 空調負荷のなるべく少ない窓、壁体構成、換気負荷、方位角の組み合わせを考えてみよう<a class="hash-link" href="#課題-空調負荷のなるべく少ない窓壁体構成換気負荷方位角の組み合わせを考えてみよう" title="Direct link to heading">​</a></h3><p>制約条件: 5m×5m×3mの建物<br>
-<!-- -->変更可能なパラメータ:   </p><ul><li>窓の位置、大きさ  </li><li>壁体構成  </li><li>換気負荷  </li><li>方位角<br>評価指標: 合計の空調負荷</li></ul>]]></content:encoded>
+            <content:encoded><![CDATA[<p>テストユーザーへのプログラム配布を開始しました。<br>
+<!-- -->興味のある方は<a href="/docs/intro.md">こちら</a>のチュートリアルを見ながら使用してみてください。  </p><p>わからなかったところ、エラー、追加してほしい機能の要望などは<a href="https://docs.google.com/forms/d/e/1FAIpQLSf_hwBQsHda7q7WF_2N-yyQiMSB1owK8hnQPH9IKP7tqypqOg/viewform?usp=sf_link" target="_blank" rel="noopener noreferrer">こちらのフォーム</a>に入力ください。</p>]]></content:encoded>
             <category>announcement</category>
         </item>
     </channel>
