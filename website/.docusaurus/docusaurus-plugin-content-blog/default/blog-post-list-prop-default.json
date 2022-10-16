@@ -2,12 +2,16 @@
   "title": "Recent posts",
   "items": [
     {
+      "title": "建築環境設備設計演習 THERB-GHによる熱負荷計算の検討演習",
+      "permalink": "/therb-gh/blog/class"
+    },
+    {
       "title": "開発のログ1",
-      "permalink": "/therb-gh/blog/welcome"
+      "permalink": "/therb-gh/blog/development"
     },
     {
       "title": "テストユーザーへのプログラム配布を開始",
-      "permalink": "/therb-gh/blog/welcome"
+      "permalink": "/therb-gh/blog/release"
     }
   ]
 }

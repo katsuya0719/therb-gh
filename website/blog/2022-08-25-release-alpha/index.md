@@ -1,5 +1,5 @@
 ---
-slug: welcome
+slug: release
 title: テストユーザーへのプログラム配布を開始
 authors:
   name: katsuya obara

@@ -1,5 +1,5 @@
 ---
-slug: welcome
+slug: development
 title: 開発のログ1
 authors:
   name: katsuya obara

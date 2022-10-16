@@ -18,8 +18,8 @@
   },
   "sidebar": "tutorialSidebar",
   "previous": {
-    "title": "Upload to server",
-    "permalink": "/therb-gh/docs/Usage/UploadToServer"
+    "title": "THERBシミュレーションを開始する",
+    "permalink": "/therb-gh/docs/Usage/RunSimulation"
   },
   "next": {
     "title": "IO",

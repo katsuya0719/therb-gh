@@ -49,18 +49,6 @@
             "label": "THERBシミュレーションを開始する",
             "href": "/therb-gh/docs/Usage/RunSimulation",
             "docId": "Usage/RunSimulation"
-          },
-          {
-            "type": "link",
-            "label": "AnalyzeResult",
-            "href": "/therb-gh/docs/Usage/AnalyzeResult",
-            "docId": "Usage/AnalyzeResult"
-          },
-          {
-            "type": "link",
-            "label": "Upload to server",
-            "href": "/therb-gh/docs/Usage/UploadToServer",
-            "docId": "Usage/UploadToServer"
           }
         ]
       },
@@ -129,6 +117,20 @@
             "docId": "NewHasp/HowToUse"
           }
         ]
+      },
+      {
+        "type": "category",
+        "label": "Reference",
+        "collapsible": true,
+        "collapsed": true,
+        "items": [
+          {
+            "type": "link",
+            "label": "デフォルトパラメータについて",
+            "href": "/therb-gh/docs/Reference/DefaultParameter",
+            "docId": "Reference/DefaultParameter"
+          }
+        ]
       }
     ]
   },
@@ -181,10 +183,10 @@
       "description": "THERB-GHではNew Haspという熱負荷計算ソフトへの連携もできます。",
       "sidebar": "tutorialSidebar"
     },
-    "Usage/AnalyzeResult": {
-      "id": "Usage/AnalyzeResult",
-      "title": "AnalyzeResult",
-      "description": "",
+    "Reference/DefaultParameter": {
+      "id": "Reference/DefaultParameter",
+      "title": "デフォルトパラメータについて",
+      "description": "壁体構成",
       "sidebar": "tutorialSidebar"
     },
     "Usage/CreateTherbModel": {
@@ -215,12 +217,6 @@
       "id": "Usage/RunSimulation",
       "title": "THERBシミュレーションを開始する",
       "description": "THERBのモデルが構築できたら、RunSimulationコンポーネントを使用して計算を実行できます。",
-      "sidebar": "tutorialSidebar"
-    },
-    "Usage/UploadToServer": {
-      "id": "Usage/UploadToServer",
-      "title": "Upload to server",
-      "description": "この機能はまだ実装途中です。",
       "sidebar": "tutorialSidebar"
     }
   }

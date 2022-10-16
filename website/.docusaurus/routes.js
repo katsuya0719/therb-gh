@@ -40,12 +40,27 @@ export default [
   },
   {
     path: '/therb-gh/blog',
-    component: ComponentCreator('/therb-gh/blog','466'),
+    component: ComponentCreator('/therb-gh/blog','b62'),
     exact: true
   },
   {
     path: '/therb-gh/blog/archive',
     component: ComponentCreator('/therb-gh/blog/archive','c78'),
+    exact: true
+  },
+  {
+    path: '/therb-gh/blog/class',
+    component: ComponentCreator('/therb-gh/blog/class','6ae'),
+    exact: true
+  },
+  {
+    path: '/therb-gh/blog/development',
+    component: ComponentCreator('/therb-gh/blog/development','6a7'),
+    exact: true
+  },
+  {
+    path: '/therb-gh/blog/release',
+    component: ComponentCreator('/therb-gh/blog/release','a00'),
     exact: true
   },
   {
@@ -55,7 +70,7 @@ export default [
   },
   {
     path: '/therb-gh/blog/tags/announcement',
-    component: ComponentCreator('/therb-gh/blog/tags/announcement','ed9'),
+    component: ComponentCreator('/therb-gh/blog/tags/announcement','191'),
     exact: true
   },
   {
@@ -64,13 +79,8 @@ export default [
     exact: true
   },
   {
-    path: '/therb-gh/blog/welcome',
-    component: ComponentCreator('/therb-gh/blog/welcome','39a'),
-    exact: true
-  },
-  {
-    path: '/therb-gh/blog/welcome',
-    component: ComponentCreator('/therb-gh/blog/welcome','505'),
+    path: '/therb-gh/blog/tags/lecture',
+    component: ComponentCreator('/therb-gh/blog/tags/lecture','163'),
     exact: true
   },
   {
@@ -80,7 +90,7 @@ export default [
   },
   {
     path: '/therb-gh/docs',
-    component: ComponentCreator('/therb-gh/docs','970'),
+    component: ComponentCreator('/therb-gh/docs','9c7'),
     routes: [
       {
         path: '/therb-gh/docs/Component/Filter',
@@ -131,8 +141,8 @@ export default [
         'sidebar': "tutorialSidebar"
       },
       {
-        path: '/therb-gh/docs/Usage/AnalyzeResult',
-        component: ComponentCreator('/therb-gh/docs/Usage/AnalyzeResult','680'),
+        path: '/therb-gh/docs/Reference/DefaultParameter',
+        component: ComponentCreator('/therb-gh/docs/Reference/DefaultParameter','7a4'),
         exact: true,
         'sidebar': "tutorialSidebar"
       },
@@ -163,12 +173,6 @@ export default [
       {
         path: '/therb-gh/docs/Usage/RunSimulation',
         component: ComponentCreator('/therb-gh/docs/Usage/RunSimulation','2b3'),
-        exact: true,
-        'sidebar': "tutorialSidebar"
-      },
-      {
-        path: '/therb-gh/docs/Usage/UploadToServer',
-        component: ComponentCreator('/therb-gh/docs/Usage/UploadToServer','311'),
         exact: true,
         'sidebar': "tutorialSidebar"
       }

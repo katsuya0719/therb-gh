@@ -33,7 +33,7 @@ const FeatureList: FeatureItem[] = [
     image: '/img/undraw_docusaurus_react.svg',
     description: (
       <>
-        THERB以外にも、New-Hasp、BAUES Analysisなど異なるシミュレーションツールに書き出しが可能です
+        THERB以外にも、New-Haspなど異なるシミュレーションツールに書き出しが可能です
       </>
     ),
   },

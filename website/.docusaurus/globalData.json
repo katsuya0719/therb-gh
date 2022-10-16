@@ -51,8 +51,8 @@
               "sidebar": "tutorialSidebar"
             },
             {
-              "id": "Usage/AnalyzeResult",
-              "path": "/therb-gh/docs/Usage/AnalyzeResult",
+              "id": "Reference/DefaultParameter",
+              "path": "/therb-gh/docs/Reference/DefaultParameter",
               "sidebar": "tutorialSidebar"
             },
             {
@@ -78,11 +78,6 @@
             {
               "id": "Usage/RunSimulation",
               "path": "/therb-gh/docs/Usage/RunSimulation",
-              "sidebar": "tutorialSidebar"
-            },
-            {
-              "id": "Usage/UploadToServer",
-              "path": "/therb-gh/docs/Usage/UploadToServer",
               "sidebar": "tutorialSidebar"
             }
           ],
