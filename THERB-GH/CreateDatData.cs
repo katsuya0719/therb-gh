@@ -702,6 +702,8 @@ namespace THERBgh
 
         public Envelope(EnvelopePayload payload, int count)
         {
+            name = payload.name;
+            id = payload.id;
             exteriorWallId = Int32.Parse(payload.exteriorWall.id);
             interiorWallId = Int32.Parse(payload.interiorWall.id);
             floorCeilingId = Int32.Parse(payload.floorCeiling.id);
